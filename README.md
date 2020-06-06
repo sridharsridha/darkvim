@@ -1,0 +1,26 @@
+# Darkvim
+
+NeoVim Configuration for Linux and OSX,
+
+![neovim 2](../screenshots/neovim-2.png?raw=True "Setup")
+
+## Installation
+
+You need neovim for this configuration to work, get a copy of neovim for you
+operating system and then follow below steps to install this configuration.
+```sh
+git clone --depth=1 https://github.com/sridharsridha/darkvim ~/.darkvim
+ln -s ~/.darkvim ~/.config/nvim
+```
+
+then execute `nvim`, and then execute `call dein#install()` thats all.
+
+## Uninstallation
+```
+rmdir ~/.darkvim
+rm ~/.config/nvim
+```
+## Contributing
+
+Feel free to fork or clone this repo and help improve this configuration.
+All contributions are welcomed.
