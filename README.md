@@ -2,7 +2,7 @@
 
 NeoVim Configuration for Linux and OSX,
 
-![darkvim]()
+![darkvim](https://github.com/sridharsridha/darkvim/blob/master/res/darkvim.png)
 
 ## Installation
 
