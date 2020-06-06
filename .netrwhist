@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =9
+let g:netrw_dirhist_9='/Users/sridharn/dotfiles/darkvim/autoload'
+let g:netrw_dirhist_8='/Users/sridharn/dotfiles/darkvim'
+let g:netrw_dirhist_7='/Users/sridharn'
+let g:netrw_dirhist_6='/Users/sridharn/dotfiles/darkvim/autoload/darkvim/layers'
+let g:netrw_dirhist_5='/Users/sridharn/dotfiles/darkvim/autoload/darkvim'
+let g:netrw_dirhist_4='/Users/sridharn/dotfiles/darkvim/autoload'
+let g:netrw_dirhist_3='/Users/sridharn/dotfiles/darkvim'
+let g:netrw_dirhist_2='/Users/sridharn/dotfiles/darkvim/autoload'
+let g:netrw_dirhist_1='/Users/sridharn/code/Algorithms/src/data_structures'
