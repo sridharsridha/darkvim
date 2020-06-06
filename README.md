@@ -2,7 +2,7 @@
 
 NeoVim Configuration for Linux and OSX,
 
-![neovim 2](../screenshots/neovim-2.png?raw=True "Setup")
+![darkvim]()
 
 ## Installation
 
