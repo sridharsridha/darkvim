@@ -3,6 +3,8 @@ scriptencoding utf-8
 " debug hook: holds all added plugins from all added layers
 let s:_darkvim_plugins = []
 
+let g:dein#install_message_type="title"
+
 function! darkvim#plugins#get() abort
 	return deepcopy(s:_darkvim_plugins)
 endfunction
@@ -15,8 +17,11 @@ function! darkvim#plugins#load() abort
 		call s:load_plugins()
 		call dein#end()
 		call dein#save_state()
-		if !has('vim_starting') && dein#check_install()
+		if dein#check_install()
 			" Installation check.
+			echom "Starting to install vim-plugins, it may take some time based on internet speed."
+			echom "Kindly do not close the neovim during this process"
+			call input('Shall we begin...?')
 			call dein#install()
 		endif
 	else

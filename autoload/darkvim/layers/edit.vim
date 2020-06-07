@@ -250,17 +250,17 @@ function! darkvim#layers#edit#config() abort
 	call darkvim#mapping#space#submode2('TextMoveJ', 'n', '', ['x', 'm', 'j'],
 				\ ':normal! ddp<cr>',
 				\ 'move-text-down (enter submode j)')
-	call submode#map('TextMoveJ', 'n', '', 'j',
+	call darkvim#mapping#space#submode_map('TextMoveJ', 'n', '', 'j',
 				\ ':noautocmd silent! m .+1<cr>')
-	call submode#map('TextMoveJ', 'n', '', 'k',
+	call darkvim#mapping#space#submode_map('TextMoveJ', 'n', '', 'k',
 				\ ':noautocmd silent! m .-2<cr>')
 
 	call darkvim#mapping#space#submode2('TextMoveK', 'n', '', ['x', 'm', 'k'],
 				\ ':normal! ddkP<cr>',
 				\ 'move-text-up(enter submode k)' )
-	call submode#map('TextMoveK', 'n', '', 'j',
+	call darkvim#mapping#space#submode_map('TextMoveK', 'n', '', 'j',
 				\ ':noautocmd silent! m .+1<cr>')
-	call submode#map('TextMoveK', 'n', '', 'k',
+	call darkvim#mapping#space#submode_map('TextMoveK', 'n', '', 'k',
 				\ ':noautocmd silent! m .-2<cr>')
 
 	" Duplicate lines
@@ -268,16 +268,16 @@ function! darkvim#layers#edit#config() abort
 	call darkvim#mapping#space#submode2('TextDupJ', 'n', '', ['x', 'd', 'j'],
 				\ 'mzyyP`z',
 				\ 'duplicate-line-down (enter submode j)')
-	call submode#map('TextDupJ', 'n', '', 'j',
+	call darkvim#mapping#space#submode_map('TextDupJ', 'n', '', 'j',
 				\ 'mzyyP`z')
-	call submode#map('TextDupJ', 'n', '', 'k',
+	call darkvim#mapping#space#submode_map('TextDupJ', 'n', '', 'k',
 				\ 'mzyyP`zk')
 	call darkvim#mapping#space#submode2('TextDupK', 'n', '', ['x', 'd', 'k'],
 				\ 'mzyyP`zk',
 				\ 'duplicate-line-up (enter submode k)')
-	call submode#map('TextDupK', 'n', '', 'j',
+	call darkvim#mapping#space#submode_map('TextDupK', 'n', '', 'j',
 				\ 'mzyyP`z')
-	call submode#map('TextDupK', 'n', '', 'k',
+	call darkvim#mapping#space#submode_map('TextDupK', 'n', '', 'k',
 				\ 'mzyyP`zk')
 
 	" Accelerated j and k

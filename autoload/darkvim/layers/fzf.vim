@@ -26,6 +26,7 @@ function! darkvim#layers#fzf#plugins() abort
 endfunction
 
 function! darkvim#layers#fzf#config() abort
+	let g:neomru#file_mru_path=g:darkvim_plugin_bundle_dir . 'neomru/file'
 	let g:fzf_action = {
 				\ 'ctrl-t': 'tab split',
 				\ 'ctrl-g': 'split',

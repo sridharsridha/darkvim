@@ -10,6 +10,7 @@ let g:darkvim_plugin_bundle_dir = $HOME. join(['', '.cache', 'darkvim', ''], '/'
 
 let g:darkvim_colorscheme = 'gruvbox'
 let g:darkvim_windows_leader = 's'
+let g:darkvim_welcome_enable = 1
 let g:darkvim_enable_guicolors = 1
 
 let g:darkvim_commandline_prompt = '➭'

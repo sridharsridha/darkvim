@@ -10,10 +10,10 @@ You need neovim for this configuration to work, get a copy of neovim for you
 operating system and then follow below steps to install this configuration.
 ```sh
 git clone --depth=1 https://github.com/sridharsridha/darkvim ~/.darkvim
-ln -s ~/.darkvim ~/.config/nvim
+cd ~/.darkvim/
+./install.sh
 ```
-
-then execute `nvim`, and then execute `call dein#install()` thats all.
+open `nvim`, and then execute `call dein#install()` thats all.
 
 ## Uninstallation
 ```

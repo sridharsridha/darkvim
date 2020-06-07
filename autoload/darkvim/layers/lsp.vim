@@ -12,11 +12,13 @@ function! darkvim#layers#lsp#plugins() abort
 				\ }])
 
 	" Complete parameters
-	call add(plugins, ['tenfyzhong/CompleteParameter.vim'])
+	call add(plugins, ['tenfyzhong/CompleteParameter.vim', {
+				\ 'on_event' : 'InsertEnter',
+				\ }])
 	" Language server protocal client intergration support
 	call add(plugins, ['neoclide/coc.nvim', {
-				\ 'depends' : ['CompleteParameter'],
 				\ 'build' : './install.sh',
+				\ 'hook_post_update' : 'call coc#util#install()',
 				\ 'on_event' : 'InsertEnter',
 				\ 'loadconf' : 1,
 				\ }])
@@ -301,6 +303,7 @@ function! darkvim#layers#lsp#tab() abort
 		return "\<tab>"
 	else
 		call coc#refresh()
+		return "\<tab>"
 	endif
 endfunction
 
