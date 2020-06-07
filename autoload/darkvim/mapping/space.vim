@@ -17,7 +17,6 @@ endfunction
 function! darkvim#mapping#space#def(type, keys, value, desc, ...) abort
 	let cmd_type = a:0 > 0 ? a:1 : 0
 	let map_visual = a:0 > 1 ? a:2 : 0
-	let feedkey_mode = a:type =~# 'nore' ? 'n' : 'm'
 	let merged_keys = join(a:keys, '')
 	if cmd_type == 1
 		" a:value is a command
@@ -28,35 +27,36 @@ function! darkvim#mapping#space#def(type, keys, value, desc, ...) abort
 		let nmap_cmd = a:value
 		let xmap_cmd = a:value
 	endif
-
 	exe a:type . ' <silent> <space>' . merged_keys . ' ' .
 				\ substitute(nmap_cmd, '|', '\\|', 'g')
 	if map_visual
 		if a:type ==# 'nnoremap'
-			exe 'xnoremap <space>' . merged_keys . ' ' .
+			exe 'xnoremap <silent> <space>' . merged_keys . ' ' .
 						\ substitute(xmap_cmd, '|', '\\|', 'g')
 		elseif a:type ==# 'nmap'
-			exe 'xmap <space>' . merged_keys . ' ' .
+			exe 'xmap <silent> <space>' . merged_keys . ' ' .
 						\ substitute(xmap_cmd, '|', '\\|', 'g')
 		endif
 	endif
-
 	call darkvim#mapping#space#guide(a:keys, a:desc)
 endfunction
 
 function! darkvim#mapping#space#guide(keys, desc) abort
-	if len(a:keys) == 3
+	let keylen = len(a:keys)
+	if keylen == 3
 		let g:_darkvim_mappings_space[a:keys[0]][a:keys[1]][a:keys[2]] = a:desc
-	elseif len(a:keys) == 2
+	elseif keylen == 2
 		let g:_darkvim_mappings_space[a:keys[0]][a:keys[1]] = a:desc
-	elseif len(a:keys) == 1
+	elseif keylen == 1
 		let g:_darkvim_mappings_space[a:keys[0]] = a:desc
 	else
+		echoerr "Invalid number of keys " . a:keys
 	endif
 endfunction
 
 function! darkvim#mapping#space#group(keys, desc) abort
-	if len(a:keys) == 3
+	let keylen = len(a:keys)
+	if keylen == 3
 		if !has_key(g:_darkvim_mappings_space[a:keys[0]][a:keys[1]], a:keys[2] )
 			let g:_darkvim_mappings_space[a:keys[0]][a:keys[1]][a:keys[2]] =
 						\ { "name" : '+'.a:desc }
@@ -68,7 +68,7 @@ function! darkvim#mapping#space#group(keys, desc) abort
 							\ tmp_desc . '/' . a:desc }
 			endif
 		endif
-	elseif len(a:keys) == 2
+	elseif keylen == 2
 		if !has_key(g:_darkvim_mappings_space[a:keys[0]], a:keys[1] )
 			let g:_darkvim_mappings_space[a:keys[0]][a:keys[1]] =
 						\ { "name" : '+' . a:desc }
@@ -79,7 +79,7 @@ function! darkvim#mapping#space#group(keys, desc) abort
 							\ tmp_desc . '/' . a:desc
 			endif
 		endif
-	elseif len(a:keys) == 1
+	elseif keylen == 1
 		if !has_key(g:_darkvim_mappings_space, a:keys[0] )
 			let g:_darkvim_mappings_space[a:keys[0]] = { "name" : '+' . a:desc }
 		else
@@ -89,6 +89,7 @@ function! darkvim#mapping#space#group(keys, desc) abort
 			endif
 		endif
 	else
+		echoerr "Invalid number of keys " . a:keys
 	endif
 endfunction
 

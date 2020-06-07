@@ -10,7 +10,7 @@ endfunction
 
 function! darkvim#layers#lang#sh#config() abort
 	let g:zsh_fold_enable = 1
-	call darkvim#mapping#space#regesit_lang_mappings('sh',
+	call darkvim#mapping#localleader#reg_lang_mappings_cb('sh',
 				\ function('s:language_specified_mappings'))
 endfunction
 

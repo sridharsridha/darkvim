@@ -15,11 +15,14 @@ function! darkvim#plugins#load() abort
 		call s:load_plugins()
 		call dein#end()
 		call dein#save_state()
+		if !has('vim_starting') && dein#check_install()
+			" Installation check.
+			call dein#install()
+		endif
 	else
-		call s:load_layer_configs_only()
-	endif
-	if !has('vim_starting') && dein#check_install()
-		call dein#install()
+		for layer in darkvim#layers#get()
+			call darkvim#layers#{layer}#config()
+		endfor
 	endif
 	if !has('vim_starting')
 		call dein#call_hook('source')
@@ -34,34 +37,6 @@ function! s:get_layer_plugins(layer) abort
 	catch /^Vim\%((\a\+)\)\=:E117/
 	endtry
 	return p
-endfunction
-
-function! s:setup_after_plugin_config(bundle) abort
-	call dein#config(g:dein#name, {
-				\ 'hook_source' : "call darkvim#util#load_config('plugins/" .
-				\ split(g:dein#name,'\.')[0] . ".vim')"
-				\ })
-endfunction
-
-function! s:setup_before_plugin_config(bundle) abort
-	call dein#config(g:dein#name, {
-				\ 'hook_add' : "call darkvim#util#load_config('plugins_before/" .
-				\ split(g:dein#name,'\.')[0] . ".vim')"
-				\ })
-endfunction
-
-function! s:load_layer_config(layer) abort
-	try
-		call darkvim#layers#{a:layer}#config()
-	catch /^Vim\%((\a\+)\)\=:E117/
-	endtry
-
-endfunction
-
-function! s:load_layer_configs_only() abort
-	for layer in darkvim#layers#get()
-		call s:load_layer_config(layer)
-	endfor
 endfunction
 
 function! s:plugin_add(repo,...) abort
@@ -87,10 +62,17 @@ function! s:load_plugins() abort
 				call s:plugin_add(name, options)
 				" Setup dein config for hook_source
 				if dein#tap(sname) && get(options, 'loadconf', 0)
-					call s:setup_after_plugin_config(sname)
+					call dein#config(g:dein#name, {
+								\ 'hook_source' : "call darkvim#util#load_config('plugins/" .
+								\ split(g:dein#name,'\.')[0] . ".vim')"
+								\ })
 				endif
 				" Load plugins configuration equal to hook_add
 				if dein#tap(sname) && get(options, 'loadconf_before', 0)
+					call dein#config(g:dein#name, {
+								\ 'hook_add' : "call darkvim#util#load_config('plugins_before/" .
+								\ split(g:dein#name,'\.')[0] . ".vim')"
+								\ })
 					call s:setup_before_plugin_config(sname)
 				endif
 			else
@@ -98,7 +80,7 @@ function! s:load_plugins() abort
 				call s:plugin_add(name, options)
 			endif
 		endfor
-		call s:load_layer_config(layer)
+		call darkvim#layers#{layer}#config()
 	endfor
 endfunction
 
