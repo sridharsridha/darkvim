@@ -8,7 +8,6 @@ let g:coc_global_extensions = [
 			\ 'coc-json',
 			\ 'coc-python',
 			\ 'coc-template',
-			\ 'coc-cmake',
 			\ 'coc-vimlsp',
 			\ 'coc-yaml',
 			\ 'coc-cmake',
