@@ -15,8 +15,9 @@ existing ones, as there might be one that already covers your points.  When
 you need to open a new one, provide as much information as you can, especially
 for bug reports.
 
-## Report bugs using Github's [issues](https://github.com/briandk/transcriptase-atom/issues)
-Report a bug by [opening a new issue](); it's that easy!
+## Report bugs using Github's [issues](https://github.com/sridharsridha/darkvim/issues)
+Report a bug by [opening a new issue](https://github.com/sridharsridha/darkvim/issues/new?template=bug_report.md).
+
 **Great Bug Reports** tend to have:
 
 - A quick summary and/or background
@@ -28,6 +29,12 @@ Report a bug by [opening a new issue](); it's that easy!
 - Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
 
 People *love* thorough bug reports. I'm not even kidding.
+
+## Request/Propose a new feature
+Request/propose a new feature by [opening a new issue](https://github.com/sridharsridha/darkvim/issues/new?template=feature_request.md).
+
+- Provide a feature request summary
+- Briefly explain why do you think this feature is necessary and it will help everyone.
 
 ## Pull Requests
 
