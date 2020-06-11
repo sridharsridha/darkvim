@@ -15,7 +15,8 @@ existing ones, as there might be one that already covers your points.  When
 you need to open a new one, provide as much information as you can, especially
 for bug reports.
 
-## Report bugs using Github's [issues](https://github.com/sridharsridha/darkvim/issues)
+## Reporting bugs
+Before raising any bugs, kindly check if a bug is already [opened](https://github.com/sridharsridha/darkvim/issues)
 Report a bug by [opening a new issue](https://github.com/sridharsridha/darkvim/issues/new?template=bug_report.md).
 
 **Great Bug Reports** tend to have:
