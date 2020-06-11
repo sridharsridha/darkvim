@@ -15,9 +15,9 @@ function! darkvim#layers#git#plugins() abort
 				\ }])
 
 	" Show git file markers in defx
-	call add(l:plugins, ['kristijanhusak/defx-git', {
-				\ 'on_source' : ['defx.nvim'],
-				\ }])
+	" call add(l:plugins, ['kristijanhusak/defx-git', {
+	"          \ 'on_source' : ['defx.nvim'],
+	"          \ }])
 
 	" List git log of current file
 	call add(l:plugins, ['cohama/agit.vim', {

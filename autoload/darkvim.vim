@@ -70,15 +70,15 @@ function! darkvim#welcome() abort
 			bwipeout! 1
 		endif
 	endif
-	if darkvim#layers#core#statusline#medium_window() ||
-				\ darkvim#layers#core#statusline#tiny_window() ||
-				\ darkvim#layers#core#statusline#small_window()
-		return
-	endif
-	if exists(':Defx') == 2
-		Defx -direction='botright'
-		wincmd p
-	endif
+	" if darkvim#layers#core#statusline#medium_window() ||
+	"          \ darkvim#layers#core#statusline#tiny_window() ||
+	"          \ darkvim#layers#core#statusline#small_window()
+	"    return
+	" endif
+	" if exists(':Defx') == 2
+	"    Defx -direction='botright'
+	"    wincmd p
+	" endif
 endfunction
 
 " Setup welcome page if status is darkvim is loaded with no argv
