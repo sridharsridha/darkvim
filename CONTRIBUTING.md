@@ -21,8 +21,8 @@ for bug reports.
 <!--=========================================================================-->
 
 ## Reporting bugs
-Before raising any bugs, kindly check if a bug is already [opened](https://github.com/sridharsridha/darkvim/issues)
-Report a bug by [opening a new issue](https://github.com/sridharsridha/darkvim/issues/new?template=bug_report.md).
+Before raising any bugs, kindly check if a bug is already [opened][opened-issues]
+Report a bug by [opening a new issue][new-issue].
 
 **Great Bug Reports** tend to have:
 
@@ -39,7 +39,7 @@ People *love* thorough bug reports. I'm not even kidding.
 <!--=========================================================================-->
 
 ## Request/Propose a new feature
-Request/propose a new feature by [opening a new issue](https://github.com/sridharsridha/darkvim/issues/new?template=feature_request.md).
+Request/propose a new feature by [opening a new issue][new-feature].
 
 - Provide a feature request summary
 - Briefly explain why do you think this feature is necessary and it will help everyone.
@@ -61,11 +61,6 @@ minimal and maintain a clear coding style.  Name your functions and variables
 sensibly, comment non-obvious lines of code and match the formatting style of
 the rest of the code (indentation, line width, spacing, etc.).
 
-This project adheres to the [Google Vimscript Style Guide][style-guide], with a
-few exceptions:
-* use four spaces for indents (not two)
-* indent continued lines by eight spaces (not four)
-
 You can use [Vint][vint] and run `vint .` in the repository root to check the
 code against the above style guide.
 
@@ -76,7 +71,9 @@ By contributing, you agree that your contributions will be licensed under its MI
 
 <!--=========================================================================-->
 
+[opened-issues]: https://github.com/sridharsridha/darkvim/issues
+[new-issue]: https://github.com/sridharsridha/darkvim/issues/new?template=bug_report.md
+[new-feature]: https://github.com/sridharsridha/darkvim/issues/new?template=feature_request.md
 [pr-guidelines]: https://opensource.guide/how-to-contribute/#opening-a-pull-request
-[style-guide]: https://google.github.io/styleguide/vimscriptguide.xml
 [vint]: https://github.com/Vimjas/vint
 
