@@ -1,6 +1,7 @@
 # Darkvim
 
-NeoVim Configuration for Linux and OSX,
+NeoVim Configuration for Linux and OSX.
+
 ![lint](https://img.shields.io/circleci/build/github/sridharsridha/darkvim?label=lint&logo=circleci)
 ![language](https://img.shields.io/github/languages/top/sridharsridha/darkvim)
 ![version](https://img.shields.io/github/v/tag/sridharsridha/darkvim?label=version&sort=semver)
