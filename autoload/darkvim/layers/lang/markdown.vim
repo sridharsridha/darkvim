@@ -1,12 +1,13 @@
+
 function! darkvim#layers#lang#markdown#plugins() abort
-	let plugins = []
-	call add(plugins, ['plasticboy/vim-markdown', {
+	let l:plugins = []
+	call add(l:plugins, ['plasticboy/vim-markdown', {
 				\ 'on_ft' : 'markdown',
 				\ }])
-	call add(plugins, ['mzlogin/vim-markdown-toc', {
+	call add(l:plugins, ['mzlogin/vim-markdown-toc', {
 				\ 'on_ft' : 'markdown',
 				\ }])
-	call add(plugins, ['lvht/tagbar-markdown', {
+	call add(l:plugins, ['lvht/tagbar-markdown', {
 				\ 'on_source' : ['tagbar'],
 				\ }])
 
@@ -18,12 +19,12 @@ function! darkvim#layers#lang#markdown#plugins() abort
 	else
 		let s:node_pkgm = ''
 	endif
-	call add(plugins, ['iamcco/markdown-preview.nvim', {
+	call add(l:plugins, ['iamcco/markdown-preview.nvim', {
 				\ 'on_ft' : 'markdown',
 				\ 'depends': 'open-browser.vim',
 				\ 'build' : 'cd app & ' . s:node_pkgm . ' install',
 				\ }])
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#lang#markdown#config() abort
@@ -36,11 +37,11 @@ function! darkvim#layers#lang#markdown#config() abort
 	let g:markdown_enable_insert_mode_leader_mappings = 0
 	let g:markdown_enable_spell_checking = 1
 
-	let remarkrc = s:generate_remarkrc()
+	let l:remarkrc = s:generate_remarkrc()
 	let g:neoformat_enabled_markdown = ['remark']
 	let g:neoformat_markdown_remark = {
 				\ 'exe': 'remark',
-				\ 'args': ['--no-color', '--silent'] + (empty(remarkrc) ?  [] : ['-r', remarkrc]),
+				\ 'args': ['--no-color', '--silent'] + (empty(l:remarkrc) ?  [] : ['-r', l:remarkrc]),
 				\ 'stdin': 1,
 				\ }
 
@@ -66,19 +67,19 @@ function! s:mappings() abort
 endfunction
 
 function! s:generate_remarkrc() abort
-	let conf = [
+	let l:conf = [
 				\ 'module.exports = {',
 				\ '  settings: {',
 				\ ]
-	call add(conf, '  },')
-	call add(conf, '  plugins: [')
+	call add(l:conf, '  },')
+	call add(l:conf, '  plugins: [')
 	" TODO add plugins
-	call add(conf, "    require('remark-frontmatter'),")
-	call add(conf, '  ]')
-	call add(conf, '};')
-	let f  = tempname() . '.js'
-	call writefile(conf, f)
-	return f
+	call add(l:conf, "    require('remark-frontmatter'),")
+	call add(l:conf, '  ]')
+	call add(l:conf, '};')
+	let l:f  = tempname() . '.js'
+	call writefile(l:conf, l:f)
+	return l:f
 endfunction
 
 function! s:markdown_insert_link(isVisual, isPicture) abort

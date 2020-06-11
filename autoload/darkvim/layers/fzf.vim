@@ -2,27 +2,27 @@ let s:CMP = darkvim#api#import('vim#compatible')
 let s:SYS = darkvim#api#import('system')
 
 function! darkvim#layers#fzf#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
 	" Fzf fuzzy finder support for vim
-	call add(plugins, ['junegunn/fzf', {
+	call add(l:plugins, ['junegunn/fzf', {
 				\ 'on_func' : ['fzf#wrap', 'fzf#run'],
 				\ }])
 
 	" Keep track of most recently used files
-	call add(plugins, ['Shougo/neomru.vim', {
+	call add(l:plugins, ['Shougo/neomru.vim', {
 				\ 'on_func' : ['neomru#_gather_file_candidates'],
 				\ }])
 
 	" Yank list
-	call add(plugins, ['Shougo/neoyank.vim'])
+	call add(l:plugins, ['Shougo/neoyank.vim'])
 
 	" Fzf yank source
-	call add(plugins, ['justinhoward/fzf-neoyank', {
+	call add(l:plugins, ['justinhoward/fzf-neoyank', {
 				\ 'depends' : ['neoyank'],
 				\ 'on_cmd' : darkvim#util#prefix('FZFNeoyank', ['', 'Selection']),
 				\ }])
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#fzf#config() abort
@@ -67,65 +67,65 @@ function! darkvim#layers#fzf#config() abort
 				\ 'recent-file', 1)
 
 	call darkvim#mapping#space#def('nnoremap', ['f', 'f'],
-				\ "exe 'FZF ' . fnamemodify(bufname('%'), ':h')",
-				\ "files-buf-dir", 1)
+				\ 'exe "FZF " . fnamemodify(bufname("%"), ":h")',
+				\ 'files-buf-dir', 1)
 
 	call darkvim#mapping#space#def('nnoremap', ['f', 'i'],
-				\ "FzfRegister",
-				\ "registers", 1)
+				\ 'FzfRegister',
+				\ 'registers', 1)
 
 	call darkvim#mapping#space#def('nnoremap', ['f', 'j'],
-				\ "FzfJumps",
-				\ "jumps", 1)
+				\ 'FzfJumps',
+				\ 'jumps', 1)
 
 	call darkvim#mapping#space#def('nnoremap', ['f', 'y'],
-				\ "FZFNeoyank",
-				\ "yanks", 1)
+				\ 'FZFNeoyank',
+				\ 'yanks', 1)
 
 	call darkvim#mapping#space#def('vnoremap', ['f', 'y'],
-				\ "FZFNeoyankSelection",
-				\ "yanks", 1)
+				\ 'FZFNeoyankSelection',
+				\ 'yanks', 1)
 
 	call darkvim#mapping#space#def('nnoremap', ['f', 'm'],
-				\ "FzfMessages",
-				\ "messages", 1)
+				\ 'FzfMessages',
+				\ 'messages', 1)
 
 	call darkvim#mapping#space#def('nnoremap', ['f', 'q'],
-				\ "FzfQuickfix",
-				\ "quickfix", 1)
+				\ 'FzfQuickfix',
+				\ 'quickfix', 1)
 
 	call darkvim#mapping#space#def('nnoremap', ['f', 'l'],
-				\ "FzfLocationList",
-				\ "locationlist", 1)
+				\ 'FzfLocationList',
+				\ 'locationlist', 1)
 
 	call darkvim#mapping#space#def('nnoremap', ['f', 't'],
-				\ "FzfTags",
-				\ "tags", 1)
+				\ 'FzfTags',
+				\ 'tags', 1)
 endfunction
 
 
 " Function below is largely lifted directly out of project junegunn/fzf.vim from
 " file autoload/fzf/vim.vim ; w/ minor mods to better integrate into darkvim
-function! s:wrap(name, opts)
+function! s:wrap(name, opts) abort
 	" fzf#wrap does not append --expect if 'sink' is found
-	let opts = copy(a:opts)
-	let options = ''
-	if has_key(opts, 'options')
-		let options = type(opts.options) == v:t_list ? join(opts.options) : opts.options
+	let l:opts = copy(a:opts)
+	let l:options = ''
+	if has_key(l:opts, 'options')
+		let l:options = type(l:opts.options) == v:t_list ? join(l:opts.options) : l:opts.options
 	endif
-	if options !~ '--expect' && has_key(opts, 'sink')
-		call remove(opts, 'sink')
-		let wrapped = fzf#wrap(a:name, opts)
+	if l:options !~# '--expect' && has_key(l:opts, 'sink')
+		call remove(l:opts, 'sink')
+		let l:wrapped = fzf#wrap(a:name, l:opts)
 	else
-		let wrapped = fzf#wrap(a:name, opts)
+		let l:wrapped = fzf#wrap(a:name, l:opts)
 	endif
-	return wrapped
+	return l:wrapped
 endfunction
 
 command! FzfColors call <SID>colors()
 function! s:colors() abort
 	let s:source = 'colorscheme'
-	call fzf#run(fzf#wrap({'source': map(split(globpath(&rtp, 'colors/*.vim')),
+	call fzf#run(fzf#wrap({'source': map(split(globpath(&runtimepath, 'colors/*.vim')),
 				\               "fnamemodify(v:val, ':t:r')"),
 				\ 'sink': 'colo','options': '--reverse',  'down': '40%'}))
 endfunction
@@ -145,28 +145,28 @@ function! darkvim#layers#fzf#sources() abort
 endfunction
 command! FzfJumps call <SID>jumps()
 function! s:bufopen(e) abort
-	let list = split(a:e)
-	if len(list) < 4
+	let l:list = split(a:e)
+	if len(l:list) < 4
 		return
 	endif
 
-	let [linenr, col, file_text] = [list[1], list[2]+1, join(list[3:])]
-	let lines = getbufline(file_text, linenr)
-	let path = file_text
-	if empty(lines)
-		if stridx(join(split(getline(linenr))), file_text) == 0
-			let lines = [file_text]
-			let path = bufname('%')
-		elseif filereadable(path)
-			let lines = ['buffer unloaded']
+	let [l:linenr, l:col, l:file_text] = [l:list[1], l:list[2]+1, join(l:list[3:])]
+	let l:lines = getbufline(l:file_text, l:linenr)
+	let l:path = l:file_text
+	if empty(l:lines)
+		if stridx(join(split(getline(l:linenr))), l:file_text) == 0
+			let l:lines = [l:file_text]
+			let l:path = bufname('%')
+		elseif filereadable(l:path)
+			let l:lines = ['buffer unloaded']
 		else
 			" Skip.
 			return
 		endif
 	endif
 
-	exe 'e '  . path
-	call cursor(linenr, col)
+	exe 'e '  . l:path
+	call cursor(l:linenr, l:col)
 endfunction
 function! s:jumps() abort
 	let s:source = 'jumps'
@@ -220,12 +220,12 @@ endfunction
 
 command! FzfQuickfix call s:quickfix()
 function! s:open_quickfix_item(e) abort
-	let line = a:e
-	let filename = fnameescape(split(line, ':\d\+:')[0])
-	let linenr = matchstr(line, ':\d\+:')[1:-2]
-	let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
-	exe 'e ' . filename
-	call cursor(linenr, colum)
+	let l:line = a:e
+	let l:filename = fnameescape(split(l:line, ':\d\+:')[0])
+	let l:linenr = matchstr(l:line, ':\d\+:')[1:-2]
+	let l:colum = matchstr(l:line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+	exe 'e ' . l:filename
+	call cursor(l:linenr, l:colum)
 endfunction
 function! s:quickfix_to_grep(v) abort
 	return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
@@ -247,12 +247,12 @@ function! s:location_list_to_grep(v) abort
 	return bufname(a:v.bufnr) . ':' . a:v.lnum . ':' . a:v.col . ':' . a:v.text
 endfunction
 function! s:open_location_item(e) abort
-	let line = a:e
-	let filename = fnameescape(split(line, ':\d\+:')[0])
-	let linenr = matchstr(line, ':\d\+:')[1:-2]
-	let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
-	exe 'e ' . filename
-	call cursor(linenr, colum)
+	let l:line = a:e
+	let l:filename = fnameescape(split(l:line, ':\d\+:')[0])
+	let l:linenr = matchstr(l:line, ':\d\+:')[1:-2]
+	let l:colum = matchstr(l:line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+	exe 'e ' . l:filename
+	call cursor(l:linenr, l:colum)
 endfunction
 function! s:location_list() abort
 	let s:source = 'location_list'
@@ -270,15 +270,15 @@ endfunction
 
 command! -bang FzfOutline call fzf#run(fzf#wrap('outline', s:outline(), <bang>0))
 function! s:outline_format(lists) abort
-	for list in a:lists
-		let linenr = list[2][:len(list[2])-3]
-		let line = getline(linenr)
-		let idx = stridx(line, list[0])
-		let len = len(list[0])
-		let list[0] = line[:idx-1] . printf("\x1b[%s%sm%s\x1b[m", 34, '', line[idx : idx+len-1]) . line[idx + len :]
+	for l:list in a:lists
+		let l:linenr = l:list[2][:len(l:list[2])-3]
+		let l:line = getline(l:linenr)
+		let l:idx = stridx(l:line, l:list[0])
+		let l:len = len(l:list[0])
+		let l:list[0] = l:line[:l:idx-1] . printf("\x1b[%s%sm%s\x1b[m", 34, '', l:line[l:idx : l:idx+l:len-1]) . l:line[l:idx + l:len :]
 	endfor
-	for list in a:lists
-		call map(list, "printf('%s', v:val)")
+	for l:list in a:lists
+		call map(l:list, "printf('%s', v:val)")
 	endfor
 	return a:lists
 endfunction
@@ -288,35 +288,35 @@ function! s:outline_source(tag_cmds) abort
 		return map(s:outline_format(map([], 'split(v:val, "\t")')), 'join(v:val, "\t")')
 	endif
 
-	let lines = []
-	for cmd in a:tag_cmds
-		let lines = split(system(cmd), "\n")
+	let l:lines = []
+	for l:cmd in a:tag_cmds
+		let l:lines = split(system(l:cmd), "\n")
 		if !v:shell_error
 			break
 		endif
 	endfor
 	if v:shell_error
-		throw get(lines, 0, 'Failed to extract tags')
-	elseif empty(lines)
+		throw get(l:lines, 0, 'Failed to extract tags')
+	elseif empty(l:lines)
 		throw 'No tags found'
 	endif
-	return map(s:outline_format(map(lines, 'split(v:val, "\t")')), 'join(v:val, "\t")')
+	return map(s:outline_format(map(l:lines, 'split(v:val, "\t")')), 'join(v:val, "\t")')
 endfunction
 
 function! s:outline_sink(lines) abort
 	if !empty(a:lines)
-		let line = a:lines[0]
-		execute split(line, "\t")[2]
+		let l:line = a:lines[0]
+		execute split(l:line, "\t")[2]
 	endif
 endfunction
 
 function! s:outline(...) abort
 	let s:source = 'outline'
-	let tag_cmds = [
+	let l:tag_cmds = [
 				\ printf('ctags -f - --sort=no --excmd=number --language-force=%s %s 2>/dev/null', &filetype, expand('%:S')),
 				\ printf('ctags -f - --sort=no --excmd=number %s 2>/dev/null', expand('%:S'))]
 	return {
-				\ 'source':  s:outline_source(tag_cmds),
+				\ 'source':  s:outline_source(l:tag_cmds),
 				\ 'sink*':   function('s:outline_sink'),
 				\ 'options': '--reverse +m -d "\t" --with-nth 1 -n 1 --ansi --prompt "Outline> "'}
 endfunction
@@ -362,31 +362,31 @@ endfunction
 let s:ansi = {'black': 30, 'red': 31, 'green': 32, 'yellow': 33, 'blue': 34, 'magenta': 35, 'cyan': 36}
 
 function! s:get_color(attr, ...) abort
-	let gui = has('termguicolors') && &termguicolors
-	let fam = gui ? 'gui' : 'cterm'
-	let pat = gui ? '^#[a-f0-9]\+' : '^[0-9]\+$'
-	for group in a:000
-		let code = synIDattr(synIDtrans(hlID(group)), a:attr, fam)
-		if code =~? pat
-			return code
+	let l:gui = has('termguicolors') && &termguicolors
+	let l:fam = l:gui ? 'gui' : 'cterm'
+	let l:pat = l:gui ? '^#[a-f0-9]\+' : '^[0-9]\+$'
+	for l:group in a:000
+		let l:code = synIDattr(synIDtrans(hlID(l:group)), a:attr, l:fam)
+		if l:code =~? l:pat
+			return l:code
 		endif
 	endfor
 	return ''
 endfunction
 function! s:csi(color, fg) abort
-	let prefix = a:fg ? '38;' : '48;'
+	let l:prefix = a:fg ? '38;' : '48;'
 	if a:color[0] ==# '#'
-		return prefix.'2;'.join(map([a:color[1:2], a:color[3:4], a:color[5:6]], 'str2nr(v:val, 16)'), ';')
+		return l:prefix.'2;'.join(map([a:color[1:2], a:color[3:4], a:color[5:6]], 'str2nr(v:val, 16)'), ';')
 	endif
-	return prefix.'5;'.a:color
+	return l:prefix.'5;'.a:color
 endfunction
 
 function! s:ansi(str, group, default, ...) abort
-	let fg = s:get_color('fg', a:group)
-	let bg = s:get_color('bg', a:group)
-	let color = s:csi(empty(fg) ? s:ansi[a:default] : fg, 1) .
-				\ (empty(bg) ? '' : s:csi(bg, 0))
-	return printf("\x1b[%s%sm%s\x1b[m", color, a:0 ? ';1' : '', a:str)
+	let l:fg = s:get_color('fg', a:group)
+	let l:bg = s:get_color('bg', a:group)
+	let l:color = s:csi(empty(l:fg) ? s:ansi[a:default] : l:fg, 1) .
+				\ (empty(l:bg) ? '' : s:csi(l:bg, 0))
+	return printf("\x1b[%s%sm%s\x1b[m", l:color, a:0 ? ';1' : '', a:str)
 endfunction
 for s:color_name in keys(s:ansi)
 	execute 'function! s:'.s:color_name."(str, ...)\n"
@@ -394,19 +394,19 @@ for s:color_name in keys(s:ansi)
 				\ 'endfunction'
 endfor
 function! s:helptag_sink(line) abort
-	let [tag, file, path] = split(a:line, "\t")[0:2]
-	unlet file
-	let rtp = fnamemodify(path, ':p:h:h')
-	if stridx(&rtp, rtp) < 0
-		execute 'set rtp+='. fnameescape(rtp)
+	let [l:tag, l:file, l:path] = split(a:line, "\t")[0:2]
+	unlet l:file
+	let l:runtimepath = fnamemodify(l:path, ':p:h:h')
+	if stridx(&runtimepath, l:runtimepath) < 0
+		execute 'set runtimepath+='. fnameescape(l:runtimepath)
 	endif
-	execute 'help' tag
+	execute 'help' l:tag
 endfunction
 command! -nargs=? FzfHelpTags call <SID>helptags(<q-args>)
 function! s:helptags(...) abort
-	let query = get(a:000, 0, '')
-	let sorted = sort(split(globpath(&runtimepath, 'doc/tags', 1), '\n'))
-	let tags = uniq(sorted)
+	let l:query = get(a:000, 0, '')
+	let l:sorted = sort(split(globpath(&runtimepath, 'doc/tags', 1), '\n'))
+	let l:tags = uniq(l:sorted)
 
 	if exists('s:helptags_script')
 		silent! call delete(s:helptags_script)
@@ -415,21 +415,21 @@ function! s:helptags(...) abort
 	call writefile(['/('.(s:SYS.isWindows ? '^[A-Z]:\/.*?[^:]' : '.*?').'):(.*?)\t(.*?)\t/; printf(qq('. call('s:green', ['%-40s', 'Label']) . '\t%s\t%s\n), $2, $3, $1)'], s:helptags_script)
 	let s:source = 'help'
 	call fzf#run(fzf#wrap('helptags', {
-				\ 'source':  'grep -H ".*" '.join(map(tags, 'shellescape(v:val)')).
+				\ 'source':  'grep -H ".*" '.join(map(l:tags, 'shellescape(v:val)')).
 				\ ' | perl -n '. shellescape(s:helptags_script).' | sort',
 				\ 'sink':    function('s:helptag_sink'),
-				\ 'options': ['--ansi', '--reverse', '+m', '--tiebreak=begin', '--with-nth', '..-2'] + (empty(query) ? [] : ['--query', query]),
+				\ 'options': ['--ansi', '--reverse', '+m', '--tiebreak=begin', '--with-nth', '..-2'] + (empty(l:query) ? [] : ['--query', l:query]),
 				\   'down': '40%'
 				\ }))
 endfunction
 
 function! s:tags_sink(line) abort
-	let parts = split(a:line, '\t\zs')
-	let excmd = matchstr(parts[2:], '^.*\ze;"\t')
-	execute 'silent e' parts[1][:-2]
-	let [magic, &magic] = [&magic, 0]
-	execute excmd
-	let &magic = magic
+	let l:parts = split(a:line, '\t\zs')
+	let l:excmd = matchstr(l:parts[2:], '^.*\ze;"\t')
+	execute 'silent e' l:parts[1][:-2]
+	let [l:magic, &magic] = [&magic, 0]
+	execute l:excmd
+	let &magic = l:magic
 endfunction
 
 function! s:tags() abort

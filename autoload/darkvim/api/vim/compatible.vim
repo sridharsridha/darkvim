@@ -113,21 +113,21 @@ if exists('*execute')
 else
 	function! s:self.execute(cmd, ...) abort
 		if a:0 == 0
-			let s = 'silent'
+			let l:s = 'silent'
 		else
-			let s = a:1
+			let l:s = a:1
 		endif
-		let output = ''
-		redir => output
-		if s ==# 'silent'
+		let l:output = ''
+		redir => l:output
+		if l:s ==# 'silent'
 			silent execute a:cmd
-		elseif s ==# 'silent!'
+		elseif l:s ==# 'silent!'
 			silent! execute a:cmd
 		else
 			execute a:cmd
 		endif
 		redir END
-		return output
+		return l:output
 	endfunction
 endif
 
@@ -141,9 +141,9 @@ if has('nvim')
 else
 	function! s:self.system(cmd, ...) abort
 		if type(a:cmd) == 3
-			let cmd = map(a:cmd, 'shellescape(v:val)')
-			let cmd = join(cmd, ' ')
-			return a:0 == 0 ? system(cmd) : system(cmd, a:1)
+			let l:cmd = map(a:cmd, 'shellescape(v:val)')
+			let l:cmd = join(l:cmd, ' ')
+			return a:0 == 0 ? system(l:cmd) : system(l:cmd, a:1)
 		else
 			return a:0 == 0 ? system(a:cmd) : system(a:cmd, a:1)
 		endif
@@ -151,9 +151,9 @@ else
 	if exists('*systemlist')
 		function! s:self.systemlist(cmd, ...) abort
 			if type(a:cmd) == 3
-				let cmd = map(a:cmd, 'shellescape(v:val)')
-				let excmd = join(cmd, ' ')
-				return a:0 == 0 ? systemlist(excmd) : systemlist(excmd, a:1)
+				let l:cmd = map(a:cmd, 'shellescape(v:val)')
+				let l:excmd = join(l:cmd, ' ')
+				return a:0 == 0 ? systemlist(l:excmd) : systemlist(l:excmd, a:1)
 			else
 				return a:0 == 0 ? systemlist(a:cmd) : systemlist(a:cmd, a:1)
 			endif
@@ -161,10 +161,10 @@ else
 	else
 		function! s:self.systemlist(cmd, ...) abort
 			if type(a:cmd) == 3
-				let cmd = map(a:cmd, 'shellescape(v:val)')
-				let excmd = join(cmd, ' ')
-				return a:0 == 0 ? split(system(excmd), "\n")
-							\ : split(system(excmd, a:1), "\n")
+				let l:cmd = map(a:cmd, 'shellescape(v:val)')
+				let l:excmd = join(l:cmd, ' ')
+				return a:0 == 0 ? split(system(l:excmd), "\n")
+							\ : split(system(l:excmd, a:1), "\n")
 			else
 				return a:0 == 0 ? split(system(a:cmd), "\n")
 							\ : split(system(a:cmd, a:1), "\n")
@@ -185,8 +185,8 @@ endif
 
 if has('nvim')
 	function! s:self.version() abort
-		let v = api_info().version
-		return v.major . '.' . v.minor . '.' . v.patch
+		let l:v = api_info().version
+		return l:v.major . '.' . l:v.minor . '.' . l:v.patch
 	endfunction
 else
 	function! s:self.version() abort
@@ -196,14 +196,14 @@ else
 		return s:parser(matchstr(l:msg,'\(Included\ patches:\ \)\@<=[^\n]*'))
 	endfunction
 	function! s:parser(version) abort
-		let v_list = split(a:version, ',')
-		if len(v_list) == 1
-			let patch = split(v_list[0], '-')[1]
-			let v = v:version[0:0] . '.' . v:version[2:2] . '.' . patch
+		let l:v_list = split(a:version, ',')
+		if len(l:v_list) == 1
+			let l:patch = split(l:v_list[0], '-')[1]
+			let l:v = v:version[0:0] . '.' . v:version[2:2] . '.' . l:patch
 		else
-			let v = v:version[0:0] . '.' . v:version[2:2] . '(' . a:version . ')'
+			let l:v = v:version[0:0] . '.' . v:version[2:2] . '(' . a:version . ')'
 		endif
-		return v
+		return l:v
 	endfunction
 endif
 
@@ -230,52 +230,52 @@ endif
 
 if exists('*matchaddpos')
 	function! s:self.matchaddpos(group, pos, ...) abort
-		let priority = get(a:000, 0, 10)
-		let id = get(a:000, 1, -1)
-		let argv = [priority, id]
+		let l:priority = get(a:000, 0, 10)
+		let l:id = get(a:000, 1, -1)
+		let l:argv = [l:priority, l:id]
 		if has('patch-7.4.792')
-			let dict = get(a:000, 2, {})
-			call add(argv, dict)
+			let l:dict = get(a:000, 2, {})
+			call add(l:argv, l:dict)
 		endif
-		return call('matchaddpos', [a:group, a:pos] + argv)
+		return call('matchaddpos', [a:group, a:pos] + l:argv)
 	endfunction
 else
 	function! s:self.matchaddpos(group, pos, ...) abort
-		let priority = get(a:000, 0, 10)
-		let id = get(a:000, 1, -1)
-		let argv = [priority, id]
+		let l:priority = get(a:000, 0, 10)
+		let l:id = get(a:000, 1, -1)
+		let l:argv = [l:priority, l:id]
 		if has('patch-7.4.792')
-			let dict = get(a:000, 2, {})
-			call add(argv, dict)
+			let l:dict = get(a:000, 2, {})
+			call add(l:argv, l:dict)
 		endif
-		let pos1 = a:pos[0]
-		if type(pos1) == 0
-			let id = call('matchadd', [a:group, '\%' . pos1 . 'l'] + argv)
-		elseif type(pos1) == 3
-			if len(pos1) == 1
-				let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l'] + argv)
-			elseif len(pos1) == 2
-				let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c'] + argv)
-			elseif len(pos1) == 3
-				let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c'] + argv)
+		let l:pos1 = a:pos[0]
+		if type(l:pos1) == 0
+			let l:id = call('matchadd', [a:group, '\%' . l:pos1 . 'l'] + l:argv)
+		elseif type(l:pos1) == 3
+			if len(l:pos1) == 1
+				let l:id = call('matchadd', [a:group, '\%' . l:pos1[0] . 'l'] + l:argv)
+			elseif len(l:pos1) == 2
+				let l:id = call('matchadd', [a:group, '\%' . l:pos1[0] . 'l\%' . l:pos1[1] . 'c'] + l:argv)
+			elseif len(l:pos1) == 3
+				let l:id = call('matchadd', [a:group, '\%' . l:pos1[0] . 'l\%>' . l:pos1[1] . 'c\%<' . l:pos1[2] . 'c'] + l:argv)
 			endif
 		endif
 		if len(a:pos) > 1
-			for pos1 in a:pos[1:]
-				if type(pos1) == 0
-					let id = call('matchadd', [a:group, '\%' . pos1 . 'l'] + argv)
-				elseif type(pos1) == 3
-					if len(pos1) == 1
-						let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l'] + argv)
-					elseif len(pos1) == 2
-						let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c'] + argv)
-					elseif len(pos1) == 3
-						let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c'] + argv)
+			for l:pos1 in a:pos[1:]
+				if type(l:pos1) == 0
+					let l:id = call('matchadd', [a:group, '\%' . l:pos1 . 'l'] + l:argv)
+				elseif type(l:pos1) == 3
+					if len(l:pos1) == 1
+						let l:id = call('matchadd', [a:group, '\%' . l:pos1[0] . 'l'] + l:argv)
+					elseif len(l:pos1) == 2
+						let l:id = call('matchadd', [a:group, '\%' . l:pos1[0] . 'l\%' . l:pos1[1] . 'c'] + l:argv)
+					elseif len(l:pos1) == 3
+						let l:id = call('matchadd', [a:group, '\%' . l:pos1[0] . 'l\%>' . l:pos1[1] . 'c\%<' . l:pos1[2] . 'c'] + l:argv)
 					endif
 				endif
 			endfor
 		endif
-		return id
+		return l:id
 	endfunction
 endif
 
@@ -285,13 +285,13 @@ endfunction
 
 if s:SYS.isWindows
 	function! s:self.resolve(path) abort
-		let cmd = 'dir /a "' . a:path . '" | findstr SYMLINK'
+		let l:cmd = 'dir /a "' . a:path . '" | findstr SYMLINK'
 		" 2018/12/07 周五  下午 10:23    <SYMLINK>      vimfiles [C:\Users\Administrator\.darkvim]
 		" ref: https://superuser.com/questions/524669/checking-where-a-symbolic-link-points-at-in-windows-7
-		silent let rst = system(cmd)
+		silent let l:rst = system(l:cmd)
 		if !v:shell_error
-			let dir = split(rst)[-1][1:-2]
-			return dir
+			let l:dir = split(l:rst)[-1][1:-2]
+			return l:dir
 		endif
 		return a:path
 	endfunction

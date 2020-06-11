@@ -1,26 +1,26 @@
 " cmake.vim : cmake file support for darkvim
 
 function! darkvim#layers#lang#cmake#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
-	call add(plugins, ['cdelledonne/vim-cmake', {
+	call add(l:plugins, ['cdelledonne/vim-cmake', {
 				\ 'on_cmd' : darkvim#util#prefix('Cmake',
 				\            ['Generate', 'Clean', 'Build', 'Open', 'Close']),
 				\ 'on_map' : {'n' : '<Plug>(CMake'},
 				\ }])
-	call add(plugins, ['pboettch/vim-cmake-syntax', {
+	call add(l:plugins, ['pboettch/vim-cmake-syntax', {
 				\ 'on_ft' : ['cmake'],
 				\ }])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#lang#cmake#config() abort
 
-	let g:cmake_default_build_dir = "cmake-build-debug"
+	let g:cmake_default_build_dir = 'cmake-build-debug'
 	let g:cmake_console_size = 10
 	let g:cmake_link_compile_commands = 1
-	call darkvim#mapping#space#group(['b'], "Build")
+	call darkvim#mapping#space#group(['b'], 'Build')
 	call darkvim#mapping#space#def('nmap', ['b', 'g'],
 				\ 'CMakeGenerate',
 				\ 'generate-cmake-build-files', 1)
@@ -30,7 +30,7 @@ function! darkvim#layers#lang#cmake#config() abort
 	call darkvim#mapping#space#def('nnoremap', ['b', 'b'],
 				\ 'CMakeBuild --parallel 7',
 				\ 'build-cmake-project', 1)
-	call darkvim#mapping#space#def('nmap', ['b', 't'],
+	call darkvim#mapping#space#def('nmap', ['b', 'B'],
 				\ '<Plug>(CMakeBuildTarget)',
 				\ 'build-cmake-target')
 	call darkvim#mapping#space#def('nmap', ['b', 'i'],
@@ -50,11 +50,11 @@ function! darkvim#layers#lang#cmake#config() abort
 endfunction
 
 function! s:toggle_cmake_console() abort
-	let l:cmake_console_windows = filter(range(1, winnr('$')), 'getwinvar(v:val, "&ft") == "vimcmake"')
+	let l:cmake_console_windows = filter(range(1, winnr('$')), 'getwinvar(v:val, "&ft") ==# "vimcmake"')
 	if len(l:cmake_console_windows) == 0
-		execute "CMakeOpen"
+		execute 'CMakeOpen'
 	else
-		execute "CMakeClose"
+		execute 'CMakeClose'
 	endif
 endfunction
 
@@ -62,7 +62,7 @@ function! s:cmake_auto_reload(enabled) abort
 	augroup cmake_custom
 		au!
 		if a:enabled
-			au BufWritePost CMakeLists.txt execute "CMakeGenerate"
+			au BufWritePost CMakeLists.txt execute 'CMakeGenerate'
 		endif
 	augroup END
 endfunction

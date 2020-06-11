@@ -1,11 +1,11 @@
 " toml.vim --- toml layer for darkvim
 
 function! darkvim#layers#lang#toml#plugins() abort
-	let plugins = []
-	call add(plugins, ['cespare/vim-toml', {
+	let l:plugins = []
+	call add(l:plugins, ['cespare/vim-toml', {
 				\ 'on_ft' : ['toml'],
 				\ }])
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#lang#toml#config() abort

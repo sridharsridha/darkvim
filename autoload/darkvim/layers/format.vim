@@ -1,14 +1,14 @@
 " format.vim format layer for darkvim
 
 function! darkvim#layers#format#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
-	call add(plugins, ['neoformat/neoformat',
+	call add(l:plugins, ['neoformat/neoformat',
 				\ {'on_cmd' : ['Neoformat'],
 				\ 'loadconf' : 1,
 				\ }])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#format#config() abort
@@ -17,8 +17,8 @@ function! darkvim#layers#format#config() abort
 				\ 'Neoformat',
 				\ 'format-code', 1)
 	command! ToggleAutoFormatCode :call ToggleAutoFormatCode()
-	call darkvim#mapping#space#group(['t'], 'Toggle')
-	call darkvim#mapping#space#def('nnoremap', ['t', 'f'], 'ToggleAutoFormatcode', 'toggle-auto-format', 1)
+	call darkvim#mapping#space#group(['b', 't'], 'toggle')
+	call darkvim#mapping#space#def('nnoremap', ['b', 't', 'f'], 'ToggleAutoFormatcode', 'toggle-auto-format', 1)
 endfunction
 
 function! ToggleAutoFormatCode() abort

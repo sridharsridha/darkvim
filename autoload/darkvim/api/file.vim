@@ -137,20 +137,20 @@ let s:file_node_pattern_matches = {
 
 
 function! s:filetypeIcon(path) abort
-	let file = fnamemodify(a:path, ':t')
-	if has_key(s:file_node_exact_matches, file)
-		return s:file_node_exact_matches[file]
+	let l:file = fnamemodify(a:path, ':t')
+	if has_key(s:file_node_exact_matches, l:file)
+		return s:file_node_exact_matches[l:file]
 	endif
-	for [k, v]  in items(s:file_node_pattern_matches)
-		if match(file, k) != -1
-			return v
+	for [l:k, l:v]  in items(s:file_node_pattern_matches)
+		if match(l:file, l:k) != -1
+			return l:v
 		endif
 	endfor
-	let ext = fnamemodify(file, ':e')
-	if has_key(g:darkvim_filetype_icons, ext)
-		return g:darkvim_filetype_icons[ext]
-	elseif has_key(s:file_node_extensions, ext)
-		return s:file_node_extensions[ext]
+	let l:ext = fnamemodify(l:file, ':e')
+	if has_key(g:darkvim_filetype_icons, l:ext)
+		return g:darkvim_filetype_icons[l:ext]
+	elseif has_key(s:file_node_extensions, l:ext)
+		return s:file_node_extensions[l:ext]
 	endif
 	return ''
 
@@ -159,15 +159,15 @@ endfunction
 let s:file['fticon'] = function('s:filetypeIcon')
 
 function! s:write(msg, fname) abort
-	let flags = filewritable(a:fname) ? 'a' : ''
-	call writefile([a:msg], a:fname, flags)
+	let l:flags = filewritable(a:fname) ? 'a' : ''
+	call writefile([a:msg], a:fname, l:flags)
 endfunction
 
 let s:file['write'] = function('s:write')
 
 function! s:override(msg, fname) abort
-	let flags = filewritable(a:fname) ? 'b' : ''
-	call writefile([a:msg], a:fname, flags)
+	let l:flags = filewritable(a:fname) ? 'b' : ''
+	call writefile([a:msg], a:fname, l:flags)
 endfunction
 
 let s:file['override'] = function('s:override')
@@ -183,11 +183,11 @@ endfunction
 let s:file['read'] = function('s:read')
 
 function! s:ls(dir, if_file_only) abort
-	let items = s:vim_comp.globpath(a:dir, '*')
+	let l:items = s:vim_comp.globpath(a:dir, '*')
 	if a:if_file_only
-		let items = filter(items, '!isdirectory(v:val)')
+		let l:items = filter(l:items, '!isdirectory(v:val)')
 	endif
-	return map(items, "fnamemodify(v:val, ':t')")
+	return map(l:items, "fnamemodify(v:val, ':t')")
 endfunction
 
 let s:file['ls'] = function('s:ls')
@@ -200,19 +200,19 @@ let s:file['ls'] = function('s:ls')
 "              }
 " }
 function! s:updatefiles(files) abort
-	let failed = []
-	for fname in keys(a:files)
-		let buffer = readfile(fname)
-		for line in keys(a:files[fname])
-			let buffer[line - 1] = a:files[fname][line]
+	let l:failed = []
+	for l:fname in keys(a:files)
+		let l:buffer = readfile(l:fname)
+		for l:line in keys(a:files[l:fname])
+			let l:buffer[l:line - 1] = a:files[l:fname][l:line]
 		endfor
 		try
-			call writefile(buffer, fname, 'b')
+			call writefile(l:buffer, l:fname, 'b')
 		catch
-			call add(failed, fname)
+			call add(l:failed, l:fname)
 		endtry
 	endfor
-	return failed
+	return l:failed
 endfunction
 
 
@@ -223,14 +223,14 @@ let s:file['updateFiles'] = function('s:updatefiles')
 " 2. if it is a dir, end with /
 " 3. if a:path end with /, then return path also end with /
 function! s:unify_path(path, ...) abort
-	let mod = a:0 > 0 ? a:1 : ':p'
-	let path = resolve(fnamemodify(a:path, mod . ':gs?[\\/]?/?'))
-	if isdirectory(path) && path[-1:] !=# '/'
-		return path . '/'
-	elseif a:path[-1:] ==# '/' && path[-1:] !=# '/'
-		return path . '/'
+	let l:mod = a:0 > 0 ? a:1 : ':p'
+	let l:path = resolve(fnamemodify(a:path, l:mod . ':gs?[\\/]?/?'))
+	if isdirectory(l:path) && l:path[-1:] !=# '/'
+		return l:path . '/'
+	elseif a:path[-1:] ==# '/' && l:path[-1:] !=# '/'
+		return l:path . '/'
 	else
-		return path
+		return l:path
 	endif
 endfunction
 

@@ -6,13 +6,13 @@
 let g:darkvim_clang_path = 'clang'
 
 function! darkvim#layers#lang#c#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
-	call add(plugins, ['octol/vim-cpp-enhanced-highlight', {
+	call add(l:plugins, ['octol/vim-cpp-enhanced-highlight', {
 				\ 'on_ft' : ['c', 'cpp'],
 				\ }])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#lang#c#config() abort

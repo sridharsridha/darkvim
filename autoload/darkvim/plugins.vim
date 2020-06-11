@@ -3,7 +3,7 @@ scriptencoding utf-8
 " debug hook: holds all added plugins from all added layers
 let s:_darkvim_plugins = []
 
-let g:dein#install_message_type="title"
+let g:dein#install_message_type='title'
 
 function! darkvim#plugins#get() abort
 	return deepcopy(s:_darkvim_plugins)
@@ -19,13 +19,13 @@ function! darkvim#plugins#load() abort
 		call dein#save_state()
 		if dein#check_install()
 			" Installation check.
-			echom "Starting to install vim-plugins, it may take some time based on internet speed."
-			echom "Kindly do not close the neovim during this process"
+			echom 'Starting to install vim-plugins, it may take some time based on internet speed.'
+			echom 'Kindly do not close the neovim during this process'
 			call input('Shall we begin...?')
 			call dein#install()
 		endif
 	else
-		for layer in darkvim#layers#get()
+		for l:layer in darkvim#layers#get()
 			call darkvim#layers#{layer}#config()
 		endfor
 	endif
@@ -36,12 +36,12 @@ function! darkvim#plugins#load() abort
 endfunction
 
 function! s:get_layer_plugins(layer) abort
-	let p = []
+	let l:p = []
 	try
-		let p = darkvim#layers#{a:layer}#plugins()
+		let l:p = darkvim#layers#{a:layer}#plugins()
 	catch /^Vim\%((\a\+)\)\=:E117/
 	endtry
-	return p
+	return l:p
 endfunction
 
 function! s:plugin_add(repo,...) abort
@@ -54,35 +54,34 @@ function! s:plugin_add(repo,...) abort
 endfunction
 
 function! s:load_plugins() abort
-	for layer in darkvim#layers#get()
-		for plugin in s:get_layer_plugins(layer)
+	for l:layer in darkvim#layers#get()
+		for l:plugin in s:get_layer_plugins(l:layer)
 			" Process each plugins and perform dein#add
-			let name = plugin[0]
-			let sname = split(plugin[0], '/')[-1]
-			if len(plugin) == 2
-				let options = plugin[1]
-				if !get(options, 'nolazy', 0)
-					let options.lazy = 1
+			let l:name = l:plugin[0]
+			let l:sname = split(l:plugin[0], '/')[-1]
+			if len(l:plugin) == 2
+				let l:options = l:plugin[1]
+				if !get(l:options, 'nolazy', 0)
+					let l:options.lazy = 1
 				endif
-				call s:plugin_add(name, options)
+				call s:plugin_add(l:name, l:options)
 				" Setup dein config for hook_source
-				if dein#tap(sname) && get(options, 'loadconf', 0)
+				if dein#tap(l:sname) && get(l:options, 'loadconf', 0)
 					call dein#config(g:dein#name, {
-								\ 'hook_source' : "call darkvim#util#load_config('plugins/" .
-								\ split(g:dein#name,'\.')[0] . ".vim')"
+								\ 'hook_source' : 'call darkvim#util#load_config("plugins/' .
+								\ split(g:dein#name,'\.')[0] . '.vim")'
 								\ })
 				endif
 				" Load plugins configuration equal to hook_add
-				if dein#tap(sname) && get(options, 'loadconf_before', 0)
+				if dein#tap(l:sname) && get(l:options, 'loadconf_before', 0)
 					call dein#config(g:dein#name, {
-								\ 'hook_add' : "call darkvim#util#load_config('plugins_before/" .
-								\ split(g:dein#name,'\.')[0] . ".vim')"
+								\ 'hook_add' : 'call darkvim#util#load_config("plugins_before/' .
+								\ split(g:dein#name,'\.')[0] . '.vim")'
 								\ })
-					call s:setup_before_plugin_config(sname)
 				endif
 			else
-				let options = {'lazy' : 1}
-				call s:plugin_add(name, options)
+				let l:options = {'lazy' : 1}
+				call s:plugin_add(l:name, l:options)
 			endif
 		endfor
 		call darkvim#layers#{layer}#config()
@@ -90,20 +89,18 @@ function! s:load_plugins() abort
 endfunction
 
 function! s:install_dein() abort
-	" Fsep && Psep
-	let s:Psep = ':'
-	let s:Fsep = '/'
+	let l:Fsep = '/'
 	"auto install dein
 	if filereadable(expand(g:darkvim_plugin_bundle_dir)
 				\ . join(['repos', 'github.com',
 				\ 'Shougo', 'dein.vim', 'README.md'],
-				\ s:Fsep))
+				\ l:Fsep))
 	else
 		if executable('git')
 			exec '!git clone https://github.com/Shougo/dein.vim "'
 						\ . expand(g:darkvim_plugin_bundle_dir)
 						\ . join(['repos', 'github.com',
-						\ 'Shougo', 'dein.vim"'], s:Fsep)
+						\ 'Shougo', 'dein.vim"'], l:Fsep)
 		else
 			echohl WarningMsg
 			echom 'You need install git!'
@@ -112,6 +109,6 @@ function! s:install_dein() abort
 	endif
 	exec 'set runtimepath+='. fnameescape(g:darkvim_plugin_bundle_dir)
 				\ . join(['repos', 'github.com', 'Shougo',
-				\ 'dein.vim'], s:Fsep)
+				\ 'dein.vim'], l:Fsep)
 endf
 

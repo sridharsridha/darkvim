@@ -1,11 +1,13 @@
 
 function! darkvim#layers#lang#qf#plugins() abort
-	let plugins = []
+	let l:plugins = []
+
 	" call add(plugins, ['romainl/vim-qf', {
 	" \ 'on_ft' : 'qf',
 	" \ 'on_func' : 'qf#OpenQuickfix'}])
-	call add(plugins, ['romainl/vim-qf'])
-	return plugins
+	call add(l:plugins, ['romainl/vim-qf'])
+
+	return l:plugins
 endfunction
 
 function! darkvim#layers#lang#qf#config() abort

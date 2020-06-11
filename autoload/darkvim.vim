@@ -1,7 +1,7 @@
 scriptencoding utf-8
 
 " Default leader key mappings
-let g:mapleader=","
+let g:mapleader=','
 let g:maplocalleader='\'
 
 let g:darkvim_version = '1.0'
@@ -40,9 +40,9 @@ function! s:parser_argv() abort
 	elseif argv(0) ==# '-'
 		return [0]
 	elseif argv(0) =~# '/$'
-		let f = fnamemodify(expand(argv(0)), ':p')
-		if isdirectory(f)
-			return [1, f]
+		let l:f = fnamemodify(expand(argv(0)), ':p')
+		if isdirectory(l:f)
+			return [1, l:f]
 		else
 			return [1, getcwd()]
 		endif
@@ -70,7 +70,12 @@ function! darkvim#welcome() abort
 			bwipeout! 1
 		endif
 	endif
-	if get(g:, "darkvim_welcome_defx", 0) && exists(':Defx') == 2
+	if darkvim#layers#core#statusline#medium_window() ||
+				\ darkvim#layers#core#statusline#tiny_window() ||
+				\ darkvim#layers#core#statusline#small_window()
+		return
+	endif
+	if exists(':Defx') == 2
 		Defx -direction='botright'
 		wincmd p
 	endif
@@ -79,20 +84,20 @@ endfunction
 " Setup welcome page if status is darkvim is loaded with no argv
 " or given a directory name as argument
 function! s:setup_welcome() abort
-	let s:status = s:parser_argv()
+	let l:status = s:parser_argv()
 
 	" If do not start Vim with filename, Define autocmd for opening welcome page
-	if s:status[0] == 0
+	if l:status[0] == 0
 		let g:_darkvim_enter_dir = fnamemodify(getcwd(), ':~')
-		let s:setup_welcome_autocmd = 1
-	elseif s:status[0] == 1
-		let g:_darkvim_enter_dir = fnamemodify(s:status[1], ':~')
-		let s:setup_welcome_autocmd = 1
+		let l:setup_welcome_autocmd = 1
+	elseif l:status[0] == 1
+		let g:_darkvim_enter_dir = fnamemodify(l:status[1], ':~')
+		let l:setup_welcome_autocmd = 1
 	else
-		let s:setup_welcome_autocmd = 0
+		let l:setup_welcome_autocmd = 0
 	endif
 
-	if s:setup_welcome_autocmd == 1
+	if l:setup_welcome_autocmd == 1
 		augroup DVwelcome
 			au!
 			autocmd VimEnter * call darkvim#welcome()

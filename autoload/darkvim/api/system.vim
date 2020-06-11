@@ -65,20 +65,20 @@ endfunction
 let s:system['isDarwin'] = function('s:isDarwin')
 
 function! s:fileformat() abort
-	let fileformat = ''
+	let l:fileformat = ''
 	if &fileformat ==? 'dos'
-		let fileformat = ''
+		let l:fileformat = ''
 	elseif &fileformat ==? 'unix'
 		if s:isDarwin()
-			let fileformat = ''
+			let l:fileformat = ''
 		else
-			let fileformat = ''
+			let l:fileformat = ''
 		endif
 	elseif &fileformat ==? 'mac'
-		let fileformat = ''
+		let l:fileformat = ''
 	endif
 
-	return fileformat
+	return l:fileformat
 endfunction
 
 let s:system['fileformat'] = function('s:fileformat')

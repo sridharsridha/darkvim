@@ -63,45 +63,45 @@ function! s:self.bufadd(name) abort
 		" create an no-named buffer
 		noautocmd 1new
 		" bufnr needs atleast one argv before patch-8.1.1924 has('patch-8.1.1924')
-		let nr = self.bufnr()
+		let l:nr = s:self.bufnr()
 		setl nobuflisted
 		noautocmd q
-		return nr
+		return l:nr
 	elseif bufexists(a:name)
 		return bufnr(a:name)
 	else
 		exe 'noautocmd 1split ' . a:name
-		let nr = self.bufnr()
+		let l:nr = s:self.bufnr()
 		setl nobuflisted
 		noautocmd q
-		return nr
+		return l:nr
 	endif
 endfunction
 
 function! s:self.open(opts) abort
-	let buf = get(a:opts, 'bufname', '')
-	let mode = get(a:opts, 'mode', 'vertical topleft split')
-	let Initfunc = get(a:opts, 'initfunc', '')
-	let cmd = get(a:opts, 'cmd', '')
-	if empty(buf)
-		exe mode | enew
+	let l:buf = get(a:opts, 'bufname', '')
+	let l:mode = get(a:opts, 'mode', 'vertical topleft split')
+	let l:Initfunc = get(a:opts, 'initfunc', '')
+	let l:cmd = get(a:opts, 'cmd', '')
+	if empty(l:buf)
+		exe l:mode | enew
 	else
-		exe mode buf
+		exe l:mode l:buf
 	endif
-	if !empty(Initfunc)
-		call call(Initfunc, [])
+	if !empty(l:Initfunc)
+		call call(l:Initfunc, [])
 	endif
 
-	if !empty(cmd)
-		exe cmd
+	if !empty(l:cmd)
+		exe l:cmd
 	endif
 	return bufnr('%')
 endfunction
 
 
 func! s:self.resize(size, ...) abort
-	let cmd = get(a:000, 0, 'vertical')
-	exe cmd 'resize' a:size
+	let l:cmd = get(a:000, 0, 'vertical')
+	exe l:cmd 'resize' a:size
 endf
 
 function! s:self.listed_buffers() abort
@@ -110,12 +110,12 @@ endfunction
 
 
 function! s:self.filter_do(expr) abort
-	let buffers = range(1, bufnr('$'))
-	for f_expr in a:expr.expr
-		let buffers = filter(buffers, f_expr)
+	let l:buffers = range(1, bufnr('$'))
+	for l:f_expr in a:expr.expr
+		let l:buffers = filter(l:buffers, l:f_expr)
 	endfor
-	for b in buffers
-		exe printf(a:expr.do, b)
+	for l:b in l:buffers
+		exe printf(a:expr.do, l:b)
 	endfor
 endfunction
 
@@ -137,7 +137,7 @@ endif
 
 " just same as nvim_buf_set_lines
 function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement) abort
-	let ma = getbufvar(a:buffer, '&ma')
+	let l:ma = getbufvar(a:buffer, '&ma')
 	call setbufvar(a:buffer,'&ma', 1)
 	if exists('*nvim_buf_set_lines')
 		call nvim_buf_set_lines(a:buffer, a:start, a:end, a:strict_indexing, a:replacement)
@@ -174,59 +174,59 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
 		" patch-8.1.0037 appendbufline()
 		" patch-8.0.1039 setbufline()
 		" patch-8.1.1610 bufadd() bufload()
-		let lct = self.line_count(a:buffer)
-		if a:start > lct
+		let l:lct = s:self.line_count(a:buffer)
+		if a:start > l:lct
 			return
 		elseif a:start >= 0 && a:end > a:start
 			" in vim, setbufline will not load buffer automatically
 			" but in neovim, nvim_buf_set_lines will do it.
 			" @fixme vim issue #5044
 			" https://github.com/vim/vim/issues/5044
-			let endtext = a:end > lct ? [] : getbufline(a:buffer, a:end + 1, '$')
+			let l:endtext = a:end > l:lct ? [] : getbufline(a:buffer, a:end + 1, '$')
 			if !buflisted(a:buffer)
 				call bufload(a:buffer)
 			endif
 			" 0 start end $
 			if len(a:replacement) == a:end - a:start
-				for i in range(a:start, len(a:replacement) + a:start - 1)
-					call setbufline(a:buffer, i + 1, a:replacement[i - a:start])
+				for l:i in range(a:start, len(a:replacement) + a:start - 1)
+					call setbufline(a:buffer, l:i + 1, a:replacement[l:i - a:start])
 				endfor
 			else
-				let replacement = a:replacement + endtext
-				for i in range(a:start, len(replacement) + a:start - 1)
-					call setbufline(a:buffer, i + 1, replacement[i - a:start])
+				let l:replacement = a:replacement + l:endtext
+				for l:i in range(a:start, len(l:replacement) + a:start - 1)
+					call setbufline(a:buffer, l:i + 1, l:replacement[l:i - a:start])
 				endfor
 			endif
-		elseif a:start >= 0 && a:end < 0 && lct + a:end > a:start
-			call self.buf_set_lines(a:buffer, a:start, lct + a:end + 1, a:strict_indexing, a:replacement)
-		elseif a:start <= 0 && a:end > a:start && a:end < 0 && lct + a:start >= 0
-			call self.buf_set_lines(a:buffer, lct + a:start + 1, lct + a:end + 1, a:strict_indexing, a:replacement)
+		elseif a:start >= 0 && a:end < 0 && l:lct + a:end > a:start
+			call s:self.buf_set_lines(a:buffer, a:start, l:lct + a:end + 1, a:strict_indexing, a:replacement)
+		elseif a:start <= 0 && a:end > a:start && a:end < 0 && l:lct + a:start >= 0
+			call s:self.buf_set_lines(a:buffer, l:lct + a:start + 1, l:lct + a:end + 1, a:strict_indexing, a:replacement)
 		endif
 	else
 		exe 'b' . a:buffer
-		let lct = line('$')
-		if a:start > lct
+		let l:lct = line('$')
+		if a:start > l:lct
 			return
 		elseif a:start >= 0 && a:end > a:start
-			let endtext = a:end > lct ? [] : getline(a:end + 1, '$')
+			let l:endtext = a:end > l:lct ? [] : getline(a:end + 1, '$')
 			" 0 start end $
 			if len(a:replacement) == a:end - a:start
-				for i in range(a:start, len(a:replacement) + a:start - 1)
-					call setline(i + 1, a:replacement[i - a:start])
+				for l:i in range(a:start, len(a:replacement) + a:start - 1)
+					call setline(l:i + 1, a:replacement[l:i - a:start])
 				endfor
 			else
-				let replacement = a:replacement + endtext
-				for i in range(a:start, len(replacement) + a:start - 1)
-					call setline(i + 1, replacement[i - a:start])
+				let l:replacement = a:replacement + l:endtext
+				for l:i in range(a:start, len(l:replacement) + a:start - 1)
+					call setline(l:i + 1, l:replacement[l:i - a:start])
 				endfor
 			endif
-		elseif a:start >= 0 && a:end < 0 && lct + a:end > a:start
-			call self.buf_set_lines(a:buffer, a:start, lct + a:end + 1, a:strict_indexing, a:replacement)
-		elseif a:start <= 0 && a:end > a:start && a:end < 0 && lct + a:start >= 0
-			call self.buf_set_lines(a:buffer, lct + a:start + 1, lct + a:end + 1, a:strict_indexing, a:replacement)
+		elseif a:start >= 0 && a:end < 0 && l:lct + a:end > a:start
+			call s:self.buf_set_lines(a:buffer, a:start, l:lct + a:end + 1, a:strict_indexing, a:replacement)
+		elseif a:start <= 0 && a:end > a:start && a:end < 0 && l:lct + a:start >= 0
+			call s:self.buf_set_lines(a:buffer, l:lct + a:start + 1, l:lct + a:end + 1, a:strict_indexing, a:replacement)
 		endif
 	endif
-	call setbufvar(a:buffer,'&ma', ma)
+	call setbufvar(a:buffer,'&ma', l:ma)
 endfunction
 
 

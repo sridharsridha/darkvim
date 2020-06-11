@@ -2,122 +2,129 @@
 scriptencoding utf-8
 
 function! darkvim#layers#core#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
 	" Show a help screen for keymap
-	call add(plugins, [ 'liuchengxu/vim-which-key', {
+	call add(l:plugins, [ 'liuchengxu/vim-which-key', {
 				\ 'on_cmd' : darkvim#util#prefix('WhichKey', ['', 'Visual', '!', 'Visual!']),
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Paste without needing to set paste. Needs xterm
-	call add(plugins, ['ConradIrwin/vim-bracketed-paste', {
+	call add(l:plugins, ['ConradIrwin/vim-bracketed-paste', {
 				\ 'nolazy' : 1,
 				\ }])
 
 	" Match paren
-	call add(plugins, ['andymass/vim-matchup', {
+	call add(l:plugins, ['andymass/vim-matchup', {
 				\ 'on_event' : ['BufReadPost'],
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Toggle search highlights automatically
-	call add(plugins, ['romainl/vim-cool', {
+	call add(l:plugins, ['romainl/vim-cool', {
 				\ 'on_event' : ['BufReadPost'],
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Automagic indentation configuration, that just works.
-	call add(plugins, ['tpope/vim-sleuth', {
+	call add(l:plugins, ['tpope/vim-sleuth', {
 				\ 'on_cmd': [ 'Sleuth' ],
+				\ }])
+
+	" copy paste
+	call add(l:plugins, ['christoomey/vim-system-copy', {
+				\ 'on_map' : {
+				\    'n' : [ 'cp', 'cP', 'cv', 'cV'],
+				\ }
 				\ }])
 
 	" [, ], }, { mappings
 	" call add(plugins, ['tpope/vim-unimpaired'])
 
 	" Trigger a mode with a keymap and repeat it usign another keymap.
-	call add(plugins, ['kana/vim-submode', {
+	call add(l:plugins, ['kana/vim-submode', {
 				\ 'nolazy' : 1,
 				\ }])
 
 	" . operator repeat
-	call add(plugins, ['tpope/vim-repeat'])
+	call add(l:plugins, ['tpope/vim-repeat'])
 
 	" Operator global plugin
-	call add(plugins, ['kana/vim-operator-user'])
+	call add(l:plugins, ['kana/vim-operator-user'])
 
 	" TextObj globla plugins
-	call add(plugins, ['kana/vim-textobj-user'])
+	call add(l:plugins, ['kana/vim-textobj-user'])
 
 	" Icons
-	call add(plugins, ['ryanoasis/vim-devicons'])
+	call add(l:plugins, ['ryanoasis/vim-devicons'])
 
 	" Multiple cursor support
-	call add(plugins, ['terryma/vim-multiple-cursors', {
+	call add(l:plugins, ['terryma/vim-multiple-cursors', {
 				\ 'on_event' : ['BufReadPost'],
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Plugin Manager Wrapper
-	call add(plugins, ['haya14busa/dein-command.vim', {
+	call add(l:plugins, ['haya14busa/dein-command.vim', {
 				\ 'on_cmd' : ['Dein'],
 				\ }])
 
 	" Commenter
-	call add(plugins, ['scrooloose/nerdcommenter', {
+	call add(l:plugins, ['scrooloose/nerdcommenter', {
 				\ 'on_map' : {'nvx' : '<plug>NERDCommenter'},
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Searching for word/cword
-	call add(plugins, ['mhinz/vim-grepper', {
+	call add(l:plugins, ['mhinz/vim-grepper', {
 				\ 'on_map' : {'nxv' : '<plug>(GrepperOperator)'},
 				\ 'on_cmd' : ['Grepper'],
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Interactive replace
-	call add(plugins, ['brooth/far.vim', {
+	call add(l:plugins, ['brooth/far.vim', {
 				\ 'on_cmd': darkvim#util#prefix('F', ['ar', 'arp', '']),
 				\ }])
 
 	" Browser helper
-	call add(plugins, ['tyru/open-browser.vim', {
+	call add(l:plugins, ['tyru/open-browser.vim', {
 				\ 'on_cmd' : darkvim#util#prefix('OpenBrowser', ['SmartSearch', '', 'Search']),
 				\ 'on_map' : {'nx' : '<Plug>(openbrowser-'},
 				\ }])
 
 	" Quickfix
-	call add(plugins, ['yssl/QFEnter', {
+	call add(l:plugins, ['yssl/QFEnter', {
 				\ 'on_ft' : ['qf'],
 				\ 'loadconf' : 1,
 				\ }])
-	call add(plugins, ['itchyny/vim-qfedit', {
+	call add(l:plugins, ['itchyny/vim-qfedit', {
 				\ 'on_ft' : ['qf'],
 				\ }])
-	call add(plugins, ['thinca/vim-qfreplace', {
+	call add(l:plugins, ['thinca/vim-qfreplace', {
 				\ 'on_cmd' : ['Qfreplace'],
 				\ }])
 
 	" Choose window by visual selection
-	call add(plugins, ['t9md/vim-choosewin', {
+	call add(l:plugins, ['t9md/vim-choosewin', {
 				\ 'on_map' : {'ni' : '<Plug>'},
 				\ 'on_cmd' : darkvim#util#prefix('ChooseWin', ['', 'Swap']),
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Whitespace showing
-	call add(plugins, ['ntpeters/vim-better-whitespace', {
+	call add(l:plugins, ['ntpeters/vim-better-whitespace', {
 				\ 'on_event' : ['InsertEnter'],
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Colorscheme
-	call add(plugins, ['morhetz/gruvbox', {
+	call add(l:plugins, ['morhetz/gruvbox', {
 				\ 'nolazy' : 1,
 				\ }])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#core#config() abort
@@ -209,7 +216,7 @@ function! darkvim#layers#core#config() abort
 				\ 'comment-paragraphs', 0, 1)
 
 	" Comment operator
-	nnoremap <silent> <Plug>CommentOperator :set opfunc=<SID>commentOperator<Cr>g@
+	nnoremap <silent> <Plug>CommentOperator :set operatorfunc=<SID>commentOperator<Cr>g@
 	call darkvim#mapping#space#def('nmap', [';'],
 				\ '<Plug>CommentOperator',
 				\ 'comment-operator', 2)
@@ -250,9 +257,9 @@ function! darkvim#layers#core#config() abort
 endfunction
 
 function! s:commentOperator(type, ...) abort
-	let sel_save = &selection
+	let l:sel_save = &selection
 	let &selection = 'inclusive'
-	let reg_save = @@
+	let l:reg_save = @@
 
 	if a:0  " Invoked from Visual mode, use gv command.
 		silent exe 'normal! gv'
@@ -265,23 +272,23 @@ function! s:commentOperator(type, ...) abort
 		call feedkeys("\<Plug>NERDCommenterComment")
 	endif
 
-	let &selection = sel_save
-	let @@ = reg_save
-	set opfunc=
+	let &selection = l:sel_save
+	let @@ = l:reg_save
+	set operatorfunc=
 endfunction
 
 function! s:comment_to_line(invert) abort
-	let input = input('line number: ')
-	if empty(input)
+	let l:input = input('line number: ')
+	if empty(l:input)
 		return
 	endif
-	let line = str2nr(input)
-	let ex = line - line('.')
-	if ex > 0
-		exe 'normal! V'. ex .'j'
-	elseif ex == 0
+	let l:line = str2nr(l:input)
+	let l:ex = l:line - line('.')
+	if l:ex > 0
+		exe 'normal! V'. l:ex .'j'
+	elseif l:ex == 0
 	else
-		exe 'normal! V'. abs(ex) .'k'
+		exe 'normal! V'. abs(l:ex) .'k'
 	endif
 	if a:invert
 		call feedkeys("\<Plug>NERDCommenterInvert")

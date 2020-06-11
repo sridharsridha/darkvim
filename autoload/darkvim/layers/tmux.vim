@@ -1,29 +1,29 @@
 " tmux.vim tmux layer for darkvim
 "
 function! darkvim#layers#tmux#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
 	" Tmux and vim navigation
-	call add(plugins, ['christoomey/vim-tmux-navigator', {
+	call add(l:plugins, ['christoomey/vim-tmux-navigator', {
 				\ 'on_cmd': darkvim#util#prefix('TmuxNavigate', ['Left', 'Down', 'Up', 'Right']),
 				\ }])
 
 	" Vim and tmux clipboard sharing
-	call add(plugins, ['roxma/vim-tmux-clipboard', {
+	call add(l:plugins, ['roxma/vim-tmux-clipboard', {
 				\ 'nolazy' : 1,
 				\ }])
 
 	" Vim and tmux pane common resize command
-	call add(plugins, ['melonmanchan/vim-tmux-resizer', {
+	call add(l:plugins, ['melonmanchan/vim-tmux-resizer', {
 				\ 'on_cmd': darkvim#util#prefix('TmuxResize', ['Left', 'Down', 'Up', 'Right']),
 				\ }])
 
 	" tmux config file support
-	call add(plugins, ['tmux-plugins/vim-tmux', {
+	call add(l:plugins, ['tmux-plugins/vim-tmux', {
 				\ 'on_ft' : [ 'tmux' ],
 				\ }])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#tmux#config() abort

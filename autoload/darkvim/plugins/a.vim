@@ -1,11 +1,11 @@
 " Do not load a.vim if is has already been loaded.
-if exists("loaded_alternateFile")
+if exists('loaded_alternateFile')
 	finish
 endif
-if (v:progname == "ex")
+if (v:progname ==# 'ex')
 	finish
 endif
-let loaded_alternateFile = 1
+let g:loaded_alternateFile = 1
 
 let g:alternateExtensionsDict = {}
 let s:maxDotsInExtension = 1
@@ -32,514 +32,512 @@ if (!exists('g:alternateRelativeFiles'))
 	let g:alternateRelativeFiles = 0
 endif
 
-function! darkvim#plugins#a#add_ext_map(extension, alternates)
+function! darkvim#plugins#a#add_ext_map(extension, alternates) abort
 	let g:alternateExtensionsDict[a:extension] = a:alternates
-	let dotsNumber = strlen(substitute(a:extension, "[^.]", "", "g"))
-	if s:maxDotsInExtension < dotsNumber
-		let s:maxDotsInExtension = dotsNumber
+	let l:dotsNumber = strlen(substitute(a:extension, '[^.]', '', 'g'))
+	if s:maxDotsInExtension < l:dotsNumber
+		let s:maxDotsInExtension = l:dotsNumber
 	endif
 endfunction
 
-function! darkvim#plugins#a#open(splitWindow, ...)
-	let extension   = DetermineExtension(expand("%:p"))
-	let baseName    = substitute(expand("%:t"), "\." . extension . '$', "", "")
-	let currentPath = expand("%:p:h")
+function! darkvim#plugins#a#open(splitWindow, ...) abort
+	let l:extension   = DetermineExtension(expand('%:p'))
+	let l:baseName    = substitute(expand('%:t'), '\.' . l:extension . '$', '', '')
+	let l:currentPath = expand('%:p:h')
 
-	if (a:0 != 0)
-		let newFullname = currentPath . "/" .  baseName . "." . a:1
-		call <SID>FindOrCreateBuffer(newFullname, a:splitWindow, 0)
+	if (a:0 !=# 0)
+		let l:newFullname = l:currentPath . '/' .  l:baseName . '.' . a:1
+		call <SID>FindOrCreateBuffer(l:newFullname, a:splitWindow, 0)
 	else
-		let allfiles = ""
-		if (extension != "")
-			let allfiles1 = EnumerateFilesByExtension(currentPath, baseName, extension)
-			let allfiles2 = EnumerateFilesByExtensionInPath(baseName, extension, g:alternateSearchPath, currentPath)
+		let l:allfiles = ''
+		if (l:extension !=# '')
+			let l:allfiles1 = EnumerateFilesByExtension(l:currentPath, l:baseName, l:extension)
+			let l:allfiles2 = EnumerateFilesByExtensionInPath(l:baseName, l:extension, g:alternateSearchPath, l:currentPath)
 
-			if (allfiles1 != "")
-				if (allfiles2 != "")
-					let allfiles = allfiles1 . ',' . allfiles2
+			if (l:allfiles1 !=# '')
+				if (l:allfiles2 !=# '')
+					let l:allfiles = l:allfiles1 . ',' . l:allfiles2
 				else
-					let allfiles = allfiles1
+					let l:allfiles = l:allfiles1
 				endif
 			else
-				let allfiles = allfiles2
+				let l:allfiles = l:allfiles2
 			endif
 		endif
 
-		if (allfiles != "")
-			let bestFile = ""
-			let bestScore = 0
-			let score = 0
-			let n = 1
+		if (l:allfiles !=# '')
+			let l:bestFile = ''
+			let l:bestScore = 0
+			let l:score = 0
+			let l:n = 1
 
-			let onefile = <SID>GetNthItemFromList(allfiles, n)
-			let bestFile = onefile
-			while (onefile != "" && score < 2)
-				let score = <SID>BufferOrFileExists(onefile)
-				if (score > bestScore)
-					let bestScore = score
-					let bestFile = onefile
+			let l:onefile = <SID>GetNthItemFromList(l:allfiles, l:n)
+			let l:bestFile = l:onefile
+			while (l:onefile !=# '' && l:score < 2)
+				let l:score = <SID>BufferOrFileExists(l:onefile)
+				if (l:score > l:bestScore)
+					let l:bestScore = l:score
+					let l:bestFile = l:onefile
 				endif
-				let n = n + 1
-				let onefile = <SID>GetNthItemFromList(allfiles, n)
+				let l:n = l:n + 1
+				let l:onefile = <SID>GetNthItemFromList(l:allfiles, l:n)
 			endwhile
 
-			if (bestScore == 0 && g:alternateNoDefaultAlternate == 1)
-				echo "No existing alternate available"
+			if (l:bestScore ==# 0 && g:alternateNoDefaultAlternate ==# 1)
+				echo 'No existing alternate available'
 			else
-				call <SID>FindOrCreateBuffer(bestFile, a:splitWindow, 1)
-				let b:AlternateAllFiles = allfiles
+				call <SID>FindOrCreateBuffer(l:bestFile, a:splitWindow, 1)
+				let b:AlternateAllFiles = l:allfiles
 			endif
 		else
-			echo "No alternate file/buffer available"
+			echo 'No alternate file/buffer available'
 		endif
 	endif
 endfunction
 
-function! darkvim#plugins#a#open_uc(splitWindow,...)
-	let cursorFile = (a:0 > 0) ? a:1 : expand("<cfile>")
-	let currentPath = expand("%:p:h")
-	let openCount = 1
+function! darkvim#plugins#a#open_uc(splitWindow,...) abort
+	let l:cursorFile = (a:0 > 0) ? a:1 : expand('<cfile>')
+	let l:currentPath = expand('%:p:h')
+	let l:openCount = 1
 
-	let fileName = <SID>FindFileInSearchPathEx(cursorFile, g:alternateSearchPath, currentPath, openCount)
-	if (fileName != "")
-		call <SID>FindOrCreateBuffer(fileName, a:splitWindow, 1)
-		let b:openCount = openCount
-		let b:cursorFile = cursorFile
-		let b:currentPath = currentPath
+	let l:fileName = <SID>FindFileInSearchPathEx(l:cursorFile, g:alternateSearchPath, l:currentPath, l:openCount)
+	if (l:fileName !=# '')
+		call <SID>FindOrCreateBuffer(l:fileName, a:splitWindow, 1)
+		let b:openCount = l:openCount
+		let b:cursorFile = l:cursorFile
+		let b:currentPath = l:currentPath
 	else
-		echo "Can't find file"
+		echo 'Cant find file'
 	endif
 endfunction
 
-function! darkvim#plugins#a#open_next(bang)
-	let cursorFile = ""
-	if (exists("b:cursorFile"))
-		let cursorFile = b:cursorFile
+function! darkvim#plugins#a#open_next(bang) abort
+	let l:cursorFile = ''
+	if (exists('b:cursorFile'))
+		let l:cursorFile = b:cursorFile
 	endif
 
-	let currentPath = ""
-	if (exists("b:currentPath"))
-		let currentPath = b:currentPath
+	let l:currentPath = ''
+	if (exists('b:currentPath'))
+		let l:currentPath = b:currentPath
 	endif
 
-	let openCount = 0
-	if (exists("b:openCount"))
-		let openCount = b:openCount + 1
+	let l:openCount = 0
+	if (exists('b:openCount'))
+		let l:openCount = b:openCount + 1
 	endif
 
-	if (cursorFile != ""  && currentPath != ""  && openCount != 0)
-		let fileName = <SID>FindFileInSearchPathEx(cursorFile, g:alternateSearchPath, currentPath, openCount)
-		if (fileName != "")
-			call <SID>FindOrCreateBuffer(fileName, "n".a:bang, 0)
-			let b:openCount = openCount
-			let b:cursorFile = cursorFile
-			let b:currentPath = currentPath
+	if (l:cursorFile !=# ''  && l:currentPath !=# ''  && l:openCount !=# 0)
+		let l:fileName = <SID>FindFileInSearchPathEx(l:cursorFile, g:alternateSearchPath, l:currentPath, l:openCount)
+		if (l:fileName !=# '')
+			call <SID>FindOrCreateBuffer(l:fileName, 'n'.a:bang, 0)
+			let b:openCount = l:openCount
+			let b:cursorFile = l:cursorFile
+			let b:currentPath = l:currentPath
 		else
-			let fileName = <SID>FindFileInSearchPathEx(cursorFile, g:alternateSearchPath, currentPath, 1)
-			if (fileName != "")
-				call <SID>FindOrCreateBuffer(fileName, "n".a:bang, 0)
+			let l:fileName = <SID>FindFileInSearchPathEx(l:cursorFile, g:alternateSearchPath, l:currentPath, 1)
+			if (l:fileName !=# '')
+				call <SID>FindOrCreateBuffer(l:fileName, 'n'.a:bang, 0)
 				let b:openCount = 1
-				let b:cursorFile = cursorFile
-				let b:currentPath = currentPath
+				let b:cursorFile = l:cursorFile
+				let b:currentPath = l:currentPath
 			else
-				echo "Can't find next file"
+				echo 'Cant find next file'
 			endif
 		endif
 	endif
 endfunction
 
-function! darkvim#plugins#a#next(bang)
+function! darkvim#plugins#a#next(bang) abort
 	if (exists('b:AlternateAllFiles'))
-		let currentFile = expand("%")
-		let n = 1
-		let onefile = <SID>GetNthItemFromList(b:AlternateAllFiles, n)
-		while (onefile != "" && !<SID>EqualFilePaths(fnamemodify(onefile,":p"), fnamemodify(currentFile,":p")))
-			let n = n + 1
-			let onefile = <SID>GetNthItemFromList(b:AlternateAllFiles, n)
+		let l:currentFile = expand('%')
+		let l:n = 1
+		let l:onefile = <SID>GetNthItemFromList(b:AlternateAllFiles, l:n)
+		while (l:onefile !=# '' && !<SID>EqualFilePaths(fnamemodify(l:onefile,':p'), fnamemodify(l:currentFile,':p')))
+			let l:n = l:n + 1
+			let l:onefile = <SID>GetNthItemFromList(b:AlternateAllFiles, l:n)
 		endwhile
 
-		if (onefile != "")
-			let stop = n
-			let n = n + 1
-			let foundAlternate = 0
-			let nextAlternate = ""
-			while (n != stop)
-				let nextAlternate = <SID>GetNthItemFromList(b:AlternateAllFiles, n)
-				if (nextAlternate == "")
-					let n = 1
+		if (l:onefile !=# '')
+			let l:stop = l:n
+			let l:n = l:n + 1
+			let l:foundAlternate = 0
+			let l:nextAlternate = ''
+			while (l:n !=# l:stop)
+				let l:nextAlternate = <SID>GetNthItemFromList(b:AlternateAllFiles, l:n)
+				if (l:nextAlternate ==# '')
+					let l:n = 1
 					continue
 				endif
-				let n = n + 1
-				if (<SID>EqualFilePaths(fnamemodify(nextAlternate, ":p"), fnamemodify(currentFile, ":p")))
+				let l:n = l:n + 1
+				if (<SID>EqualFilePaths(fnamemodify(l:nextAlternate, ':p'), fnamemodify(l:currentFile, ':p')))
 					continue
 				endif
-				if (filereadable(nextAlternate))
-					" on cygwin filereadable("foo.H") returns true if "foo.h" exists
-					if (has("unix") && $WINDIR != "" && fnamemodify(nextAlternate, ":p") ==? fnamemodify(currentFile, ":p"))
+				if (filereadable(l:nextAlternate))
+					if (has('unix') && $WINDIR !=# '' && fnamemodify(l:nextAlternate, ':p') ==? fnamemodify(l:currentFile, ':p'))
 						continue
 					endif
-					let foundAlternate = 1
+					let l:foundAlternate = 1
 					break
 				endif
 			endwhile
-			if (foundAlternate == 1)
+			if (l:foundAlternate ==# 1)
 				let s:AlternateAllFiles = b:AlternateAllFiles
-				"silent! execute ":e".a:bang." " . nextAlternate
-				call <SID>FindOrCreateBuffer(nextAlternate, "n".a:bang, 0)
+				call <SID>FindOrCreateBuffer(l:nextAlternate, 'n'.a:bang, 0)
 				let b:AlternateAllFiles = s:AlternateAllFiles
 			else
-				echo "Only this alternate file exists"
+				echo 'Only this alternate file exists'
 			endif
 		else
-			echo "Could not find current file in alternates list"
+			echo 'Could not find current file in alternates list'
 		endif
 	else
-		echo "No other alternate files exist"
+		echo 'No other alternate files exist'
 	endif
 endfunction
 
-function! <SID>BufferOrFileExists(fileName)
-	let result = 0
+function! <SID>BufferOrFileExists(fileName) abort
+	let l:result = 0
 
-	let lastBuffer = bufnr("$")
-	let i = 1
-	while i <= lastBuffer
-		if <SID>EqualFilePaths(expand("#".i.":p"), a:fileName)
-			let result = 2
+	let l:lastBuffer = bufnr('$')
+	let l:i = 1
+	while l:i <= l:lastBuffer
+		if <SID>EqualFilePaths(expand('#'.l:i.':p'), a:fileName)
+			let l:result = 2
 			break
 		endif
-		let i = i + 1
+		let l:i = l:i + 1
 	endwhile
 
-	if (!result)
-		let bufName = fnamemodify(a:fileName,":t")
-		let memBufName = bufname(bufName)
-		if (memBufName != "")
-			let memBufBasename = fnamemodify(memBufName, ":t")
-			if (bufName == memBufBasename)
-				let result = 2
+	if (!l:result)
+		let l:bufName = fnamemodify(a:fileName,':t')
+		let l:memBufName = bufname(l:bufName)
+		if (l:memBufName !=# '')
+			let l:memBufBasename = fnamemodify(l:memBufName, ':t')
+			if (l:bufName ==# l:memBufBasename)
+				let l:result = 2
 			endif
 		endif
 
-		if (!result)
-			let result  = bufexists(bufName) || bufexists(a:fileName) || filereadable(a:fileName)
+		if (!l:result)
+			let l:result  = bufexists(l:bufName) || bufexists(a:fileName) || filereadable(a:fileName)
 		endif
 	endif
 
-	if (!result)
-		let result = filereadable(a:fileName)
+	if (!l:result)
+		let l:result = filereadable(a:fileName)
 	endif
-	return result
+	return l:result
 endfunction
 
 
-function! <SID>GetNthItemFromList(list, n)
-	let itemStart = 0
-	let itemEnd = -1
-	let pos = 0
-	let item = ""
-	let i = 0
-	while (i != a:n)
-		let itemStart = itemEnd + 1
-		let itemEnd = match(a:list, ",", itemStart)
-		let i = i + 1
-		if (itemEnd == -1)
-			if (i == a:n)
-				let itemEnd = strlen(a:list)
+function! <SID>GetNthItemFromList(list, n) abort
+	let l:itemStart = 0
+	let l:itemEnd = -1
+	let l:pos = 0
+	let l:item = ''
+	let l:i = 0
+	while (l:i !=# a:n)
+		let l:itemStart = l:itemEnd + 1
+		let l:itemEnd = match(a:list, ',', l:itemStart)
+		let l:i = l:i + 1
+		if (l:itemEnd ==# -1)
+			if (l:i ==# a:n)
+				let l:itemEnd = strlen(a:list)
 			endif
 			break
 		endif
 	endwhile
-	if (itemEnd != -1)
-		let item = strpart(a:list, itemStart, itemEnd - itemStart)
+	if (l:itemEnd !=# -1)
+		let l:item = strpart(a:list, l:itemStart, l:itemEnd - l:itemStart)
 	endif
-	return item
+	return l:item
 endfunction
 
-function! <SID>ExpandAlternatePath(pathSpec, sfPath)
-	let prfx = strpart(a:pathSpec, 0, 4)
-	if (prfx == "wdr:" || prfx == "abs:")
-		let path = strpart(a:pathSpec, 4)
-	elseif (prfx == "reg:")
-		let re = strpart(a:pathSpec, 4)
-		let sep = strpart(re, 0, 1)
-		let patend = match(re, sep, 1)
-		let pat = strpart(re, 1, patend - 1)
-		let subend = match(re, sep, patend + 1)
-		let sub = strpart(re, patend+1, subend - patend - 1)
-		let flag = strpart(re, strlen(re) - 2)
-		if (flag == sep)
-			let flag = ''
+function! <SID>ExpandAlternatePath(pathSpec, sfPath) abort
+	let l:prfx = strpart(a:pathSpec, 0, 4)
+	if (l:prfx ==# 'wdr:' || l:prfx ==# 'abs:')
+		let l:path = strpart(a:pathSpec, 4)
+	elseif (l:prfx ==# 'reg:')
+		let l:re = strpart(a:pathSpec, 4)
+		let l:sep = strpart(l:re, 0, 1)
+		let l:patend = match(l:re, l:sep, 1)
+		let l:pat = strpart(l:re, 1, l:patend - 1)
+		let l:subend = match(l:re, l:sep, l:patend + 1)
+		let l:sub = strpart(l:re, l:patend+1, l:subend - l:patend - 1)
+		let l:flag = strpart(l:re, strlen(l:re) - 2)
+		if (l:flag ==# l:sep)
+			let l:flag = ''
 		endif
-		let path = substitute(a:sfPath, pat, sub, flag)
+		let l:path = substitute(a:sfPath, l:pat, l:sub, l:flag)
 		"call confirm('PAT: [' . pat . '] SUB: [' . sub . ']')
 		"call confirm(a:sfPath . ' => ' . path)
 	else
-		let path = a:pathSpec
-		if (prfx == "sfr:")
-			let path = strpart(path, 4)
+		let l:path = a:pathSpec
+		if (l:prfx ==# 'sfr:')
+			let l:path = strpart(l:path, 4)
 		endif
-		let path = a:sfPath . "/" . path
+		let l:path = a:sfPath . '/' . l:path
 	endif
-	return path
+	return l:path
 endfunction
 
-function! <SID>FindFileInSearchPath(fileName, pathList, relPathBase)
-	let filepath = ""
-	let m = 1
-	let pathListLen = strlen(a:pathList)
-	if (pathListLen > 0)
+function! <SID>FindFileInSearchPath(fileName, pathList, relPathBase) abort
+	let l:filepath = ''
+	let l:m = 1
+	let l:pathListLen = strlen(a:pathList)
+	if (l:pathListLen > 0)
 		while (1)
-			let pathSpec = <SID>GetNthItemFromList(a:pathList, m)
-			if (pathSpec != "")
-				let path = <SID>ExpandAlternatePath(pathSpec, a:relPathBase)
-				let fullname = path . "/" . a:fileName
-				let foundMatch = <SID>BufferOrFileExists(fullname)
-				if (foundMatch)
-					let filepath = fullname
+			let l:pathSpec = <SID>GetNthItemFromList(a:pathList, l:m)
+			if (l:pathSpec !=# '')
+				let l:path = <SID>ExpandAlternatePath(l:pathSpec, a:relPathBase)
+				let l:fullname = l:path . '/' . a:fileName
+				let l:foundMatch = <SID>BufferOrFileExists(l:fullname)
+				if (l:foundMatch)
+					let l:filepath = l:fullname
 					break
 				endif
 			else
 				break
 			endif
-			let m = m + 1
+			let l:m = l:m + 1
 		endwhile
 	endif
-	return filepath
+	return l:filepath
 endfunction
 
-function! <SID>FindFileInSearchPathEx(fileName, pathList, relPathBase, count)
-	let filepath = ""
-	let m = 1
-	let spath = ""
-	let pathListLen = strlen(a:pathList)
-	if (pathListLen > 0)
+function! <SID>FindFileInSearchPathEx(fileName, pathList, relPathBase, count) abort
+	let l:filepath = ''
+	let l:m = 1
+	let l:spath = ''
+	let l:pathListLen = strlen(a:pathList)
+	if (l:pathListLen > 0)
 		while (1)
-			let pathSpec = <SID>GetNthItemFromList(a:pathList, m)
-			if (pathSpec != "")
-				let path = <SID>ExpandAlternatePath(pathSpec, a:relPathBase)
-				if (spath != "")
-					let spath = spath . ','
+			let l:pathSpec = <SID>GetNthItemFromList(a:pathList, l:m)
+			if (l:pathSpec !=# '')
+				let l:path = <SID>ExpandAlternatePath(l:pathSpec, a:relPathBase)
+				if (l:spath !=# '')
+					let l:spath = l:spath . ','
 				endif
-				let spath = spath . path
+				let l:spath = l:spath . l:path
 			else
 				break
 			endif
-			let m = m + 1
+			let l:m = l:m + 1
 		endwhile
 	endif
 
-	if (&path != "")
-		if (spath != "")
-			let spath = spath . ','
+	if (&path !=# '')
+		if (l:spath !=# '')
+			let l:spath = l:spath . ','
 		endif
-		let spath = spath . &path
+		let l:spath = l:spath . &path
 	endif
 
-	let filepath = findfile(a:fileName, spath, a:count)
-	return filepath
+	let l:filepath = findfile(a:fileName, l:spath, a:count)
+	return l:filepath
 endfunction
 
-function! EnumerateFilesByExtension(path, baseName, extension)
-	let enumeration = ""
-	let extSpec = ""
-	let v:errmsg = ""
+function! EnumerateFilesByExtension(path, baseName, extension) abort
+	let l:enumeration = ''
+	let l:extSpec = ''
+	let v:errmsg = ''
 	silent! echo g:alternateExtensions_{a:extension}
-	if (v:errmsg == "")
-		let extSpec = g:alternateExtensions_{a:extension}
+	if (v:errmsg ==# '')
+		let l:extSpec = g:alternateExtensions_{a:extension}
 	endif
-	if (extSpec == "")
+	if (l:extSpec ==# '')
 		if (has_key(g:alternateExtensionsDict, a:extension))
-			let extSpec = g:alternateExtensionsDict[a:extension]
+			let l:extSpec = g:alternateExtensionsDict[a:extension]
 		endif
 	endif
-	if (extSpec != "")
-		let n = 1
-		let done = 0
-		while (!done)
-			let ext = <SID>GetNthItemFromList(extSpec, n)
-			if (ext != "")
-				if (a:path != "")
-					let newFilename = a:path . "/" . a:baseName . "." . ext
+	if (l:extSpec !=# '')
+		let l:n = 1
+		let l:done = 0
+		while (!l:done)
+			let l:ext = <SID>GetNthItemFromList(l:extSpec, l:n)
+			if (l:ext !=# '')
+				if (a:path !=# '')
+					let l:newFilename = a:path . '/' . a:baseName . '.' . l:ext
 				else
-					let newFilename =  a:baseName . "." . ext
+					let l:newFilename =  a:baseName . '.' . l:ext
 				endif
-				if (enumeration == "")
-					let enumeration = newFilename
+				if (l:enumeration ==# '')
+					let l:enumeration = l:newFilename
 				else
-					let enumeration = enumeration . "," . newFilename
+					let l:enumeration = l:enumeration . ',' . l:newFilename
 				endif
 			else
-				let done = 1
+				let l:done = 1
 			endif
-			let n = n + 1
+			let l:n = l:n + 1
 		endwhile
 	endif
-	return enumeration
+	return l:enumeration
 endfunction
 
-function! EnumerateFilesByExtensionInPath(baseName, extension, pathList, relPathBase)
-	let enumeration = ""
-	let filepath = ""
-	let m = 1
-	let pathListLen = strlen(a:pathList)
-	if (pathListLen > 0)
+function! EnumerateFilesByExtensionInPath(baseName, extension, pathList, relPathBase) abort
+	let l:enumeration = ''
+	let l:filepath = ''
+	let l:m = 1
+	let l:pathListLen = strlen(a:pathList)
+	if (l:pathListLen > 0)
 		while (1)
-			let pathSpec = <SID>GetNthItemFromList(a:pathList, m)
-			if (pathSpec != "")
-				let path = <SID>ExpandAlternatePath(pathSpec, a:relPathBase)
-				let pe = EnumerateFilesByExtension(path, a:baseName, a:extension)
-				if (enumeration == "")
-					let enumeration = pe
+			let l:pathSpec = <SID>GetNthItemFromList(a:pathList, l:m)
+			if (l:pathSpec !=# '')
+				let l:path = <SID>ExpandAlternatePath(l:pathSpec, a:relPathBase)
+				let l:pe = EnumerateFilesByExtension(l:path, a:baseName, a:extension)
+				if (l:enumeration ==# '')
+					let l:enumeration = l:pe
 				else
-					let enumeration = enumeration . "," . pe
+					let l:enumeration = l:enumeration . ',' . l:pe
 				endif
 			else
 				break
 			endif
-			let m = m + 1
+			let l:m = l:m + 1
 		endwhile
 	endif
-	return enumeration
+	return l:enumeration
 endfunction
 
-function! DetermineExtension(path)
-	let mods = ":t"
-	let i = 0
-	while i <= s:maxDotsInExtension
-		let mods = mods . ":e"
-		let extension = fnamemodify(a:path, mods)
-		if (has_key(g:alternateExtensionsDict, extension))
-			return extension
+function! DetermineExtension(path) abort
+	let l:mods = ':t'
+	let l:i = 0
+	while l:i <= s:maxDotsInExtension
+		let l:mods = l:mods . ':e'
+		let l:extension = fnamemodify(a:path, l:mods)
+		if (has_key(g:alternateExtensionsDict, l:extension))
+			return l:extension
 		endif
-		let v:errmsg = ""
+		let v:errmsg = ''
 		silent! echo g:alternateExtensions_{extension}
-		if (v:errmsg == "")
-			return extension
+		if (v:errmsg ==# '')
+			return l:extension
 		endif
-		let i = i + 1
+		let l:i = l:i + 1
 	endwhile
-	return ""
+	return ''
 endfunction
 
-function! <SID>FindOrCreateBuffer(fileName, doSplit, findSimilar)
+function! <SID>FindOrCreateBuffer(fileName, doSplit, findSimilar) abort
 	" Check to see if the buffer is already open before re-opening it.
-	let FILENAME = escape(a:fileName, ' ')
-	let bufNr = -1
-	let lastBuffer = bufnr("$")
-	let i = 1
+	let l:FILENAME = escape(a:fileName, ' ')
+	let l:bufNr = -1
+	let l:lastBuffer = bufnr('$')
+	let l:i = 1
 	if (a:findSimilar)
-		while i <= lastBuffer
-			if <SID>EqualFilePaths(expand("#".i.":p"), a:fileName)
-				let bufNr = i
+		while l:i <= l:lastBuffer
+			if <SID>EqualFilePaths(expand('#'.l:i.':p'), a:fileName)
+				let l:bufNr = l:i
 				break
 			endif
-			let i = i + 1
+			let l:i = l:i + 1
 		endwhile
 
-		if (bufNr == -1)
-			let bufName = bufname(a:fileName)
-			let bufFilename = fnamemodify(a:fileName,":t")
+		if (l:bufNr ==# -1)
+			let l:bufName = bufname(a:fileName)
+			let l:bufFilename = fnamemodify(a:fileName,':t')
 
-			if (bufName == "")
-				let bufName = bufname(bufFilename)
+			if (l:bufName ==# '')
+				let l:bufName = bufname(l:bufFilename)
 			endif
 
-			if (bufName != "")
-				let tail = fnamemodify(bufName, ":t")
-				if (tail != bufFilename)
-					let bufName = ""
+			if (l:bufName !=# '')
+				let l:tail = fnamemodify(l:bufName, ':t')
+				if (l:tail !=# l:bufFilename)
+					let l:bufName = ''
 				endif
 			endif
-			if (bufName != "")
-				let bufNr = bufnr(bufName)
-				let FILENAME = bufName
+			if (l:bufName !=# '')
+				let l:bufNr = bufnr(l:bufName)
+				let l:FILENAME = l:bufName
 			endif
 		endif
 	endif
 
-	if (g:alternateRelativeFiles == 1)
-		let FILENAME = fnamemodify(FILENAME, ":p:.")
+	if (g:alternateRelativeFiles ==# 1)
+		let l:FILENAME = fnamemodify(l:FILENAME, ':p:.')
 	endif
 
-	let splitType = a:doSplit[0]
-	let bang = a:doSplit[1]
-	if (bufNr == -1)
+	let l:splitType = a:doSplit[0]
+	let l:bang = a:doSplit[1]
+	if (l:bufNr ==# -1)
 		" Buffer did not exist....create it
-		let v:errmsg=""
-		if (splitType == "h")
-			silent! execute ":split".bang." " . FILENAME
-		elseif (splitType == "v")
-			silent! execute ":vsplit".bang." " . FILENAME
-		elseif (splitType == "t")
-			silent! execute ":tab split".bang." " . FILENAME
+		let v:errmsg=''
+		if (l:splitType ==# 'h')
+			silent! execute ':split'.l:bang.' ' . l:FILENAME
+		elseif (l:splitType ==# 'v')
+			silent! execute ':vsplit'.l:bang.' ' . l:FILENAME
+		elseif (l:splitType ==# 't')
+			silent! execute ':tab split'.l:bang.' ' . l:FILENAME
 		else
-			silent! execute ":e".bang." " . FILENAME
+			silent! execute ':e'.l:bang.' ' . l:FILENAME
 		endif
-		if (v:errmsg != "")
+		if (v:errmsg !=# '')
 			echo v:errmsg
 		endif
 	else
 
 		" Find the correct tab corresponding to the existing buffer
-		let tabNr = -1
+		let l:tabNr = -1
 		" iterate tab pages
-		for i in range(tabpagenr('$'))
+		for l:i in range(tabpagenr('$'))
 			" get the list of buffers in the tab
-			let tabList =  tabpagebuflist(i + 1)
-			let idx = 0
+			let l:tabList =  tabpagebuflist(l:i + 1)
+			let l:idx = 0
 			" iterate each buffer in the list
-			while idx < len(tabList)
+			while l:idx < len(l:tabList)
 				" if it matches the buffer we are looking for...
-				if (tabList[idx] == bufNr)
+				if (l:tabList[l:idx] ==# l:bufNr)
 					" ... save the number
-					let tabNr = i + 1
+					let l:tabNr = l:i + 1
 					break
 				endif
-				let idx = idx + 1
+				let l:idx = l:idx + 1
 			endwhile
-			if (tabNr != -1)
+			if (l:tabNr !=# -1)
 				break
 			endif
 		endfor
 		" switch the the tab containing the buffer
-		if (tabNr != -1)
-			execute "tabn ".tabNr
+		if (l:tabNr !=# -1)
+			execute 'tabn '.l:tabNr
 		endif
 
 		" Buffer was already open......check to see if it is in a window
-		let bufWindow = bufwinnr(bufNr)
-		if (bufWindow == -1)
+		let l:bufWindow = bufwinnr(l:bufNr)
+		if (l:bufWindow ==# -1)
 			" Buffer was not in a window so open one
-			let v:errmsg=""
-			if (splitType == "h")
-				silent! execute ":sbuffer".bang." " . FILENAME
-			elseif (splitType == "v")
-				silent! execute ":vert sbuffer " . FILENAME
-			elseif (splitType == "t")
-				silent! execute ":tab sbuffer " . FILENAME
+			let v:errmsg=''
+			if (l:splitType ==# 'h')
+				silent! execute ':sbuffer'.l:bang.' ' . l:FILENAME
+			elseif (l:splitType ==# 'v')
+				silent! execute ':vert sbuffer ' . l:FILENAME
+			elseif (l:splitType ==# 't')
+				silent! execute ':tab sbuffer ' . l:FILENAME
 			else
-				silent! execute ":buffer".bang." " . FILENAME
+				silent! execute ':buffer'.l:bang.' ' . l:FILENAME
 			endif
-			if (v:errmsg != "")
+			if (v:errmsg !=# '')
 				echo v:errmsg
 			endif
 		else
 			" Buffer is already in a window so switch to the window
-			execute bufWindow."wincmd w"
-			if (bufWindow != winnr())
+			execute l:bufWindow.'wincmd w'
+			if (l:bufWindow !=# winnr())
 				" something wierd happened...open the buffer
-				let v:errmsg=""
-				if (splitType == "h")
-					silent! execute ":split".bang." " . FILENAME
-				elseif (splitType == "v")
-					silent! execute ":vsplit".bang." " . FILENAME
-				elseif (splitType == "t")
-					silent! execute ":tab split".bang." " . FILENAME
+				let v:errmsg=''
+				if (l:splitType ==# 'h')
+					silent! execute ':split'.l:bang.' ' . l:FILENAME
+				elseif (l:splitType ==# 'v')
+					silent! execute ':vsplit'.l:bang.' ' . l:FILENAME
+				elseif (l:splitType ==# 't')
+					silent! execute ':tab split'.l:bang.' ' . l:FILENAME
 				else
-					silent! execute ":e".bang." " . FILENAME
+					silent! execute ':e'.l:bang.' ' . l:FILENAME
 				endif
-				if (v:errmsg != "")
+				if (v:errmsg !=# '')
 					echo v:errmsg
 				endif
 			endif
@@ -547,51 +545,51 @@ function! <SID>FindOrCreateBuffer(fileName, doSplit, findSimilar)
 	endif
 endfunction
 
-function! <SID>EqualFilePaths(path1, path2)
-	if has("win16") || has("win32") || has("win64") || has("win95")
-		return substitute(a:path1, "\/", "\\", "g") ==? substitute(a:path2, "\/", "\\", "g")
+function! <SID>EqualFilePaths(path1, path2) abort
+	if has('win16') || has('win32') || has('win64') || has('win95')
+		return substitute(a:path1, '\/', '\\', 'g') ==? substitute(a:path2, '\/', '\\', 'g')
 	else
-		return a:path1 == a:path2
+		return a:path1 ==# a:path2
 	endif
 endfunction
 
 " Add all the default extensions
 " Mappings for C and C++
-call darkvim#plugins#a#add_ext_map('h',"c,cpp,cxx,cc,CC")
-call darkvim#plugins#a#add_ext_map('H',"C,CPP,CXX,CC")
-call darkvim#plugins#a#add_ext_map('hpp',"cpp,c")
-call darkvim#plugins#a#add_ext_map('HPP',"CPP,C")
-call darkvim#plugins#a#add_ext_map('c',"h")
-call darkvim#plugins#a#add_ext_map('C',"H")
-call darkvim#plugins#a#add_ext_map('cpp',"h,hpp")
-call darkvim#plugins#a#add_ext_map('CPP',"H,HPP")
-call darkvim#plugins#a#add_ext_map('cc',"h")
-call darkvim#plugins#a#add_ext_map('CC',"H,h")
-call darkvim#plugins#a#add_ext_map('cxx',"h")
-call darkvim#plugins#a#add_ext_map('CXX',"H")
-call darkvim#plugins#a#add_ext_map('tac',"tin,itin")
-call darkvim#plugins#a#add_ext_map('tin',"tac")
-call darkvim#plugins#a#add_ext_map('itin',"tac")
+call darkvim#plugins#a#add_ext_map('h','c,cpp,cxx,cc,CC')
+call darkvim#plugins#a#add_ext_map('H','C,CPP,CXX,CC')
+call darkvim#plugins#a#add_ext_map('hpp','cpp,c')
+call darkvim#plugins#a#add_ext_map('HPP','CPP,C')
+call darkvim#plugins#a#add_ext_map('c','h')
+call darkvim#plugins#a#add_ext_map('C','H')
+call darkvim#plugins#a#add_ext_map('cpp','h,hpp')
+call darkvim#plugins#a#add_ext_map('CPP','H,HPP')
+call darkvim#plugins#a#add_ext_map('cc','h')
+call darkvim#plugins#a#add_ext_map('CC','H,h')
+call darkvim#plugins#a#add_ext_map('cxx','h')
+call darkvim#plugins#a#add_ext_map('CXX','H')
+call darkvim#plugins#a#add_ext_map('tac','tin,itin')
+call darkvim#plugins#a#add_ext_map('tin','tac')
+call darkvim#plugins#a#add_ext_map('itin','tac')
 
 " Mappings for PSL7
-call darkvim#plugins#a#add_ext_map('psl',"ph")
-call darkvim#plugins#a#add_ext_map('ph',"psl")
+call darkvim#plugins#a#add_ext_map('psl','ph')
+call darkvim#plugins#a#add_ext_map('ph','psl')
 
 " Mappings for ADA
-call darkvim#plugins#a#add_ext_map('adb',"ads")
-call darkvim#plugins#a#add_ext_map('ads',"adb")
+call darkvim#plugins#a#add_ext_map('adb','ads')
+call darkvim#plugins#a#add_ext_map('ads','adb')
 
 " Mappings for lex and yacc files
-call darkvim#plugins#a#add_ext_map('l',"y,yacc,ypp")
-call darkvim#plugins#a#add_ext_map('lex',"yacc,y,ypp")
-call darkvim#plugins#a#add_ext_map('lpp',"ypp,y,yacc")
-call darkvim#plugins#a#add_ext_map('y',"l,lex,lpp")
-call darkvim#plugins#a#add_ext_map('yacc',"lex,l,lpp")
-call darkvim#plugins#a#add_ext_map('ypp',"lpp,l,lex")
+call darkvim#plugins#a#add_ext_map('l','y,yacc,ypp')
+call darkvim#plugins#a#add_ext_map('lex','yacc,y,ypp')
+call darkvim#plugins#a#add_ext_map('lpp','ypp,y,yacc')
+call darkvim#plugins#a#add_ext_map('y','l,lex,lpp')
+call darkvim#plugins#a#add_ext_map('yacc','lex,l,lpp')
+call darkvim#plugins#a#add_ext_map('ypp','lpp,l,lex')
 
 " Mappings for OCaml
-call darkvim#plugins#a#add_ext_map('ml',"mli")
-call darkvim#plugins#a#add_ext_map('mli',"ml")
+call darkvim#plugins#a#add_ext_map('ml','mli')
+call darkvim#plugins#a#add_ext_map('mli','ml')
 
 " ASP stuff
 call darkvim#plugins#a#add_ext_map('aspx.cs', 'aspx')

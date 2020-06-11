@@ -12,7 +12,7 @@ let g:enabled_layers = []
 
 " Load the [layers] you want.
 function! darkvim#layers#load(layers) abort
-	if type(a:layers) == type("")
+	if type(a:layers) == type('')
 		" string
 		call s:add_layer(a:layers)
 	else
@@ -21,9 +21,9 @@ endfunction
 
 " Disable layers
 function! darkvim#layers#disable(layer) abort
-	let index = index(g:enabled_layers, a:layer)
-	if index != -1
-		call remove(g:enabled_layers, index)
+	let l:index = index(g:enabled_layers, a:layer)
+	if l:index != -1
+		call remove(g:enabled_layers, l:index)
 	endif
 endfunction
 

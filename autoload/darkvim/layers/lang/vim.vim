@@ -1,12 +1,12 @@
 function! darkvim#layers#lang#vim#plugins() abort
-	let plugins = []
-	call add(plugins , ['tweekmonster/exception.vim', {
+	let l:plugins = []
+	call add(l:plugins , ['tweekmonster/exception.vim', {
 				\ 'on_ft': 'vim',
 				\ }])
-	call add(plugins , ['tweekmonster/helpful.vim', {
+	call add(l:plugins , ['tweekmonster/helpful.vim', {
 				\ 'on_cmd': 'HelpfulVersion',
 				\ }])
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#lang#vim#config() abort

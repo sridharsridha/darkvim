@@ -7,13 +7,13 @@ function! darkvim#api#import(name) abort
 	if has_key(s:apis, a:name)
 		return deepcopy(s:apis[a:name])
 	endif
-	let p = {}
+	let l:p = {}
 	try
-		let p = darkvim#api#{a:name}#get()
-		let s:apis[a:name] = deepcopy(p)
+		let l:p = darkvim#api#{a:name}#get()
+		let s:apis[a:name] = deepcopy(l:p)
 	catch /^Vim\%((\a\+)\)\=:E117/
 	endtry
-	return p
+	return l:p
 endfunction
 
 function! darkvim#api#register(name, api) abort

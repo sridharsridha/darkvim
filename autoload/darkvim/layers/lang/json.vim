@@ -1,9 +1,9 @@
 function! darkvim#layers#lang#json#plugins() abort
-	let plugins = []
-	call add(plugins, ['elzr/vim-json', {
+	let l:plugins = []
+	call add(l:plugins, ['elzr/vim-json', {
 				\ 'on_ft' : ['javascript','json'],
 				\ }])
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#lang#json#config() abort

@@ -21,8 +21,8 @@ endfunction
 function! s:self.echomsg(hl, msg) abort
 	execute 'echohl' a:hl
 	try
-		for m in split(a:msg, "\n")
-			echomsg m
+		for l:m in split(a:msg, "\n")
+			echomsg l:m
 		endfor
 	finally
 		echohl None
@@ -30,21 +30,21 @@ function! s:self.echomsg(hl, msg) abort
 endfunction
 
 function! s:self.error(msg) abort
-	call self.echomsg('ErrorMsg', a:msg)
+	call s:self.echomsg('ErrorMsg', a:msg)
 endfunction
 
 function! s:self.warn(msg) abort
-	call self.echomsg('WarningMsg', a:msg)
+	call s:self.echomsg('WarningMsg', a:msg)
 endfunction
 
 function! s:self.confirm(msg) abort
 	echohl WarningMsg
 	echon a:msg . '? (y or n) '
 	echohl NONE
-	let rst = nr2char(getchar())
+	let l:rst = nr2char(getchar())
 	" clear the cmdline
 	redraw!
-	if rst =~? 'y' || rst == nr2char(13)
+	if l:rst =~? 'y' || l:rst == nr2char(13)
 		return 1
 	else
 		return 0

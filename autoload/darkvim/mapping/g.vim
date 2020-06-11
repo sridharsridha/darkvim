@@ -3,7 +3,7 @@
 " Key mapping guide for g
 let g:_darkvim_mappings_g = get(g:,'_darkvim_mappings_g', {})
 
-function! darkvim#mapping#g#init()
+function! darkvim#mapping#g#init() abort
 	call darkvim#mapping#g#def('nnoremap', ['&'], 'g&', 'repeat-last-":s"-on-all-lines')
 	call darkvim#mapping#g#def('nnoremap', ["'"], "g'", 'jump-to-mark')
 	call darkvim#mapping#g#def('nnoremap', ['`'], 'g`', 'jump-to-mark')
@@ -50,33 +50,33 @@ function! darkvim#mapping#g#init()
 	nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 	let g:_darkvim_mappings_g['p'] = 'select-last-paste'
 	call darkvim#mapping#g#def('nnoremap', ['!'], ":<C-u>put=execute('')<Left><Left>", 'start-external-command', 2)
-endfunction!
+endfunction
 
 function! darkvim#mapping#g#def(type, keys, value, desc, ...) abort
-	let cmd_type = a:0 > 0 ? a:1 : 0
-	let map_visual = a:0 > 1 ? a:2 : 0
-	let feedkey_mode = a:type =~# 'nore' ? 'n' : 'm'
-	let merged_keys = join(a:keys, '')
-	if cmd_type == 1
+	let l:cmd_type = a:0 > 0 ? a:1 : 0
+	let l:map_visual = a:0 > 1 ? a:2 : 0
+	let l:feedkey_mode = a:type =~# 'nore' ? 'n' : 'm'
+	let l:merged_keys = join(a:keys, '')
+	if l:cmd_type == 1
 		" a:value is a command
-		let nmap_cmd = ':<C-u>'.a:value.'<CR>'
-		let xmap_cmd = ':'.a:value.'<CR>'
+		let l:nmap_cmd = ':<C-u>'.a:value.'<CR>'
+		let l:xmap_cmd = ':'.a:value.'<CR>'
 	else
 		" a:value is a key stream
-		let nmap_cmd = a:value
-		let xmap_cmd = a:value
+		let l:nmap_cmd = a:value
+		let l:xmap_cmd = a:value
 	endif
 
-	exe a:type.' g'.merged_keys.' '.substitute(nmap_cmd, '|', '\\|', 'g')
-	if map_visual
+	exe a:type.' g'.l:merged_keys.' '.substitute(l:nmap_cmd, '|', '\\|', 'g')
+	if l:map_visual
 		if a:type ==# 'nnoremap'
-			exe 'xnoremap g'.merged_keys.' '.substitute(xmap_cmd, '|', '\\|', 'g')
+			exe 'xnoremap g'.l:merged_keys.' '.substitute(l:xmap_cmd, '|', '\\|', 'g')
 		elseif a:type ==# 'nmap'
-			exe 'xmap g'.merged_keys.' ' .substitute(xmap_cmd, '|', '\\|', 'g')
+			exe 'xmap g'.l:merged_keys.' ' .substitute(l:xmap_cmd, '|', '\\|', 'g')
 		elseif a:type ==# 'nnoremap <silent>'
-			exe 'xnoremap <silent> g'.merged_keys.' '.substitute(xmap_cmd, '|', '\\|', 'g')
+			exe 'xnoremap <silent> g'.l:merged_keys.' '.substitute(l:xmap_cmd, '|', '\\|', 'g')
 		elseif a:type ==# 'nmap <silent>'
-			exe 'xmap <silent> g'.merged_keys.' '.substitute(xmap_cmd, '|', '\\|', 'g')
+			exe 'xmap <silent> g'.l:merged_keys.' '.substitute(l:xmap_cmd, '|', '\\|', 'g')
 		endif
 	endif
 
@@ -97,29 +97,29 @@ endfunction
 function! darkvim#mapping#g#group(keys, desc) abort
 	if len(a:keys) == 3
 		if !has_key(g:_darkvim_mappings_g[a:keys[0]][a:keys[1]], a:keys[2] )
-			let g:_darkvim_mappings_g[a:keys[0]][a:keys[1]][a:keys[2]] = { "name" : '+'.a:desc }
+			let g:_darkvim_mappings_g[a:keys[0]][a:keys[1]][a:keys[2]] = { 'name' : '+'.a:desc }
 		else
-			let tmp_desc = g:_darkvim_mappings_g[a:keys[0]][a:keys[1]][a:keys[2]]['name']
-			if tmp_desc !~? a:desc
-				let g:_darkvim_mappings_g[a:keys[0]][a:keys[1]][a:keys[2]]["name"] = tmp_desc.'/'.a:desc }
+			let l:tmp_desc = g:_darkvim_mappings_g[a:keys[0]][a:keys[1]][a:keys[2]]['name']
+			if l:tmp_desc !~? a:desc
+				let g:_darkvim_mappings_g[a:keys[0]][a:keys[1]][a:keys[2]]['name'] = l:tmp_desc.'/'.a:desc
 			endif
 		endif
 	elseif len(a:keys) == 2
 		if !has_key(g:_darkvim_mappings_g[a:keys[0]], a:keys[1] )
-			let g:_darkvim_mappings_g[a:keys[0]][a:keys[1]] = { "name" : '+'.a:desc }
+			let g:_darkvim_mappings_g[a:keys[0]][a:keys[1]] = { 'name' : '+'.a:desc }
 		else
-			let tmp_desc = g:_darkvim_mappings_g[a:keys[0]][a:keys[1]]['name']
-			if tmp_desc !~? a:desc
-				let g:_darkvim_mappings_g[a:keys[0]][a:keys[1]]["name"] = tmp_desc.'/'.a:desc
+			let l:tmp_desc = g:_darkvim_mappings_g[a:keys[0]][a:keys[1]]['name']
+			if l:tmp_desc !~? a:desc
+				let g:_darkvim_mappings_g[a:keys[0]][a:keys[1]]['name'] = l:tmp_desc.'/'.a:desc
 			endif
 		endif
 	elseif len(a:keys) == 1
 		if !has_key(g:_darkvim_mappings_g, a:keys[0] )
-			let g:_darkvim_mappings_g[a:keys[0]] = { "name" : '+'.a:desc }
+			let g:_darkvim_mappings_g[a:keys[0]] = { 'name' : '+'.a:desc }
 		else
-			let tmp_desc = g:_darkvim_mappings_g[a:keys[0]]['name']
-			if tmp_desc !~? a:desc
-				let g:_darkvim_mappings_g[a:keys[0]]["name"] = tmp_desc.'/'.a:desc
+			let l:tmp_desc = g:_darkvim_mappings_g[a:keys[0]]['name']
+			if l:tmp_desc !~? a:desc
+				let g:_darkvim_mappings_g[a:keys[0]]['name'] = l:tmp_desc.'/'.a:desc
 			endif
 		endif
 	else

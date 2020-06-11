@@ -2,14 +2,14 @@
 " darkvim uses neomake as default syntax checker.
 "
 function! darkvim#layers#checkers#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
-	call add(plugins, ['neomake/neomake', {
+	call add(l:plugins, ['neomake/neomake', {
 				\ 'on_cmd' : ['Neomake'],
 				\ 'loadconf' : 1,
 				\ }])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#checkers#config() abort
@@ -103,12 +103,12 @@ endfunction
 function! s:explain_the_error() abort
 	if exists('g:loaded_neomake')
 		try
-			let message = neomake#GetCurrentErrorMsg()
+			let l:message = neomake#GetCurrentErrorMsg()
 		catch /^Vim\%((\a\+)\)\=:E117/
-			let message = ''
+			let l:message = ''
 		endtry
-		if !empty(message)
-			echo message
+		if !empty(l:message)
+			echo l:message
 		else
 			echo 'no error message at this point!'
 		endif

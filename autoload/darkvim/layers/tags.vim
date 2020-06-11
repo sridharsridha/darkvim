@@ -1,19 +1,19 @@
 " tags.vim --- darkvim gtags layer
 function! darkvim#layers#tags#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
 	" Automatic tag generation
-	call add(plugins, ['ludovicchabant/vim-gutentags', {
+	call add(l:plugins, ['ludovicchabant/vim-gutentags', {
 				\ 'on_event' : [ 'BufReadPost' ],
 				\ 'loadconf' : 1,
 				\ }])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#tags#config() abort
 	" Gutentags
-	call darkvim#mapping#space#group(['t'], "Tags")
+	call darkvim#mapping#space#group(['t'], 'Tags')
 	call darkvim#mapping#space#def('nnoremap', ['t', 'u'],
 				\ 'GutentagsUpdate!',
 				\ 'update-tags-cur-proj', 1)

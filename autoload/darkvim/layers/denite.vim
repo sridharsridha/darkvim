@@ -1,22 +1,22 @@
 " denite.vim fuzzyfinder layer for darkvim
 
 function! darkvim#layers#denite#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
-	call add(plugins, ['Shougo/denite.nvim', {
+	call add(l:plugins, ['Shougo/denite.nvim', {
 				\  'on_cmd':['Denite','DeniteBufferDir','DeniteCursorWord',
 				\            'DeniteProjectDir'],
 				\  'loadconf':1}])
-	call add(plugins, ['Shougo/unite-outline', {
+	call add(l:plugins, ['Shougo/unite-outline', {
 				\ 'on_source':['denite.nvim']}])
-	call add(plugins, ['chemzqm/denite-extra', {
+	call add(l:plugins, ['chemzqm/denite-extra', {
 				\ 'on_source':['denite.nvim']}])
-	call add(plugins, ['Shougo/neoyank.vim', {
+	call add(l:plugins, ['Shougo/neoyank.vim', {
 				\ 'on_source':['denite.nvim']}])
-	call add(plugins, ['notomo/denite-keymap', {
+	call add(l:plugins, ['notomo/denite-keymap', {
 				\ 'on_source':['denite.nvim']}])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#denite#config() abort

@@ -1,12 +1,12 @@
 " clap Layer
 function! darkvim#layers#clap#plugins() abort
-	let plugins = []
+	let l:plugins = []
 	" call clap#installer#build_maple()
-	call add(plugins, ['liuchengxu/vim-clap', {
+	call add(l:plugins, ['liuchengxu/vim-clap', {
 				\ 'on_cmd' : ['Clap'],
 				\ 'do': [':Clap install-binary!',
 				\ ':call clap#installer#build_maple()']}])
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#clap#config() abort
@@ -141,7 +141,7 @@ function! darkvim#layers#clap#config() abort
 				\ 'keymappings', 1)
 endfunction
 
-function! s:clap_mappings()
+function! s:clap_mappings() abort
 	nnoremap <silent> <buffer> <nowait>' :call clap#handler#tab_action()<CR>
 	nnoremap <silent> <buffer> <C-f> :<c-u>call clap#navigation#scroll('down')<CR>
 	nnoremap <silent> <buffer> <C-b> :<c-u>call clap#navigation#scroll('up')<CR>

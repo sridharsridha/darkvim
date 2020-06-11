@@ -1,13 +1,13 @@
 " python.vim --- darkvim lang#python layer
 
 function! darkvim#layers#lang#python#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
-	call add(plugins, ['jeetsukumaran/vim-pythonsense', {
+	call add(l:plugins, ['jeetsukumaran/vim-pythonsense', {
 				\ 'on_ft' : 'python',
 				\ }])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#lang#python#config() abort
@@ -19,7 +19,7 @@ function! darkvim#layers#lang#python#config() abort
 endfunction
 
 function! s:language_specified_mappings() abort
-	if darkvim#layers#is_loaded("format")
+	if darkvim#layers#is_loaded('format')
 		call darkvim#mapping#localleader#group(['i'], 'Imports')
 		call darkvim#mapping#localleader#def('nmap', ['i', 's'],
 					\ 'Neoformat isort',

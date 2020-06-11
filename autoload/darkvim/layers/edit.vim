@@ -3,51 +3,51 @@
 scriptencoding utf-8
 
 function! darkvim#layers#edit#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
 	" Bullets support
-	call add(plugins, ['dkarter/bullets.vim', {
+	call add(l:plugins, ['dkarter/bullets.vim', {
 				\ 'on_ft': ['gitcommit', 'txt', 'markdown', 'md', 'config'],
 				\ }])
 
 	" Adds bunch of testobjs (quotes, brackets, etc with a, i, A, I, n, l)
-	call add(plugins, ['wellle/targets.vim', {
+	call add(l:plugins, ['wellle/targets.vim', {
 				\ 'nolazy' : 1,
 				\ }])
 
 	" textobject 'i/I' for indentation
-	call add(plugins, ['kana/vim-textobj-indent', {
+	call add(l:plugins, ['kana/vim-textobj-indent', {
 				\ 'depends':[ 'vim-textobj-user' ],
 				\ 'on_map':{'vo':'<Plug>(textobj-indent-'},
 				\ }])
 
 	" textobj 'L' for selecting line
-	call add(plugins, ['kana/vim-textobj-line', {
+	call add(l:plugins, ['kana/vim-textobj-line', {
 				\ 'depends':[ 'vim-textobj-user' ],
 				\ 'on_map':{'vo':'<Plug>(textobj-line-'},
 				\ }])
 
 	" textobj 'e' for selection entire text
 	" Usefull for bulk copying result operator or clipboard
-	call add(plugins, ['kana/vim-textobj-entire', {
+	call add(l:plugins, ['kana/vim-textobj-entire', {
 				\ 'depends':[ 'vim-textobj-user' ],
 				\ 'on_map':{'vo':'<Plug>(textobj-entire-'},
 				\ }])
 
 	" textobj 'c/C' for seletin comments
-	call add(plugins, ['glts/vim-textobj-comment', {
+	call add(l:plugins, ['glts/vim-textobj-comment', {
 				\ 'depends':[ 'vim-textobj-user' ],
 				\ 'on_map':{'vo':'<Plug>(textobj-comment-'},
 				\ }])
 
 	" textobj 'f/F' for selecting functions
-	call add(plugins, ['kana/vim-textobj-function', {
+	call add(l:plugins, ['kana/vim-textobj-function', {
 				\ 'depends':[ 'vim-textobj-user' ],
 				\ 'on_map':{'vo':'<Plug>(textobj-function-'},
 				\ }])
 
 	" add/change/del quotes etc around word
-	call add(plugins, ['tpope/vim-surround', {
+	call add(l:plugins, ['tpope/vim-surround', {
 				\ 'depends': 'vim-repeat',
 				\ 'on_map': {
 				\   'i': ['<C-g>S', '<C-g>s', '<C-s>'],
@@ -57,39 +57,39 @@ function! darkvim#layers#edit#plugins() abort
 				\ }])
 
 	" Improved J
-	call add(plugins, ['osyo-manga/vim-jplus', {
+	call add(l:plugins, ['osyo-manga/vim-jplus', {
 				\ 'on_map' : {'n' : '<Plug>(jplus'},
 				\ }])
 
 	" Table Mode for writing tables triggered using "||"
-	call add(plugins, ['dhruvasagar/vim-table-mode', {
+	call add(l:plugins, ['dhruvasagar/vim-table-mode', {
 				\ 'on_cmd': darkvim#util#prefix('TableMode', ['Toggle', 'Enable', 'Disable']),
 				\ }])
 
 	" Align text motion support gl, gL motion
-	call add(plugins, ['tommcdo/vim-lion', {
+	call add(l:plugins, ['tommcdo/vim-lion', {
 				\ 'on_map': {'n': ['gl', 'gL']},
 				\ }])
 
 	" Convert text into table using delimiters helful for formatting code
-	call add(plugins, ['godlygeek/tabular', {
+	call add(l:plugins, ['godlygeek/tabular', {
 				\ 'on_cmd' : ['Tabularize'],
 				\ }])
 
 	" Faster j and k movement
-	call add(plugins, ['rhysd/accelerated-jk', {
+	call add(l:plugins, ['rhysd/accelerated-jk', {
 				\ 'on_map' : {'n' : '<Plug>(accelerated_'}
 				\ }])
 
 	" Split and join code
-	call add(plugins, ['AndrewRadev/splitjoin.vim', {
+	call add(l:plugins, ['AndrewRadev/splitjoin.vim', {
 				\ 'on_cmd': darkvim#util#prefix('Splitjoin', ['Join', 'Split']),
 				\ 'on_map': {'n': ['gJ', 'gS']},
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Exchange text between two regions
-	call add(plugins, ['tommcdo/vim-exchange', {
+	call add(l:plugins, ['tommcdo/vim-exchange', {
 				\ 'on_map': {
 				\   'n': 'cx',
 				\   'v': 'X',
@@ -97,11 +97,11 @@ function! darkvim#layers#edit#plugins() abort
 				\ }])
 
 	" Move an item in a delimiter-separated list left or right
-	call add(plugins, ['AndrewRadev/sideways.vim', {
+	call add(l:plugins, ['AndrewRadev/sideways.vim', {
 				\ 'on_cmd': darkvim#util#prefix('Sideways', ['Left', 'Right']),
 				\ }])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#edit#config() abort
@@ -313,71 +313,71 @@ let s:string_info = {
 
 function! s:string_join_with() abort
 	if s:is_string(line('.'), col('.'))
-		let c = col('.')
-		let a = 0
-		let b = 0
-		let _c = c
-		while c > 0
-			if s:is_string(line('.'), c)
-				let c -= 1
+		let l:c = col('.')
+		let l:a = 0
+		let l:b = 0
+		let l:_c = l:c
+		while l:c > 0
+			if s:is_string(line('.'), l:c)
+				let l:c -= 1
 			else
-				let a = c
+				let l:a = l:c
 				break
 			endif
 		endwhile
-		let c = _c
-		while c > 0
-			if s:is_string(line('.'), c)
-				let c += 1
+		let l:c = l:_c
+		while l:c > 0
+			if s:is_string(line('.'), l:c)
+				let l:c += 1
 			else
-				let b = c
+				let l:b = l:c
 				break
 			endif
 		endwhile
 		let l:save_register_m = @m
-		let line = getline('.')[:a] . join(split(getline('.')[a+1 : b]), '-') .
-					\ getline('.')[b :]
-		call setline('.', line)
+		let l:line = getline('.')[:l:a] . join(split(getline('.')[l:a+1 : l:b]), '-') .
+					\ getline('.')[l:b :]
+		call setline('.', l:line)
 		let @m = l:save_register_m
 	endif
 endfunction
 
 function! s:string_split(newline) abort
 	if s:is_string(line('.'), col('.'))
-		let save_cursor = getcurpos()
-		let c = col('.')
-		let sep = ''
-		while c > 0
-			if s:is_string(line('.'), c)
-				let c -= 1
+		let l:save_cursor = getcurpos()
+		let l:c = col('.')
+		let l:sep = ''
+		while l:c > 0
+			if s:is_string(line('.'), l:c)
+				let l:c -= 1
 			else
 				if !empty(get(get(s:string_info, &filetype, {}), 'quotes_hi', []))
-					let sep = getline('.')[c - 1]
+					let l:sep = getline('.')[l:c - 1]
 				else
-					let sep = getline('.')[c]
+					let l:sep = getline('.')[l:c]
 				endif
 				break
 			endif
 		endwhile
-		let addedtext = a:newline ? "\n" .
+		let l:addedtext = a:newline ? "\n" .
 					\ get(get(s:string_info, &filetype, {}), 'line_prefix', '') : ''
-		let connect = get(get(s:string_info, &filetype, {}), 'connect', '')
-		if !empty(connect)
-			let connect = ' ' . connect . ' '
+		let l:connect = get(get(s:string_info, &filetype, {}), 'connect', '')
+		if !empty(l:connect)
+			let l:connect = ' ' . l:connect . ' '
 		endif
 		if a:newline
-			let addedtext = addedtext . connect
+			let l:addedtext = l:addedtext . l:connect
 		else
-			let addedtext = connect
+			let l:addedtext = l:connect
 		endif
-		let save_register_m = @m
-		let @m = sep . addedtext . sep
+		let l:save_register_m = @m
+		let @m = l:sep . l:addedtext . l:sep
 		normal! "mp
-		let @m = save_register_m
+		let @m = l:save_register_m
 		if a:newline
 			normal! j==
 		endif
-		call setpos('.', save_cursor)
+		call setpos('.', l:save_cursor)
 	endif
 endfunction
 
@@ -394,9 +394,9 @@ function! s:is_string(l, c) abort
 endfunction
 
 function! s:align_at_regular_expression() abort
-	let re = input(':Tabularize /')
-	if !empty(re)
-		exe 'Tabularize /' . re
+	let l:re = input(':Tabularize /')
+	if !empty(l:re)
+		exe 'Tabularize /' . l:re
 	else
 		normal! :
 		echo 'empty input, canceled!'
@@ -404,13 +404,13 @@ function! s:align_at_regular_expression() abort
 endfunction
 
 " quickly enable / disable table mode in insert mode by using || or __ :
-function! darkvim#layers#edit#is_start_of_line(mapping)
-	let text_before_cursor = getline('.')[0 : col('.')-1]
-	let mapping_pattern = '\V' . escape(a:mapping, '\')
-	let comment_pattern = '\V' . escape(substitute(&l:commentstring,
+function! darkvim#layers#edit#is_start_of_line(mapping) abort
+	let l:text_before_cursor = getline('.')[0 : col('.')-1]
+	let l:mapping_pattern = '\V' . escape(a:mapping, '\')
+	let l:comment_pattern = '\V' . escape(substitute(&l:commentstring,
 				\ '%s.*$', '', ''), '\')
-	return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') .
-				\ '\s*\v' . mapping_pattern . '\v$')
+	return (l:text_before_cursor =~? '^' . ('\v(' . l:comment_pattern . '\v)?') .
+				\ '\s*\v' . l:mapping_pattern . '\v$')
 endfunction
 
 

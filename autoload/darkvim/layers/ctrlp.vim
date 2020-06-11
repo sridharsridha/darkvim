@@ -1,23 +1,23 @@
 " Ctrlp Layer
 function! darkvim#layers#ctrlp#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
-	call add(plugins, ['ctrlpvim/ctrlp.vim', {
+	call add(l:plugins, ['ctrlpvim/ctrlp.vim', {
 				\ 'on_cmd' : 'CtrlP'}])
-	call add(plugins, ['FelikZ/ctrlp-py-matcher', {
+	call add(l:plugins, ['FelikZ/ctrlp-py-matcher', {
 				\ 'on_source': ['ctrlp.vim']}])
-	call add(plugins, ['mattn/ctrlp-register', {
+	call add(l:plugins, ['mattn/ctrlp-register', {
 				\ 'on_cmd' : 'CtrlPRegister'}])
-	call add(plugins, ['DeaR/ctrlp-jumps', {
+	call add(l:plugins, ['DeaR/ctrlp-jumps', {
 				\ 'on_cmd' : 'CtrlPJump'}])
-	call add(plugins, ['SpaceVim/vim-ctrlp-help', {
+	call add(l:plugins, ['SpaceVim/vim-ctrlp-help', {
 				\ 'on_cmd' : 'CtrlPHelp'}])
-	call add(plugins, ['hara/ctrlp-colorscheme', {
+	call add(l:plugins, ['hara/ctrlp-colorscheme', {
 				\ 'on_cmd' : 'CtrlPColorscheme'}])
-	call add(plugins, ['ivan-cukic/vim-ctrlp-switcher', {
+	call add(l:plugins, ['ivan-cukic/vim-ctrlp-switcher', {
 				\ 'on_cmd' : ['CtrlPSwitch', 'CtrlPSwitchFull', 'CtrlPSwitchBasic']}])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#ctrlp#config() abort

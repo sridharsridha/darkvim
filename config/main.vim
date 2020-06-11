@@ -36,7 +36,7 @@ endfunction
 let g:_darkvim_root_dir = escape(fnamemodify(s:resolve(fnamemodify(expand('<sfile>'),
       \ ':p:h:h:gs?\\?'.'/?')), ':p:gs?[\\/]?/?'), ' ')
 lockvar g:_darkvim_root_dir
-let &rtp = g:_darkvim_root_dir . ',' . $VIMRUNTIME
+let &runtimepath = g:_darkvim_root_dir . ',' . $VIMRUNTIME
 
 call darkvim#start()
 call darkvim#end()

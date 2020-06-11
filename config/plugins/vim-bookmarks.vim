@@ -1,3 +1,4 @@
+scriptencoding utf-8
 
 let g:bookmark_no_default_key_mappings = 1
 let g:bookmark_sign = '♥'

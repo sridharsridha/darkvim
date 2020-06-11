@@ -1,88 +1,88 @@
 " tools.vim --- darkvim tools layer
 
 function! darkvim#layers#tools#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
 	" Show indent line highlight
-	call add(plugins, ['nathanaelkane/vim-indent-guides', {
+	call add(l:plugins, ['nathanaelkane/vim-indent-guides', {
 				\ 'on_cmd' : darkvim#util#prefix('IndentGuides', ['Enable', 'Toggle']),
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Highlight words under cursor
-	call add(plugins, ['t9md/vim-quickhl' , {
+	call add(l:plugins, ['t9md/vim-quickhl' , {
 				\ 'on_map' : {'nx' : '<Plug>(quickhl'},
 				\ }])
 
 	" Open symbols window
-	call add(plugins, ['majutsushi/tagbar', {
+	call add(l:plugins, ['majutsushi/tagbar', {
 				\ 'on_cmd' : ['TagbarToggle'],
 				\ 'loadconf' : 1,
 				\ }])
 
 	" FileTree Explorer
-	call add(plugins, ['kristijanhusak/defx-icons'])
-	call add(plugins, ['Shougo/defx.nvim', {
+	call add(l:plugins, ['kristijanhusak/defx-icons'])
+	call add(l:plugins, ['Shougo/defx.nvim', {
 				\ 'depends' : ['defx-icons'],
 				\ 'on_cmd' : ['Defx'],
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Fancy start screen
-	call add(plugins, ['mhinz/vim-startify', {
+	call add(l:plugins, ['mhinz/vim-startify', {
 				\ 'on_cmd' : ['Startify'],
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Bookmarks
-	call add(plugins, ['MattesGroeger/vim-bookmarks', {
+	call add(l:plugins, ['MattesGroeger/vim-bookmarks', {
 				\ 'on_cmd' : darkvim#util#prefix('Bookmark',
 				\                ['ShowAll', 'Toggle', 'Annotate', 'Next', 'Prev']),
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Capture command output to a buffer
-	call add(plugins, ['tyru/capture.vim', {
+	call add(l:plugins, ['tyru/capture.vim', {
 				\ 'on_cmd' : ['Capture'],
 				\ }])
 
 	" Profile startuptime
-	call add(plugins, ['tweekmonster/startuptime.vim', {
+	call add(l:plugins, ['tweekmonster/startuptime.vim', {
 				\ 'on_cmd' : ['StartupTime'],
 				\ }])
 
 	" info window
-	call add(plugins, ['mcchrish/info-window.nvim', {
+	call add(l:plugins, ['mcchrish/info-window.nvim', {
 				\ 'on_cmd': ['InfoWindowToggle'],
 				\ 'on_func': ['infowindow#toggle'],
 				\ }])
 
 	" Cheat
-	call add(plugins, ['dbeniamine/cheat.sh-vim', {
+	call add(l:plugins, ['dbeniamine/cheat.sh-vim', {
 				\ 'name': 'cheat_sheet',
 				\ 'on_func': ['cheat#cheat'],
 				\ }])
 
 	" Grammer checker
-	call add(plugins, ['rhysd/vim-grammarous', {
+	call add(l:plugins, ['rhysd/vim-grammarous', {
 				\ 'on_cmd': [ 'GrammarousCheck' ],
 				\ }])
 
 	" Scratch window
-	call add(plugins, ['mtth/scratch.vim', {
+	call add(l:plugins, ['mtth/scratch.vim', {
 				\ 'on_cmd': darkvim#util#prefix('Scratch',
 				\              ['', 'Insert', 'Selection', 'Preview']),
 				\ }])
-	call add(plugins, ['chrisbra/NrrwRgn', {
+	call add(l:plugins, ['chrisbra/NrrwRgn', {
 				\ 'on_cmd': ['NUD', 'NR', 'NW']
 				\ }])
 
 	" Resize window automatically on switching
-	call add(plugins, ['justincampbell/vim-eighties', {
+	call add(l:plugins, ['justincampbell/vim-eighties', {
 				\ 'on_cmd': darkvim#util#prefix('Eighties', ['Disable', 'Enable']),
 				\ }])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#tools#config() abort
@@ -157,8 +157,8 @@ function! darkvim#layers#tools#config() abort
 				\ 'profile-startuptime', 1)
 
 	" Alternate files
-	call darkvim#mapping#space#group(['j'], "Jump")
-	call darkvim#mapping#space#group(['j', 'a'], "AlternateFile")
+	call darkvim#mapping#space#group(['j'], 'Jump')
+	call darkvim#mapping#space#group(['j', 'a'], 'AlternateFile')
 	call darkvim#mapping#space#def('nnoremap', ['j', 'a', 'a'],
 				\ 'A',
 				\ 'open', 1)
@@ -215,21 +215,21 @@ function! darkvim#layers#tools#config() abort
 	let g:CheatSheetIdPath = '/tmp/cht.sh/id' " I hate cookies.
 	let g:CheatSheetDoNotMap = 1
 	let g:CheatDoNotReplaceKeywordPrg = 1
-	call darkvim#mapping#space#group(['C'], "Cheat")
+	call darkvim#mapping#space#group(['C'], 'Cheat')
 	call darkvim#mapping#space#def('nnoremap', ['C', 'c'],
-				\ "call cheat#cheat('', getcurpos()[1], getcurpos()[1], 0, 0, '!')",
+				\ 'call cheat#cheat("", getcurpos()[1], getcurpos()[1], 0, 0, "!")',
 				\ 'search-current-line-cheat.sh (open-new-win)', 1)
 	call darkvim#mapping#space#def('nnoremap', ['C', 'r'],
-				\ "call cheat#cheat('', getcurpos()[1], getcurpos()[1], 0, 1, '!')",
+				\ 'call cheat#cheat("", getcurpos()[1], getcurpos()[1], 0, 1, "!")',
 				\ 'search-current-line-cheat.sh (rep-cur-line)', 1)
 	call darkvim#mapping#space#def('nnoremap', ['C', 'r'],
-				\ "call cheat#cheat('', getcurpos()[1], getcurpos()[1], 0, 1, '!')",
+				\ 'call cheat#cheat("", getcurpos()[1], getcurpos()[1], 0, 1, "!")',
 				\ 'search-current-line-cheat.sh (rep-cur-line)', 1)
 	call darkvim#mapping#space#def('nnoremap', ['C', 'e'],
-				\ "call cheat#cheat('', getcurpos()[1], getcurpos()[1], 0, 1, '!')",
+				\ 'call cheat#cheat("", getcurpos()[1], getcurpos()[1], 0, 1, "!")',
 				\ 'search-first-error-cheat.sh (open-new-win)', 1)
 	call darkvim#mapping#space#def('nnoremap', ['C', 'C'],
-				\ "call cheat#navigate(0, 'C')",
+				\ 'call cheat#navigate(0, "C")',
 				\ 'remove-comments-of-cheat.sh-replacement', 1)
 
 	" Grammarous
@@ -245,33 +245,33 @@ function! darkvim#layers#tools#config() abort
 				\ 'markdown' : 0,
 				\ 'help' : 0
 				\ }
-	call darkvim#mapping#space#group(['G'], "Grammar")
+	call darkvim#mapping#space#group(['G'], 'Grammar')
 	call darkvim#mapping#space#def('nnoremap', ['G', 'g'],
-				\ "GrammarousCheck",
+				\ 'GrammarousCheck',
 				\ 'start-check-grammar', 1)
 	call darkvim#mapping#space#def('nmap', ['G', 'R'],
-				\ "<Plug>(grammarous-reset)",
+				\ '<Plug>(grammarous-reset)',
 				\ 'reset-last-check-grammar')
 	call darkvim#mapping#space#def('nmap', ['G', 'o'],
-				\ "<Plug>(grammarous-open-info-window)",
+				\ '<Plug>(grammarous-open-info-window)',
 				\ 'open-grammer-check-result-window')
 	call darkvim#mapping#space#def('nmap', ['G', 'c'],
-				\ "<Plug>(grammarous-close-info-window)",
+				\ '<Plug>(grammarous-close-info-window)',
 				\ 'close-grammar-check-result-window')
 	call darkvim#mapping#space#def('nmap', ['G', 'n'],
-				\ "<Plug>(grammarous-move-to-next-error)",
+				\ '<Plug>(grammarous-move-to-next-error)',
 				\ 'jump-to-next-grammar-check-error')
 	call darkvim#mapping#space#def('nmap', ['G', 'N'],
-				\ "<Plug>(grammarous-move-to-previous-error)",
+				\ '<Plug>(grammarous-move-to-previous-error)',
 				\ 'jump-to-previous-grammar-check-error')
 	call darkvim#mapping#space#def('nmap', ['G', 'p'],
-				\ "<Plug>(grammarous-move-to-previous-error)",
+				\ '<Plug>(grammarous-move-to-previous-error)',
 				\ 'jump-to-previous-grammar-check-error')
 	call darkvim#mapping#space#def('nmap', ['G', 'f'],
-				\ "<Plug>(grammarous-fixit)<Plug>(grammarous-move-to-next-error)",
+				\ '<Plug>(grammarous-fixit)<Plug>(grammarous-move-to-next-error)',
 				\ 'autofix-current-error-and-jump-to-next')
 	call darkvim#mapping#space#def('nmap', ['G', 'r'],
-				\ "<Plug>(grammarous-remove-error)<Plug>(grammarous-move-to-next-error)",
+				\ '<Plug>(grammarous-remove-error)<Plug>(grammarous-move-to-next-error)',
 				\ 'remove/ignore-current-error-and-jump-to-next')
 
 	" Scratch window
@@ -282,12 +282,12 @@ function! darkvim#layers#tools#config() abort
 	let g:scratch_horizontal = 1
 	let g:scratch_no_mappings = 1
 	let g:scratch_persistence_file = g:darkvim_plugin_bundle_dir . '/scratch.md'
-	call darkvim#mapping#space#group(['o', 'e'], "Scratch")
+	call darkvim#mapping#space#group(['o', 'e'], 'Scratch')
 	call darkvim#mapping#space#def('nnoremap', ['o', 'e', 'e'],
-				\ "Scratch",
+				\ 'Scratch',
 				\ 'open-scratch-pad', 1)
 	call darkvim#mapping#space#def('nnoremap', ['o', 'e', 'p'],
-				\ "ScratchPreview",
+				\ 'ScratchPreview',
 				\ 'open-scratch-pad-in-preview-window', 1)
 
 endfunction

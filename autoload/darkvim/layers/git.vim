@@ -1,42 +1,42 @@
 " git.vim git layer for darkvim
 
 function! darkvim#layers#git#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
 	" Git support
-	call add(plugins, ['lambdalisue/gina.vim', {
+	call add(l:plugins, ['lambdalisue/gina.vim', {
 				\ 'on_cmd' : ['Gina'],
 				\ }])
 
 	" Signcolumn marker
-	call add(plugins, ['mhinz/vim-signify', {
+	call add(l:plugins, ['mhinz/vim-signify', {
 				\ 'on_cmd' : darkvim#util#prefix('Signify', ['Diff', 'Toggle', 'ToggleHighlight']),
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Show git file markers in defx
-	call add(plugins, ['kristijanhusak/defx-git', {
+	call add(l:plugins, ['kristijanhusak/defx-git', {
 				\ 'on_source' : ['defx.nvim'],
 				\ }])
 
 	" List git log of current file
-	call add(plugins, ['cohama/agit.vim', {
+	call add(l:plugins, ['cohama/agit.vim', {
 				\ 'on_cmd' : darkvim#util#prefix('Agit', ['', 'File']),
 				\ }])
 
 	" Gist support
-	call add(plugins, ['lambdalisue/vim-gista', {
+	call add(l:plugins, ['lambdalisue/vim-gista', {
 				\ 'on_cmd' : ['Gista'],
 				\ }])
 
 	" Show git blame in floating window
-	call add(plugins, ['rhysd/git-messenger.vim', {
+	call add(l:plugins, ['rhysd/git-messenger.vim', {
 				\ 'on_cmd' : ['GitMessenger'],
 				\ 'on_map' : '<Plug>(git-messenger',
 				\ 'loadconf' : 1,
 				\ }])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#git#config() abort
@@ -115,7 +115,7 @@ function! darkvim#layers#git#config() abort
 				\ 'commit-message-of-current-line', 1)
 
 	" Gista ( Gist wrapper )
-	call darkvim#mapping#space#group(['g', 'g'], "Gist")
+	call darkvim#mapping#space#group(['g', 'g'], 'Gist')
 	call darkvim#mapping#space#def('nnoremap', ['g', 'g', 'l'],
 				\ 'Gista list',
 				\ 'list-gist', 1)
@@ -132,13 +132,13 @@ function! darkvim#layers#git#config() abort
 endfunction
 
 function! s:disp_last_commit_curline() abort
-	let line = line('.')
-	let file = expand('%')
-	let cmd = 'git log -L ' . line . ',' . line . ':' . file
-	let cmd .= ' --pretty=format:"%s" -1'
-	let title = systemlist(cmd)[0]
+	let l:line = line('.')
+	let l:file = expand('%')
+	let l:cmd = 'git log -L ' . l:line . ',' . l:line . ':' . l:file
+	let l:cmd .= ' --pretty=format:"%s" -1'
+	let l:title = systemlist(l:cmd)[0]
 	if v:shell_error == 0
-		echo 'Last commit of current line is: ' . title
+		echo 'Last commit of current line is: ' . l:title
 	endif
 endfunction
 

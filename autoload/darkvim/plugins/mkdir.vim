@@ -1,7 +1,7 @@
 " mkdir.vim --- auto mkdir when saving file
 
-let s:save_cpo = &cpo
-set cpo&vim
+let s:save_cpoptions = &cpoptions
+set cpoptions&vim
 
 function! darkvim#plugins#mkdir#create_current() abort
 	call s:create_directory(expand('%:p:h'))
@@ -20,17 +20,17 @@ fun! s:mkdirp(dir) abort
 endf
 
 fun! s:create_directory(dir) abort
-	let d = a:dir
+	let l:d = a:dir
 
 	" @todo do not skip files that have schemes
-	if d =~? '^[a-z]\+:/'
+	if l:d =~? '^[a-z]\+:/'
 		return
 	endif
 
-	if !isdirectory(d)
-		call s:mkdirp(d)
+	if !isdirectory(l:d)
+		call s:mkdirp(l:d)
 	end
 endf
 
-let &cpo = s:save_cpo
-unlet s:save_cpo
+let &cpoptions = s:save_cpoptions
+unlet s:save_cpoptions

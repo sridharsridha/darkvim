@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 let g:tagbar_autoshowtag = 1
 let g:tagbar_width = get(g:, 'darkvim_tagbar_width', 40)
 if get(g:,'darkvim_filetree_direction', 'right') ==# 'right'

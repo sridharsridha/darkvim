@@ -30,11 +30,11 @@ let g:NERD_c_alt_style = 1
 let g:NERDCustomDelimiters = {'c': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' }}
 let g:ft = ''
 fu! NERDCommenter_before()
-  if &ft ==# 'markdown'
+  if &filetype ==# 'markdown'
     let g:ft = 'markdown'
-    let cf = context_filetype#get()
-    if cf.filetype !=# 'markdown'
-      exe 'setf ' . cf.filetype
+    let l:cf = context_filetype#get()
+    if l:cf.filetype !=# 'markdown'
+      exe 'setf ' . l:cf.filetype
     endif
   endif
 endfu

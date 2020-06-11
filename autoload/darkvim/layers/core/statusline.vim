@@ -2,19 +2,19 @@
 scriptencoding utf8
 
 function! darkvim#layers#core#statusline#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
 	" Statusbar plugin
-	call add(plugins, ['itchyny/lightline.vim', {
+	call add(l:plugins, ['itchyny/lightline.vim', {
 				\ 'depends' : ['vim-devicons'],
 				\ 'on_event': ['VimEnter'],
 				\ }])
 	" Tabline plubin
-	call add(plugins, ['mengelbrecht/lightline-bufferline', {
+	call add(l:plugins, ['mengelbrecht/lightline-bufferline', {
 				\ 'on_event': ['VimEnter'],
 				\ }])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#core#statusline#config() abort
@@ -184,27 +184,27 @@ endfunction
 " Indicates if the current window is a special one.
 " Used to differ the segments in such case.
 function! darkvim#layers#core#statusline#special_window() abort
-	let ft = &filetype
-	let bfname = bufname('%')
+	let l:ft = &filetype
+	let l:bfname = bufname('%')
 	return
-				\ ft ==# 'tagbar' ||
-				\ ft ==# 'nerdtree' ||
-				\ ft ==# 'undotree' ||
-				\ ft ==# 'twiggy' ||
-				\ ft ==# 'help' ||
-				\ ft ==# 'gitcommit' ||
-				\ ft ==# 'denite' ||
-				\ ft ==# 'denite-filter' ||
-				\ ft ==# 'fzf' ||
-				\ ft ==# 'agit' ||
-				\ ft ==# 'startify' ||
-				\ ft ==# 'snippets' ||
-				\ ft ==# 'far_vim' ||
-				\ ft ==# 'qf' ||
-				\ ft ==# 'ctrlp' ||
-				\ ft ==# 'clap' ||
-				\ ft ==# 'defx' ||
-				\ bfname ==# '__Scratch__' ||
+				\ l:ft ==# 'tagbar' ||
+				\ l:ft ==# 'nerdtree' ||
+				\ l:ft ==# 'undotree' ||
+				\ l:ft ==# 'twiggy' ||
+				\ l:ft ==# 'help' ||
+				\ l:ft ==# 'gitcommit' ||
+				\ l:ft ==# 'denite' ||
+				\ l:ft ==# 'denite-filter' ||
+				\ l:ft ==# 'fzf' ||
+				\ l:ft ==# 'agit' ||
+				\ l:ft ==# 'startify' ||
+				\ l:ft ==# 'snippets' ||
+				\ l:ft ==# 'far_vim' ||
+				\ l:ft ==# 'qf' ||
+				\ l:ft ==# 'ctrlp' ||
+				\ l:ft ==# 'clap' ||
+				\ l:ft ==# 'defx' ||
+				\ l:bfname ==# '__Scratch__' ||
 				\ s:is_location_window(win_getid()) ||
 				\ s:is_diff_window()
 endfunction
@@ -275,29 +275,29 @@ function! darkvim#layers#core#statusline#mode() abort
 		let l:submode = submode#current()
 	endi
 
-	let ft = &filetype
-	let bfname = bufname('%')
+	let l:ft = &filetype
+	let l:bfname = bufname('%')
 	if darkvim#layers#core#statusline#special_window()
 		return
-					\ ft ==# 'tagbar' ? 'Tagbar' :
-					\ ft ==# 'nerdtree' ? 'NERDTree' :
-					\ ft ==# 'tabman' ? 'TabMan':
-					\ ft ==# 'twiggy' ? 'Twiggy':
-					\ ft ==# 'help' ? 'Help' :
-					\ ft ==# 'gitcommit' ? 'Git Commit' :
-					\ ft ==# 'tagbar' ? 'Tagbar' :
-					\ ft ==# 'defx' ? 'Defx' :
-					\ ft ==# 'fzf' ? 'FZF' :
-					\ ft ==# 'clap' ? 'Clap' :
-					\ ft ==# 'agit' ? 'Git Log' :
-					\ ft ==# 'startify' ? 'Startify' :
-					\ ft ==# 'snippets' ? 'Snippet' :
-					\ ft ==# 'far' ? 'Find & Replace' :
-					\ ft ==# 'denite' ? 'Denite' :
-					\ ft ==# 'denite-filter' ? 'Denite Filter' :
-					\ ft ==# 'ctrlp' ? 'CtrlP' :
-					\ ft ==# 'qf' ? 'Quickfix List' :
-					\ bfname ==# '__Scratch__' ? 'Scratch' :
+					\ l:ft ==# 'tagbar' ? 'Tagbar' :
+					\ l:ft ==# 'nerdtree' ? 'NERDTree' :
+					\ l:ft ==# 'tabman' ? 'TabMan':
+					\ l:ft ==# 'twiggy' ? 'Twiggy':
+					\ l:ft ==# 'help' ? 'Help' :
+					\ l:ft ==# 'gitcommit' ? 'Git Commit' :
+					\ l:ft ==# 'tagbar' ? 'Tagbar' :
+					\ l:ft ==# 'defx' ? 'Defx' :
+					\ l:ft ==# 'fzf' ? 'FZF' :
+					\ l:ft ==# 'clap' ? 'Clap' :
+					\ l:ft ==# 'agit' ? 'Git Log' :
+					\ l:ft ==# 'startify' ? 'Startify' :
+					\ l:ft ==# 'snippets' ? 'Snippet' :
+					\ l:ft ==# 'far' ? 'Find & Replace' :
+					\ l:ft ==# 'denite' ? 'Denite' :
+					\ l:ft ==# 'denite-filter' ? 'Denite Filter' :
+					\ l:ft ==# 'ctrlp' ? 'CtrlP' :
+					\ l:ft ==# 'qf' ? 'Quickfix List' :
+					\ l:bfname ==# '__Scratch__' ? 'Scratch' :
 					\ s:is_location_window(win_getid()) ? 'Location List' :
 					\ s:is_diff_window() ? s:get_diff_window_name() : ''
 	elseif darkvim#layers#core#statusline#preview_window()

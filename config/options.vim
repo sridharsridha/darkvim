@@ -1,3 +1,4 @@
+scriptencoding utf-8
 
 " General:
 " ----------------------------------------------------------------------------
@@ -18,10 +19,6 @@ set ttimeoutlen=30
 " always use system clipboard as unnamed register
 set clipboard=unnamed,unnamedplus
 
-if has('vim_starting')
-   set encoding=utf-8
-   scriptencoding utf-8
-endif
 " ----------------------------------------------------------------------------
 
 

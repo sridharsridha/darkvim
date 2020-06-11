@@ -1,11 +1,14 @@
+
 function! darkvim#layers#incsearch#plugins() abort
-	let plugins = []
-	call add(plugins, ['haya14busa/incsearch.vim'])
-	call add(plugins, ['haya14busa/incsearch-fuzzy.vim'])
-	call add(plugins, ['haya14busa/vim-asterisk'])
-	call add(plugins, ['osyo-manga/vim-over'])
-	call add(plugins, ['haya14busa/incsearch-easymotion.vim'])
-	return plugins
+	let l:plugins = []
+
+	call add(l:plugins, ['haya14busa/incsearch.vim'])
+	call add(l:plugins, ['haya14busa/incsearch-fuzzy.vim'])
+	call add(l:plugins, ['haya14busa/vim-asterisk'])
+	call add(l:plugins, ['osyo-manga/vim-over'])
+	call add(l:plugins, ['haya14busa/incsearch-easymotion.vim'])
+
+	return l:plugins
 endfunction
 
 function! darkvim#layers#incsearch#config() abort

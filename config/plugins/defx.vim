@@ -1,4 +1,5 @@
 " defx.vim --- defx configuration
+scriptencoding utf-8
 
 let g:_darkvim_filetree_show_hidden_files = 1
 let g:_darkvim_autoclose_filetree = 1
@@ -188,20 +189,20 @@ function! DefxSmartL(_)
     call defx#call_action('open_tree')
     normal! j
   else
-    let filepath = defx#get_candidate()['action__path']
+    let l:filepath = defx#get_candidate()['action__path']
     if tabpagewinnr(tabpagenr(), '$') >= 3    " if there are more than 2 normal windows
       if exists(':ChooseWin') == 2
         ChooseWin
       else
-        let input = input('ChooseWin No./Cancel(n): ')
-        if input ==# 'n' | return | endif
-        if input == winnr() | return | endif
-        exec input . 'wincmd w'
+        let l:input = input('ChooseWin No./Cancel(n): ')
+        if l:input ==# 'n' | return | endif
+        if l:input == winnr() | return | endif
+        exec l:input . 'wincmd w'
       endif
-      exec 'e' filepath
+      exec 'e' l:filepath
     else
       exec 'wincmd w'
-      exec 'e' filepath
+      exec 'e' l:filepath
     endif
   endif
 endfunction
@@ -220,8 +221,8 @@ function! DefxSmartH(_)
   " parent is root?
   let s:candidate = defx#get_candidate()
   let s:parent = fnamemodify(s:candidate['action__path'], s:candidate['is_directory'] ? ':p:h:h' : ':p:h')
-  let sep = '/'
-  if s:trim_right(s:parent, sep) == s:trim_right(b:defx.paths[0], sep)
+  let l:sep = '/'
+  if s:trim_right(s:parent, l:sep) == s:trim_right(b:defx.paths[0], l:sep)
     return defx#call_action('cd', ['..'])
   endif
 

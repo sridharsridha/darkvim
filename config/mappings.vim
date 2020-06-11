@@ -1,10 +1,6 @@
 "Use jk switch to normal mode
 inoremap jk <esc>
 
-if (!has('nvim') || $DISPLAY != '') && has('clipboard')
-	xnoremap <silent> y "*y:let [@+,@"]=[@*,@*]<CR>
-endif
-
 " Start new line
 inoremap <S-Return> <C-o>o
 
@@ -35,6 +31,13 @@ vnoremap k gk
 " Start an external command with a single bang
 nnoremap !  :!
 
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
+
 imap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 imap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 imap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
@@ -62,29 +65,41 @@ call darkvim#mapping#leader#def('nnoremap', ['x', 'm'],
 if has('unnamedplus')
 	call darkvim#mapping#leader#def('nnoremap', ['p'],
 				\ '"+p',
-				\ 'paste-after-here', 2, 1)
+				\ 'paste-after-here', 2)
 	call darkvim#mapping#leader#def('nnoremap', ['P'],
 				\ '"+P',
-				\ 'paste-before-here', 2, 1)
-	call darkvim#mapping#leader#def('xnoremap', ['y'],
+				\ 'paste-before-here', 2)
+	call darkvim#mapping#leader#def('vnoremap', ['y'],
 				\ '"+y',
-				\ 'yank-selected-text', 2)
-	call darkvim#mapping#leader#def('xnoremap', ['x', 'd'],
-				\ '"+d',
-				\ 'delete-selected-text', 2)
+				\ 'copy-text')
+	call darkvim#mapping#leader#def('nnoremap', ['y'],
+				\ '"+Y',
+				\ 'copy-line')
+	call darkvim#mapping#leader#def('nnoremap', ['x'],
+				\ '"+Y dd"',
+				\ 'cut-line')
+	call darkvim#mapping#leader#def('vnoremap', ['x'],
+				\ '"+y gvd"',
+				\ 'cut-text', 2)
 else
 	call darkvim#mapping#leader#def('nnoremap', ['p'],
 				\ '"*p',
-				\ 'paste-after-here', 2, 1)
+				\ 'paste-after-here', 2)
 	call darkvim#mapping#leader#def('nnoremap', ['P'],
 				\ '"*P',
-				\ 'paste-before-here', 2, 1)
-	call darkvim#mapping#leader#def('xnoremap', ['y'],
+				\ 'paste-before-here', 2)
+	call darkvim#mapping#leader#def('vnoremap', ['y'],
 				\ '"*y',
-				\ 'yank-selected-text', 2)
-	call darkvim#mapping#leader#def('xnoremap', ['x', 'd'],
-				\ '"*d',
-				\ 'delete-selected-text', 2)
+				\ 'copy-text')
+	call darkvim#mapping#leader#def('nnoremap', ['y'],
+				\ '"*Y',
+				\ 'copy-line')
+	call darkvim#mapping#leader#def('nnoremap', ['x'],
+				\ '"*Y dd"',
+				\ 'cut-line')
+	call darkvim#mapping#leader#def('vnoremap', ['x'],
+				\ '"*y gvd"',
+				\ 'cut-text', 2)
 endif
 
 " Unimpaired bindings
@@ -96,15 +111,6 @@ call darkvim#mapping#leader#def('nnoremap', ['l', 'a'],
 call darkvim#mapping#leader#def('nnoremap', ['l', 'b'],
 			\ 'put =repeat(nr2char(10), v:count1)',
 			\ 'add-empty-line-above', 1)
-
-" [b or ]n go to previous or next buffer
-call darkvim#mapping#leader#group(['b'], 'Buffer')
-call darkvim#mapping#leader#def('nnoremap', ['b', 'p'],
-			\ 'bN \| stopinsert',
-			\ 'prev-buffer', 1)
-call darkvim#mapping#leader#def('nnoremap', ['b', 'n'],
-			\ 'bn \| stopinsert',
-			\ 'next-buffer', 1)
 
 " [l or ]l go to next and previous error
 call darkvim#mapping#leader#group(['e'], 'Error')
@@ -121,16 +127,16 @@ call darkvim#mapping#leader#def('nnoremap', ['d', 'c'],
 			\ 'lcd %:p:h<CR>:pwd',
 			\ 'cd-current-buffer-dir', 1)
 " Yank buffer's relative/absolute path to clipboard
-nnoremap <leader>dY :let @+=expand("%:~:.")<CR>:echo 'Yanked relative path'<CR>
+nnoremap <leader>dY :let @+=expand('%:~:.')<CR>:echo 'Yanked relative path'<CR>
 let g:_darkvim_mappings_leader['d']['Y'] = 'yank-relative-path-current-buffer'
-nnoremap <leader>dy :let @+=expand("%:p")<CR>:echo 'Yanked absolute path'<CR>
+nnoremap <leader>dy :let @+=expand('%:p')<CR>:echo 'Yanked absolute path'<CR>
 let g:_darkvim_mappings_leader['d']['y'] = 'yank-absolute-path-current-buffer'
 
 " Smart wrap toggle (breakindent and colorcolumn toggle as-well)
 call darkvim#mapping#leader#group(['t'], 'Toggles')
 " nmap <leader>tw :execute('setlocal wrap! breakindent! colorcolumn=' . (&colorcolumn == '' ? &textwidth : ''))<CR>
 call darkvim#mapping#leader#def('nmap', ['t', 'w'],
-			\ "execute('setlocal wrap! breakindent! colorcolumn=' . (&colorcolumn == '' ? &textwidth : ''))",
+			\ 'execute("setlocal wrap! breakindent! colorcolumn=" . (&colorcolumn == "" ? &textwidth : ""))',
 			\ 'toggle-wrap', 1)
 " let g:_darkvim_mappings_leader['t']['w'] = 'toggle-wrap'
 call darkvim#mapping#leader#def('nnoremap', ['t', 's'],
@@ -154,17 +160,17 @@ call darkvim#mapping#leader#def('nnoremap', ['t', 'h'],
 " toggles the quickfix window.
 command -bang -nargs=? QFix call QFixToggle(<bang>0)
 function! QFixToggle(forced)
-	if exists("g:qfix_win") && a:forced == 0
+	if exists('g:qfix_win') && a:forced == 0
 		cclose
 	else
-		execute "copen " . get(g:, 'darkvim_quickfix_winheight', 15)
+		execute 'copen ' . get(g:, 'darkvim_quickfix_winheight', 15)
 	endif
 endfunction
 " used to track the quickfix window
 augroup QFixToggle
 	autocmd!
-	autocmd BufWinEnter quickfix let g:qfix_win = bufnr("$")
-	autocmd BufWinLeave * if exists("g:qfix_win") && expand("<abuf>") == g:qfix_win |
+	autocmd BufWinEnter quickfix let g:qfix_win = bufnr('$')
+	autocmd BufWinLeave * if exists('g:qfix_win') && expand('<abuf>') == g:qfix_win |
 				\ unlet! g:qfix_win | endif
 augroup END
 call darkvim#mapping#leader#def('nnoremap', ['t', 'q'],
@@ -175,7 +181,7 @@ call darkvim#mapping#leader#def('nnoremap', ['t', 'q'],
 function! s:browse_files(local) abort
 	let l:directory = '~/.config/nvim/'
 	if a:local
-		echom "Local Config"
+		echom 'Local Config'
 		if finddir(g:darkvim_custom_folder) ==# ''
 			silent call mkdir(expand(g:darkvim_custom_folder), 'p', 0700)
 			silent exe '!touch ' . g:darkvim_custom_folder . '/init.vim'
@@ -188,6 +194,8 @@ function! s:browse_files(local) abort
 		exe 'CtrlP '.l:directory
    elseif darkvim#layers#is_loaded('denite')
 		exe 'Denite '.l:directory
+   elseif darkvim#layers#is_loaded('fzf')
+		exe 'FZF '.l:directory
 	else
 		exe 'tabnew' l:directory
 	endif

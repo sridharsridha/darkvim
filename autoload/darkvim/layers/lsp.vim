@@ -2,21 +2,21 @@
 " Uses coc.nvim
 
 function! darkvim#layers#lsp#plugins() abort
-	let plugins = []
+	let l:plugins = []
 
 	" Echo doc of current api
-	call add(plugins, ['Shougo/echodoc.vim', {
+	call add(l:plugins, ['Shougo/echodoc.vim', {
 				\ 'on_cmd' : darkvim#util#prefix('EchoDoc', ['Enable', 'Disable']),
 				\ 'on_event' : 'CompleteDone',
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Complete parameters
-	call add(plugins, ['tenfyzhong/CompleteParameter.vim', {
+	call add(l:plugins, ['tenfyzhong/CompleteParameter.vim', {
 				\ 'on_event' : 'InsertEnter',
 				\ }])
 	" Language server protocal client intergration support
-	call add(plugins, ['neoclide/coc.nvim', {
+	call add(l:plugins, ['neoclide/coc.nvim', {
 				\ 'build' : './install.sh',
 				\ 'hook_post_update' : 'call coc#util#install()',
 				\ 'on_event' : 'InsertEnter',
@@ -24,36 +24,36 @@ function! darkvim#layers#lsp#plugins() abort
 				\ }])
 
 	" Snippet support
-	call add(plugins, ['honza/vim-snippets'])
-	call add(plugins, ['Shougo/neosnippet-snippets'])
-	call add(plugins,  ['Shougo/neosnippet.vim', {
+	call add(l:plugins, ['honza/vim-snippets'])
+	call add(l:plugins, ['Shougo/neosnippet-snippets'])
+	call add(l:plugins,  ['Shougo/neosnippet.vim', {
 				\ 'depends' : ['neosnippet-snippets', 'vim-snippets'],
 				\ 'on_event' : 'InsertEnter',
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Not sure if I need this need to check
-	call add(plugins, ['Shougo/neco-syntax', {
+	call add(l:plugins, ['Shougo/neco-syntax', {
 				\ 'on_event' : 'InsertEnter',
 				\ }])
-	call add(plugins, ['Shougo/neopairs.vim', {
+	call add(l:plugins, ['Shougo/neopairs.vim', {
 				\ 'on_event' : 'InsertEnter',
 				\ }])
 
 	" Demlimter
-	call add(plugins, ['Raimondi/delimitMate', {
+	call add(l:plugins, ['Raimondi/delimitMate', {
 				\ 'on_event' : 'InsertEnter',
 				\ 'loadconf' : 1,
 				\ }])
 
 	" Symbol tree
-	call add(plugins, ['liuchengxu/vista.vim', {
+	call add(l:plugins, ['liuchengxu/vista.vim', {
 				\ 'on_cmd': 'Vista',
 				\ 'on_func': ['vista#', 'vista#RunForNearestMethodOrFunction'],
 				\ 'loadconf' : 1,
 				\ }])
 
-	return plugins
+	return l:plugins
 endfunction
 
 function! darkvim#layers#lsp#config() abort
@@ -271,7 +271,7 @@ function! darkvim#layers#lsp#config() abort
 				\ "exe 'CocList --input='.expand('%:p:h:t').'/ files'",
 				\ 'files-project-root', 1)
 	call darkvim#mapping#space#def('nnoremap', ['l', 'l', 'g'],
-				\ "CocList -A -I grep",
+				\ 'CocList -A -I grep',
 				\ 'grep-symbols', 1)
 	call darkvim#mapping#space#def('nnoremap', ['l', 'l', 'G'],
 				\ "exe 'CocList -A -I --input='.expand('<cword>').' grep'",
@@ -279,8 +279,8 @@ function! darkvim#layers#lsp#config() abort
 endfunction
 
 function! darkvim#layers#lsp#check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
+	let l:col = col('.') - 1
+	return !l:col || getline('.')[l:col - 1]  =~# '\s'
 endfunction
 
 function! darkvim#layers#lsp#tab() abort
@@ -308,8 +308,8 @@ function! darkvim#layers#lsp#tab() abort
 endfunction
 
 function! darkvim#layers#lsp#check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
+	let l:col = col('.') - 1
+	return !l:col || getline('.')[l:col - 1]  =~# '\s'
 endfunction-
 
 function! darkvim#layers#lsp#enter() abort
