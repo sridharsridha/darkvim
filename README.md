@@ -5,7 +5,7 @@ NeoVim Configuration for Linux and OSX.
 ![Darkvim-Linter](https://github.com/sridharsridha/darkvim/workflows/Darkvim-Linter/badge.svg)
 ![language](https://img.shields.io/github/languages/top/sridharsridha/darkvim)
 ![version](https://img.shields.io/github/v/tag/sridharsridha/darkvim?label=version&sort=semver)
-![license](https://img.shields.io/github/license/sridharsridha/darkvim)
+[![GitHub license](https://img.shields.io/github/license/sridharsridha/darkvim?style=plastic)](https://github.com/sridharsridha/darkvim/blob/master/LICENSE)
 
 ![darkvim](https://github.com/sridharsridha/darkvim/blob/master/res/darkvim.png)
 
