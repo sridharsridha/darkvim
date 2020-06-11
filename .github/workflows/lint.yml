@@ -1,4 +1,4 @@
-name: DarkvimCI
+name: Darkvim-Linter
 on:
   push:
     branches: [ master ]
