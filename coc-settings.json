@@ -1,46 +1,18 @@
 {
-	"suggest.maxCompleteItemCount": 25,
-	"suggest.minTriggerInputLength": 2,
-	"suggest.echodocSupport": true,
-	"diagnostic.enable": true,
-	"diagnostic.virtualText": true,
-	"diagnostic.errorSign": "✖",
-	"diagnostic.warningSign": "⚠",
-	"diagnostic.infoSign": "",
-	"diagnostic.hintSign": "",
-	"diagnostic.refreshOnInsertMode": true,
-	"diagnostic.refreshAfterSave": true,
-	"list.indicator": "➭",
-	"python.jediEnabled": true,
-	"python.linting.enabled": true,
-	"python.linting.flake8Enabled": true,
-	"languageserver": {
-		"ccls": {
-			"command": "ccls",
-			"filetypes": [
-				"c",
-				"cpp",
-				"objc",
-				"objcpp"
-			],
-			"rootPatterns": [
-				".ccls",
-				"compile_commands.json"
-			],
-			"initializationOptions": {
-				"cache": {
-					"directory": "/tmp/ccls"
-				},
-				"clang": {
-					"resourceDir": "/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0",
-					"extraArgs": [
-						"-isystem",
-						"/Library/Developer/CommandLineTools/usr/include/c++/v1",
-						"-I",
-						"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/"
-					]
-				}
-			}
-		}
-	}
+  "suggest.maxCompleteItemCount": 25,
+  "suggest.minTriggerInputLength": 2,
+  "suggest.echodocSupport": true,
+  "diagnostic.enable": true,
+  "diagnostic.errorSign": "✖",
+  "diagnostic.warningSign": "⚠",
+  "diagnostic.infoSign": "",
+  "diagnostic.hintSign": "",
+  "diagnostic.refreshOnInsertMode": true,
+  "diagnostic.refreshAfterSave": true,
+  "list.indicator": "➭",
+  "python.jediEnabled": true,
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true,
+  "clangd.path": "/usr/local/opt/llvm/bin/clangd",
+  "clangd.semanticHighlighting": true
 }

@@ -101,6 +101,11 @@ function! darkvim#layers#edit#plugins() abort
 				\ 'on_cmd': darkvim#util#prefix('Sideways', ['Left', 'Right']),
 				\ }])
 
+	call add(l:plugins, ['glts/vim-magnum'])
+	call add(l:plugins, ['glts/vim-radical', {
+				\ 'depends' : ['vim-magnum', 'vim-repeat'],
+				\ 'on_map' : {'nvx' : ['gA', 'crd', 'crx', 'cro', 'crb']}
+				\ }])
 	return l:plugins
 endfunction
 

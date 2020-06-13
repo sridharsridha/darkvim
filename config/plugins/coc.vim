@@ -1,6 +1,7 @@
 
 " Coc default extensions
 let g:coc_global_extensions = [
+			\ 'coc-clangd',
 			\ 'coc-lists',
 			\ 'coc-tabnine',
 			\ 'coc-tag',

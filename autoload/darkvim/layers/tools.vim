@@ -82,6 +82,13 @@ function! darkvim#layers#tools#plugins() abort
 				\ 'on_cmd': darkvim#util#prefix('Eighties', ['Disable', 'Enable']),
 				\ }])
 
+	" Shell tools
+	call add(l:plugins, ['tpope/vim-eunuch', {
+				\ 'on_cmd' : ['Delete', 'Unlink', 'Move', 'Rename', 'Chmod', 'Mkdir',
+				\             'Cfind', 'Clocate', 'Lfind', 'Llocate', 'Wall',
+				\             'SudoWrite', 'SudoEdit'],
+				\ }])
+
 	return l:plugins
 endfunction
 
