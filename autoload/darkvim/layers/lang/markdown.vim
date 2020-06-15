@@ -28,11 +28,9 @@ function! darkvim#layers#lang#markdown#plugins() abort
 endfunction
 
 function! darkvim#layers#lang#markdown#config() abort
-	" the fenced languages based on loaded language layer
-	let g:markdown_fenced_languages = []
 	let g:vim_markdown_conceal = 0
-	let g:markdown_minlines = 100
-	let g:markdown_syntax_conceal = 1
+	let g:vim_markdown_conceal_code_blocks = 0
+	let g:vim_markdown_toc_autofit = 1
 	let g:markdown_enable_mappings = 1
 	let g:markdown_enable_insert_mode_leader_mappings = 0
 	let g:markdown_enable_spell_checking = 1
