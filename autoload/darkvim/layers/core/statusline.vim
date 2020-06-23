@@ -460,7 +460,11 @@ function! darkvim#layers#core#statusline#tags_status() abort
 
 		let l:condition = !darkvim#layers#core#statusline#medium_window()
 		let l:text      = tagbar#currenttag(' %s', '')
-		let l:icon      = ' ' . (!empty(gutentags#statusline('a')) ? '羽' : '')
+      if get(g:, 'loaded_gutentags', 0)
+         let l:icon = ' ' . (!empty(gutentags#statusline('a')) ? '羽' : '')
+      else
+         let l:icon = ''
+      endif
 
 		" Short the file name for small windows if a threshold is exceeded.
 		if darkvim#layers#core#statusline#medium_window()
