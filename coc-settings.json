@@ -1,8 +1,8 @@
 {
   "suggest.maxCompleteItemCount": 25,
   "suggest.minTriggerInputLength": 2,
-  "suggest.echodocSupport": true,
-  "diagnostic.enable": true,
+  "diagnostic.checkCurrentLine" : true,
+  "diagnostic.virtualText": true,
   "diagnostic.errorSign": "✖",
   "diagnostic.warningSign": "⚠",
   "diagnostic.infoSign": "",
