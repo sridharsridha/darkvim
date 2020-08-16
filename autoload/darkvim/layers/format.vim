@@ -12,13 +12,12 @@ function! darkvim#layers#format#plugins() abort
 endfunction
 
 function! darkvim#layers#format#config() abort
-	call darkvim#mapping#space#group(['b'], 'Buffer')
-	call darkvim#mapping#space#def('nnoremap', ['b', 'f'],
+	call darkvim#mapping#space#group(['F'], 'Format')
+	call darkvim#mapping#space#def('nnoremap', ['F', 'f'],
 				\ 'Neoformat',
 				\ 'format-code', 1)
 	command! ToggleAutoFormatCode :call ToggleAutoFormatCode()
-	call darkvim#mapping#space#group(['b', 't'], 'toggle')
-	call darkvim#mapping#space#def('nnoremap', ['b', 't', 'f'], 'ToggleAutoFormatcode', 'toggle-auto-format', 1)
+	call darkvim#mapping#space#def('nnoremap', ['F', 't'], 'ToggleAutoFormatcode', 'toggle-auto-format', 1)
 endfunction
 
 function! ToggleAutoFormatCode() abort

@@ -79,7 +79,7 @@ function! darkvim#layers#tools#plugins() abort
 
 	" Resize window automatically on switching
 	call add(l:plugins, ['justincampbell/vim-eighties', {
-				\ 'on_cmd': darkvim#util#prefix('Eighties', ['Disable', 'Enable']),
+				\ 'on_cmd': [ 'EightiesResize' ],
 				\ }])
 
 	" Shell tools
@@ -98,7 +98,7 @@ function! darkvim#layers#tools#plugins() abort
 endfunction
 
 function! darkvim#layers#tools#config() abort
-	let g:eighties_extra_width = 3
+	let g:eighties_extra_width = 0
 	let g:eighties_bufname_additional_patterns = [
 				\ '__Gundo__',
 				\ '__Gundo_Preview__',
@@ -110,13 +110,9 @@ function! darkvim#layers#tools#config() abort
 				\ 'gina-blame',
 				\ 'gina-log',
 				\ ]
-	call darkvim#mapping#space#group(['w'], 'Windows')
-	call darkvim#mapping#space#def('nnoremap', ['w', 'a'],
-				\ 'EightiesEnable',
-				\ 'autoresize-window-on-switching', 1)
-	call darkvim#mapping#space#def('nnoremap', ['w', 'A'],
-				\ 'EightiesDisable',
-				\ 'disable-autoresize-window-on-switching', 1)
+	call darkvim#mapping#windows#def('nnoremap', ['r'],
+				\ 'EightiesResize',
+				\ 'resize-window', 1)
 
 	" IndentLine
 	call darkvim#mapping#space#group(['h'], 'Highlight')
@@ -140,66 +136,65 @@ function! darkvim#layers#tools#config() abort
 
 
 	" Tagbar
-	call darkvim#mapping#space#group(['o'], 'Open')
-	call darkvim#mapping#space#def('nnoremap', ['o', 't'],
+	call darkvim#mapping#space#group(['a'], 'Applications')
+	call darkvim#mapping#space#def('nnoremap', ['a', 't'],
 				\ 'TagbarToggle',
 				\ 'open-tagbar-window', 1)
 
 	" Defx
-	call darkvim#mapping#space#group(['o', 'f'], 'FileExplorer')
-	call darkvim#mapping#space#def('nnoremap <silent>', ['o', 'f', 'f'],
+	call darkvim#mapping#space#group(['a', 'f'], 'FileExplorer')
+	call darkvim#mapping#space#def('nnoremap <silent>', ['a', 'f', 'f'],
 				\ "Defx -no-toggle -search=`expand('%:p')`
 				\ `stridx(expand('%:p'), getcwd()) < 0? expand('%:p:h'): getcwd()`",
 				\ 'open-file-tree', 1)
-	call darkvim#mapping#space#def('nnoremap', ['o', 'f', 'b'],
+	call darkvim#mapping#space#def('nnoremap', ['a', 'f', 'b'],
 				\ "Defx -no-toggle `fnameescape(expand('%:p:h'))`",
 				\ 'show-file-tree-at-buffer-dir', 1)
-	call darkvim#mapping#space#def('nnoremap', ['o', 'f', 'd'],
+	call darkvim#mapping#space#def('nnoremap', ['a', 'f', 'd'],
 				\ 'call call(' . string(function('s:explore_current_dir')) . ', [])',
 				\ 'explore-current-directory', 1)
 
 	" Startify
-	call darkvim#mapping#space#def('nnoremap', ['o','S'],
+	call darkvim#mapping#space#def('nnoremap', ['a','S'],
 				\ 'Startify | doautocmd WinEnter',
 				\ 'open-fancy-start-screen', 1)
 
 	" StartupTime profile
-	call darkvim#mapping#space#def('nnoremap', ['o', 'p'],
+	call darkvim#mapping#space#def('nnoremap', ['a', 'p'],
 				\ 'StartupTime',
 				\ 'profile-startuptime', 1)
 
 	" Alternate files
 	call darkvim#mapping#space#group(['j'], 'Jump')
-	call darkvim#mapping#space#group(['j', 'a'], 'AlternateFile')
-	call darkvim#mapping#space#def('nnoremap', ['j', 'a', 'a'],
+	call darkvim#mapping#space#def('nnoremap', ['j', 'a' ],
 				\ 'A',
 				\ 'open', 1)
-	call darkvim#mapping#space#def('nnoremap', ['j', 'a', 't'],
+	call darkvim#mapping#space#def('nnoremap', ['j', 't'],
 				\ 'AT',
 				\ 'open-new-tab', 1)
-	call darkvim#mapping#space#def('nnoremap', ['j', 'a', 'g'],
+	call darkvim#mapping#space#def('nnoremap', ['j', 'g'],
 				\ 'AV',
 				\ 'open-vertical-split', 1)
-	call darkvim#mapping#space#def('nnoremap', ['j', 'a', 'v'],
+	call darkvim#mapping#space#def('nnoremap', ['j', 'v'],
 				\ 'AS',
 				\ 'open-horizontal-split', 1)
-	call darkvim#mapping#space#submode('AltFile', 'n', '', ['j', 'a', 'n'], 'n',
+	call darkvim#mapping#space#submode('AltFile', 'n', '', ['j', 'n'], 'n',
 				\ ':AN<cr>',
 				\ 'next-alt-file (enter submode n)')
 
-	call darkvim#mapping#space#def('nnoremap', ['j', 'a', 'A'],
+	call darkvim#mapping#space#def('nnoremap', ['j', 'A'],
 				\ 'IH',
 				\ 'open-uc', 1)
-	call darkvim#mapping#space#def('nnoremap', ['j', 'a', 'T'],
+	call darkvim#mapping#space#def('nnoremap', ['j', 'T'],
 				\ 'IHT',
 				\ 'open-uc-new-tab', 1)
-	call darkvim#mapping#space#def('nnoremap', ['j', 'a', 'G'],
+	call darkvim#mapping#space#def('nnoremap', ['j', 'G'],
 				\ 'IHV',
 				\ 'open-uc-vertical-split', 1)
-	call darkvim#mapping#space#def('nnoremap', ['j', 'a', 'V'],
+	call darkvim#mapping#space#def('nnoremap', ['j', 'V'],
 				\ 'IHS',
 				\ 'open-uc-horizontal-split', 1)
-	call darkvim#mapping#space#submode('AltFileF', 'n', '', ['j', 'a', 'N'], 'N',
+	call darkvim#mapping#space#submode('AltFileF', 'n', '', ['j', 'N'], 'N',
 				\ ':IHN<cr>',
 				\ 'next-alt-file (enter submode n)')
 
@@ -227,20 +222,20 @@ function! darkvim#layers#tools#config() abort
 	let g:CheatSheetIdPath = '/tmp/cht.sh/id' " I hate cookies.
 	let g:CheatSheetDoNotMap = 1
 	let g:CheatDoNotReplaceKeywordPrg = 1
-	call darkvim#mapping#space#group(['C'], 'Cheat')
-	call darkvim#mapping#space#def('nnoremap', ['C', 'c'],
+	call darkvim#mapping#space#group(['a', 'c'], 'Cheat')
+	call darkvim#mapping#space#def('nnoremap', ['a', 'c', 'c'],
 				\ 'call cheat#cheat("", getcurpos()[1], getcurpos()[1], 0, 0, "!")',
 				\ 'search-current-line-cheat.sh (open-new-win)', 1)
-	call darkvim#mapping#space#def('nnoremap', ['C', 'r'],
+	call darkvim#mapping#space#def('nnoremap', ['a', 'c', 'r'],
 				\ 'call cheat#cheat("", getcurpos()[1], getcurpos()[1], 0, 1, "!")',
 				\ 'search-current-line-cheat.sh (rep-cur-line)', 1)
-	call darkvim#mapping#space#def('nnoremap', ['C', 'r'],
+	call darkvim#mapping#space#def('nnoremap', ['a', 'c', 'r'],
 				\ 'call cheat#cheat("", getcurpos()[1], getcurpos()[1], 0, 1, "!")',
 				\ 'search-current-line-cheat.sh (rep-cur-line)', 1)
-	call darkvim#mapping#space#def('nnoremap', ['C', 'e'],
+	call darkvim#mapping#space#def('nnoremap', ['a', 'c', 'e'],
 				\ 'call cheat#cheat("", getcurpos()[1], getcurpos()[1], 0, 1, "!")',
 				\ 'search-first-error-cheat.sh (open-new-win)', 1)
-	call darkvim#mapping#space#def('nnoremap', ['C', 'C'],
+	call darkvim#mapping#space#def('nnoremap', ['a', 'c', 'C'],
 				\ 'call cheat#navigate(0, "C")',
 				\ 'remove-comments-of-cheat.sh-replacement', 1)
 
@@ -257,32 +252,32 @@ function! darkvim#layers#tools#config() abort
 				\ 'markdown' : 0,
 				\ 'help' : 0
 				\ }
-	call darkvim#mapping#space#group(['G'], 'Grammar')
-	call darkvim#mapping#space#def('nnoremap', ['G', 'g'],
+	call darkvim#mapping#space#group(['a', 'g'], 'Grammar')
+	call darkvim#mapping#space#def('nnoremap', ['a', 'g', 'g'],
 				\ 'GrammarousCheck',
 				\ 'start-check-grammar', 1)
-	call darkvim#mapping#space#def('nmap', ['G', 'R'],
+	call darkvim#mapping#space#def('nmap', ['a', 'g', 'R'],
 				\ '<Plug>(grammarous-reset)',
 				\ 'reset-last-check-grammar')
-	call darkvim#mapping#space#def('nmap', ['G', 'o'],
+	call darkvim#mapping#space#def('nmap', ['a', 'g', 'o'],
 				\ '<Plug>(grammarous-open-info-window)',
 				\ 'open-grammer-check-result-window')
-	call darkvim#mapping#space#def('nmap', ['G', 'c'],
+	call darkvim#mapping#space#def('nmap', ['a', 'g', 'c'],
 				\ '<Plug>(grammarous-close-info-window)',
 				\ 'close-grammar-check-result-window')
-	call darkvim#mapping#space#def('nmap', ['G', 'n'],
+	call darkvim#mapping#space#def('nmap', ['a', 'g', 'n'],
 				\ '<Plug>(grammarous-move-to-next-error)',
 				\ 'jump-to-next-grammar-check-error')
-	call darkvim#mapping#space#def('nmap', ['G', 'N'],
+	call darkvim#mapping#space#def('nmap', ['a', 'g', 'N'],
 				\ '<Plug>(grammarous-move-to-previous-error)',
 				\ 'jump-to-previous-grammar-check-error')
-	call darkvim#mapping#space#def('nmap', ['G', 'p'],
+	call darkvim#mapping#space#def('nmap', ['a', 'g', 'p'],
 				\ '<Plug>(grammarous-move-to-previous-error)',
 				\ 'jump-to-previous-grammar-check-error')
-	call darkvim#mapping#space#def('nmap', ['G', 'f'],
+	call darkvim#mapping#space#def('nmap', ['a', 'g', 'f'],
 				\ '<Plug>(grammarous-fixit)<Plug>(grammarous-move-to-next-error)',
 				\ 'autofix-current-error-and-jump-to-next')
-	call darkvim#mapping#space#def('nmap', ['G', 'r'],
+	call darkvim#mapping#space#def('nmap', ['a', 'g', 'r'],
 				\ '<Plug>(grammarous-remove-error)<Plug>(grammarous-move-to-next-error)',
 				\ 'remove/ignore-current-error-and-jump-to-next')
 
@@ -294,24 +289,23 @@ function! darkvim#layers#tools#config() abort
 	let g:scratch_horizontal = 1
 	let g:scratch_no_mappings = 1
 	let g:scratch_persistence_file = g:darkvim_plugin_bundle_dir . '/scratch.md'
-	call darkvim#mapping#space#group(['o', 'e'], 'Scratch')
-	call darkvim#mapping#space#def('nnoremap', ['o', 'e', 'e'],
+	call darkvim#mapping#space#group(['a', 'e'], 'Scratch')
+	call darkvim#mapping#space#def('nnoremap', ['a', 'e', 'e'],
 				\ 'Scratch',
 				\ 'open-scratch-pad', 1)
-	call darkvim#mapping#space#def('nnoremap', ['o', 'e', 'p'],
+	call darkvim#mapping#space#def('nnoremap', ['a', 'e', 'p'],
 				\ 'ScratchPreview',
 				\ 'open-scratch-pad-in-preview-window', 1)
 
 	" Quickrun
-	call darkvim#mapping#space#group(['d'], 'Debug')
-	call darkvim#mapping#space#group(['d', 'r'], 'Run')
-	call darkvim#mapping#space#def('nnoremap', ['d', 'r', 'r'],
+	call darkvim#mapping#space#group(['r'], 'Run')
+	call darkvim#mapping#space#def('nnoremap', ['r', 'r'],
 				\ 'QuickRun',
 				\ 'quickly-run-current-buffer', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['d', 'r', 'j'],
+	call darkvim#mapping#space#def('nnoremap', ['r', 'j'],
 				\ 'call call(' . string(function('s:quickrun_goto')) . ', [])',
 				\ 'explore-current-directory', 1)
-	call darkvim#mapping#space#def('nnoremap', ['d', 'r', 'q'],
+	call darkvim#mapping#space#def('nnoremap', ['r', 'q'],
 				\ 'call call(' . string(function('s:quickrun_close')) . ', [])',
 				\ 'explore-current-directory', 1)
 endfunction

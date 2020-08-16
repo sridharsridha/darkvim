@@ -14,10 +14,10 @@ endfunction
 
 function! darkvim#layers#checkers#config() abort
 	call darkvim#mapping#space#group(['e'], 'Errors')
-	call darkvim#mapping#space#def('nnoremap', ['t', 'e'], 'call call('
+	call darkvim#mapping#space#def('nnoremap', ['e', 'e'], 'call call('
 				\ . string(function('s:toggle_syntax_checker')) . ', [1])',
 				\ 'toggle-syntax-checker', 1)
-	call darkvim#mapping#space#def('nnoremap', ['t', 'E'], 'call call('
+	call darkvim#mapping#space#def('nnoremap', ['e', 'E'], 'call call('
 				\ . string(function('s:toggle_syntax_checker')) . ', [0])',
 				\ 'toggle-syntax-checker', 1)
 	call darkvim#mapping#space#def('nnoremap', ['e', 'l'], 'call call('

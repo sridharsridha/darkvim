@@ -32,11 +32,15 @@ function! darkvim#layers#core#plugins() abort
 				\ 'on_cmd': [ 'Sleuth' ],
 				\ }])
 
+	" Highlight jump
+	"
+	call add(l:plugins, ['deris/vim-shot-f', {
+				\ 'on_map' : { 'nxo' : '<Plug>' }
+				\ }])
+
 	" copy paste
 	call add(l:plugins, ['christoomey/vim-system-copy', {
-				\ 'on_map' : {
-				\    'n' : [ 'cp', 'cP', 'cv', 'cV'],
-				\ }
+				\ 'on_map' : { 'n' : [ 'cp', 'cP', 'cv', 'cV'], }
 				\ }])
 
 	" [, ], }, { mappings
@@ -71,8 +75,8 @@ function! darkvim#layers#core#plugins() abort
 				\ }])
 
 	" Commenter
-	call add(l:plugins, ['scrooloose/nerdcommenter', {
-				\ 'on_map' : {'nvx' : '<plug>NERDCommenter'},
+	call add(l:plugins, ['tyru/caw.vim', {
+				\ 'on_map' : {'nvx' : '<Plug>'},
 				\ 'loadconf' : 1,
 				\ }])
 
@@ -99,12 +103,12 @@ function! darkvim#layers#core#plugins() abort
 				\ 'on_ft' : ['qf'],
 				\ 'loadconf' : 1,
 				\ }])
-	call add(l:plugins, ['itchyny/vim-qfedit', {
-				\ 'on_ft' : ['qf'],
-				\ }])
-	call add(l:plugins, ['thinca/vim-qfreplace', {
-				\ 'on_cmd' : ['Qfreplace'],
-				\ }])
+	" call add(l:plugins, ['itchyny/vim-qfedit', {
+	"			\ 'on_ft' : ['qf'],
+	"			\ }])
+	" call add(l:plugins, ['thinca/vim-qfreplace', {
+	"			\ 'on_cmd' : ['Qfreplace'],
+	"			\ }])
 
 	" Choose window by visual selection
 	call add(l:plugins, ['t9md/vim-choosewin', {
@@ -167,68 +171,18 @@ function! darkvim#layers#core#config() abort
 				\ 'Dein update',
 				\ 'update-plugins', 1)
 
-	" NerdCommenter
-	" Toggles the comment state of the selected line(s). If the topmost selected
-	" line is commented, all selected lines are uncommented and vice versa.
-	call darkvim#mapping#space#group(['c'], 'Comment')
-	call darkvim#mapping#space#def('nmap', ['c', 'l'],
-				\ '<Plug>NERDCommenterInvert',
-				\ 'toggle-comments', 0, 1)
-	call darkvim#mapping#space#def('nmap', ['c', 'L'],
-				\ '<Plug>NERDCommenterComment',
-				\ 'comment-lines', 0, 1)
-	call darkvim#mapping#space#def('nmap', ['c', 'u'],
-				\ '<Plug>NERDCommenterUncomment',
-				\ 'uncomment-lines', 0, 1)
-	call darkvim#mapping#space#def('nmap', ['c', 'v'],
-				\ '<Plug>NERDCommenterInvertgv',
-				\ 'toggle-visual-comments', 0, 1)
-	call darkvim#mapping#space#def('nmap', ['c', 's'],
-				\ '<Plug>NERDCommenterSexy',
-				\ 'comment-with-sexy-layout', 0, 1)
-	call darkvim#mapping#space#def('nmap', ['c', 'Y'],
-				\ '<Plug>NERDCommenterYank',
-				\ 'yank-and-comment', 0, 1)
-	call darkvim#mapping#space#def('nmap', ['c', '$'],
-				\ '<Plug>NERDCommenterToEOL',
-				\ 'comment-from-cursor-to-end-of-line', 0, 1)
-	call darkvim#mapping#space#def('nmap', ['c', 'a'],
-				\ '<Plug>NERDCommenterAppend',
-				\ 'append-comment-at-end-of-line', 0, 1)
-
-	nnoremap <silent> <Plug>CommentToLine :call <SID>comment_to_line(0)<Cr>
-	nnoremap <silent> <Plug>CommentToLineInvert :call <SID>comment_to_line(1)<Cr>
-	nnoremap <silent> <Plug>CommentParagraphs :call <SID>comment_paragraphs(0)<Cr>
-	nnoremap <silent> <Plug>CommentParagraphsInvert
-				\ :call <SID>comment_paragraphs(1)<Cr>
-
-	call darkvim#mapping#space#def('nmap', ['c', 't'],
-				\ '<Plug>CommentToLineInvert',
-				\ 'toggle-comment-until-line', 0, 1)
-	call darkvim#mapping#space#def('nmap', ['c', 'T'],
-				\ '<Plug>CommentToLine',
-				\ 'comment-until-the-line', 0, 1)
-	call darkvim#mapping#space#def('nmap', ['c', 'p'],
-				\ '<Plug>CommentParagraphsInvert',
-				\ 'toggle-comment-paragraphs', 0, 1)
-	call darkvim#mapping#space#def('nmap', ['c', 'P'],
-				\ '<Plug>CommentParagraphs',
-				\ 'comment-paragraphs', 0, 1)
-
-	" Comment operator
-	nnoremap <silent> <Plug>CommentOperator :set operatorfunc=<SID>commentOperator<Cr>g@
-	call darkvim#mapping#space#def('nmap', [';'],
-				\ '<Plug>CommentOperator',
-				\ 'comment-operator', 2)
+	" Toggles the comment state of the selected line(s).
+	call darkvim#mapping#g#def('nmap', ['c'],
+				\ '<plug>(caw:prefix)',
+				\ 'comment-prefix', 2, 1)
+	nmap <buffer> gcc <Plug>(caw:hatpos:toggle)
+	xmap <buffer> gcc <Plug>(caw:hatpos:toggle)
 
 	" Vim-Grepper
 	call darkvim#mapping#space#group(['s'], 'Search')
 	call darkvim#mapping#g#def('nmap', ['s'],
 				\ '<plug>(GrepperOperator)',
-				\ 'grep-selection', 2)
-	call darkvim#mapping#g#def('vmap', ['s'],
-				\ '<plug>(GrepperOperator)',
-				\ 'grep-selection', 2)
+				\ 'grep-selection', 2, 1)
 	call darkvim#mapping#space#def('nnoremap', ['s', 's'],
 				\ 'Grepper',
 				\ 'search-in-project', 1)
@@ -254,54 +208,20 @@ function! darkvim#layers#core#config() abort
 				\ '<plug>(openbrowser-smart-search)',
 				\ 'browser-smart-search-operator', 0, 1)
 
-endfunction
+	" disable default key mappings for vim-shot-f
+	let g:shot_f_no_default_key_mappings = 1
+	nmap f  <Plug>(shot-f-f)
+	nmap F  <Plug>(shot-f-F)
+	nmap t  <Plug>(shot-f-t)
+	nmap T  <Plug>(shot-f-T)
+	xmap f  <Plug>(shot-f-f)
+	xmap F  <Plug>(shot-f-F)
+	xmap t  <Plug>(shot-f-t)
+	xmap T  <Plug>(shot-f-T)
+	omap f  <Plug>(shot-f-f)
+	omap F  <Plug>(shot-f-F)
+	omap t  <Plug>(shot-f-t)
+	omap T  <Plug>(shot-f-T)
 
-function! s:commentOperator(type, ...) abort
-	let l:sel_save = &selection
-	let &selection = 'inclusive'
-	let l:reg_save = @@
-
-	if a:0  " Invoked from Visual mode, use gv command.
-		silent exe 'normal! gv'
-		call feedkeys("\<Plug>NERDCommenterComment")
-	elseif a:type ==# 'line'
-		call feedkeys('`[V`]')
-		call feedkeys("\<Plug>NERDCommenterComment")
-	else
-		call feedkeys('`[v`]')
-		call feedkeys("\<Plug>NERDCommenterComment")
-	endif
-
-	let &selection = l:sel_save
-	let @@ = l:reg_save
-	set operatorfunc=
-endfunction
-
-function! s:comment_to_line(invert) abort
-	let l:input = input('line number: ')
-	if empty(l:input)
-		return
-	endif
-	let l:line = str2nr(l:input)
-	let l:ex = l:line - line('.')
-	if l:ex > 0
-		exe 'normal! V'. l:ex .'j'
-	elseif l:ex == 0
-	else
-		exe 'normal! V'. abs(l:ex) .'k'
-	endif
-	if a:invert
-		call feedkeys("\<Plug>NERDCommenterInvert")
-	else
-		call feedkeys("\<Plug>NERDCommenterComment")
-	endif
-endfunction
-
-function! s:comment_paragraphs(invert) abort
-	if a:invert
-		call feedkeys("vip\<Plug>NERDCommenterInvert")
-	else
-		call feedkeys("vip\<Plug>NERDCommenterComment")
-	endif
 endfunction
 
