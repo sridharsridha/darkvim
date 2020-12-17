@@ -132,6 +132,7 @@ function! darkvim#layers#core#plugins() abort
 endfunction
 
 function! darkvim#layers#core#config() abort
+   let g:which_key_use_floating_win = 1
 	" Which-Key toplevel mappings, no guide need for these mappings
 	nnoremap <silent> z :<c-u>WhichKey 'z'<CR>
 	nnoremap <silent><nowait> g :<c-u>WhichKey 'g'<CR>

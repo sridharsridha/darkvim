@@ -1,18 +1,25 @@
 {
-  "suggest.maxCompleteItemCount": 25,
-  "suggest.minTriggerInputLength": 2,
-  "diagnostic.checkCurrentLine" : true,
-  "diagnostic.virtualText": true,
-  "diagnostic.errorSign": "✖",
-  "diagnostic.warningSign": "⚠",
-  "diagnostic.infoSign": "",
-  "diagnostic.hintSign": "",
-  "diagnostic.refreshOnInsertMode": true,
-  "diagnostic.refreshAfterSave": true,
-  "list.indicator": "➭",
-  "python.jediEnabled": true,
-  "python.linting.enabled": true,
-  "python.linting.flake8Enabled": true,
-  "clangd.path": "/usr/local/opt/llvm/bin/clangd",
-  "clangd.semanticHighlighting": true
+   "languageserver": {
+      "tacc": {
+         "command": "/usr/bin/artaclsp",
+         "filetypes": [
+            "tac"
+         ],
+         "cwd": "/src"
+      }
+   },
+   "suggest.maxCompleteItemCount": 25,
+   "suggest.minTriggerInputLength": 2,
+   "diagnostic.checkCurrentLine": true,
+   "diagnostic.virtualText": true,
+   "diagnostic.errorSign": "✖",
+   "diagnostic.warningSign": "⚠",
+   "diagnostic.infoSign": "",
+   "diagnostic.hintSign": "",
+   "diagnostic.refreshOnInsertMode": true,
+   "diagnostic.refreshAfterSave": true,
+   "list.indicator": "➭",
+   "python.jediEnabled": true,
+   "python.linting.enabled": true,
+   "clangd.semanticHighlighting": false
 }

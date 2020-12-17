@@ -54,7 +54,11 @@ function! s:run(search_query) abort
 endfunc
 
 function! darkvim#plugins#cscope#open_list() abort
-	botright copen
+   if exists( ":Denite"  )
+      Denite quickfix
+   else
+      botright copen
+   endif
 endfunction
 
 " Find search

@@ -20,12 +20,12 @@ if has('vim_starting')
   exe 'set encoding=utf-8'
   scriptencoding utf-8
   " python host
-  if !empty($PYTHON_HOST_PROG)
-    let g:python_host_prog  = $PYTHON_HOST_PROG
-  endif
-  if !empty($PYTHON3_HOST_PROG)
-    let g:python3_host_prog = $PYTHON3_HOST_PROG
-  endif
+  " if !empty($PYTHON_HOST_PROG)
+  "   let g:python_host_prog  = $PYTHON_HOST_PROG
+  " endif
+  " if !empty($PYTHON3_HOST_PROG)
+  "   let g:python3_host_prog = $PYTHON3_HOST_PROG
+  " endif
 endif
 
 " Detect root directory of darkvim

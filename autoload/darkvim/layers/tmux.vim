@@ -14,7 +14,7 @@ function! darkvim#layers#tmux#plugins() abort
 				\ }])
 
 	" Vim and tmux pane common resize command
-	call add(l:plugins, ['melonmanchan/vim-tmux-resizer', {
+	call add(l:plugins, ['RyanMillerC/better-vim-tmux-resizer', {
 				\ 'on_cmd': darkvim#util#prefix('TmuxResize', ['Left', 'Down', 'Up', 'Right']),
 				\ }])
 
