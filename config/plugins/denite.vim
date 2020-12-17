@@ -5,70 +5,55 @@ if exists('*denite#start')
   finish
 endif
 
-" " Denite general settings
-" call denite#custom#option('_', {
-"      \ 'prompt': '❯',
-"      \ 'auto_resume': 1,
-"      \ 'start_filter': 1,
-"      \ 'statusline': 1,
-"      \ 'smartcase': 1,
-"      \ 'vertical_preview': 1,
-"      \ 'highlight_matched_char' : 'Keyword',
-"      \ 'highlight_matched_range' : 'MoreMsg',
-"      \ })
+" Denite general settings
+call denite#custom#option('_', {
+     \ 'prompt': '❯',
+     \ 'auto_resume': 1,
+     \ 'auto_resize': 1,
+     \ 'start_filter': 1,
+     \ 'statusline': 0,
+     \ 'smartcase': 1,
+     \ 'source_names': 'short',
+     \ 'highlight_window_background': 'Statusline',
+     \ 'highlight_filter_background': 'WildMenu',
+     \ 'highlight_prompt': 'StatusLine',
+     \ })
+
+     "\ 'highlight_matched_char' : 'Keyword',
+     "\ 'highlight_matched_range' : 'MoreMsg',
 "
-" if has('nvim') && exists('*nvim_open_win')
-"   call denite#custom#option('_', {
-"       \ 'statusline': 0,
-"       \ 'split': 'floating',
-"       \ 'floating_preview': 1,
-"       \ 'filter_split_direction': 'floating',
-"       \ })
-" endif
-"
-"
-" " Allow customizable window positions: top, bottom, center (default)
-" function! s:denite_resize(position)
-"   if a:position ==# 'top'
-"     call denite#custom#option('_', {
-"          \ 'winwidth': (&columns - (&columns / 3)) - 1,
-"          \ 'winheight': &lines / 3,
-"          \ 'wincol': 0,
-"          \ 'winrow': 1,
-"          \ })
-"   elseif a:position ==# 'bottom'
-"     call denite#custom#option('_', {
-"          \ 'winwidth': (&columns - (&columns / 3)) - 1,
-"          \ 'winheight': &lines / 3,
-"          \ 'wincol': 0,
-"          \ 'winrow': (&lines - 2) - (&lines / 3),
-"          \ })
-"   else
-"     " Use Denite default, which is centered.
-"   endif
-" endfunction
+if has('nvim') && exists('*nvim_open_win')
+  call denite#custom#option('_', {
+      \ 'split': 'floating',
+      \ 'floating_preview': 1,
+      \ 'filter_split_direction': 'floating',
+      \ })
+endif
+
+
+" Allow customizable window positions: top, bottom, center (default)
+function! s:denite_resize(position)
+  if a:position ==# 'top'
+    call denite#custom#option('_', {
+         \ 'winwidth': (&columns - 2 * (&columns / 25)) - 1,
+         \ 'wincol': (&columns / 25),
+         \ 'winrow': (&lines / 25) - 1,
+         \ })
+  elseif a:position ==# 'bottom'
+    call denite#custom#option('_', {
+         \ 'winwidth': (&columns - (&columns / 4)) - 1,
+         \ 'wincol': 0,
+         \ 'winrow': (&lines - 2) - (&lines / 3),
+         \ })
+  else
+    " Use Denite default, which is centered.
+  endif
+endfunction
 
 
 " Set Denite's window position
-" let g:denite_position = get(g:, 'denite_position', '')
-" call s:denite_resize(g:denite_position)
-
-call denite#custom#option('_', {
-         \ 'split': 'floating',
-         \ 'start_filter': 1,
-         \ 'auto_resize': 1,
-         \ 'source_names': 'short',
-         \ 'direction': 'botright',
-         \ 'prompt': 'λ:',
-         \ 'statusline': 0,
-         \ 'highlight_matched_char': 'WildMenu',
-         \ 'highlight_matched_range': 'Visual',
-         \ 'highlight_window_background': 'Statusline',
-         \ 'highlight_filter_background': 'WildMenu',
-         \ 'highlight_prompt': 'StatusLine',
-         \ 'winrow': 1,
-         \ 'vertical_preview': 1,
-         \ })
+let g:denite_position = get(g:, 'denite_position', 'top')
+call s:denite_resize(g:denite_position)
 
 " MATCHERS
 " Default is 'matcher/fuzzy'
@@ -141,15 +126,15 @@ augroup darkvim_layer_denite
 
   autocmd VimResized * call s:denite_resize(g:denite_position)
 
-  " Enable Denite special cursor-line highlight
-  autocmd WinEnter * if &filetype =~# '^denite'
-        \ |   highlight! link CursorLine WildMenu
-        \ | endif
-
-  " Disable Denite special cursor-line highlight
-  autocmd WinLeave * if &filetype ==# 'denite'
-        \ |   highlight! link CursorLine NONE
-        \ | endif
+  " " Enable Denite special cursor-line highlight
+  " autocmd WinEnter * if &filetype =~# '^denite'
+  "      \ |   highlight! link CursorLine WildMenu
+  "      \ | endif
+  "
+  " " Disable Denite special cursor-line highlight
+  " autocmd WinLeave * if &filetype ==# 'denite'
+  "      \ |   highlight! link CursorLine NONE
+  "      \ | endif
 augroup END
 
 function! s:denite_settings() abort
