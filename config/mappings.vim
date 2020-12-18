@@ -1,6 +1,9 @@
 "Use jk switch to normal mode
 inoremap jk <esc>
 
+" Replace
+nnoremap R "_d"
+
 " Start new line
 inoremap <S-Return> <C-o>o
 

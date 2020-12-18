@@ -1,23 +1,19 @@
 scriptencoding utf-8
 
-" Disable unwanted default plugins
-let g:loaded_2html_plugin      = 1
-let g:loaded_logiPat           = 1
-let g:loaded_getscriptPlugin   = 1
-let g:loaded_gzip              = 1
-let g:loaded_man               = 1
-let g:loaded_matchit           = 1
-let g:loaded_matchparen        = 1
-let g:loaded_netrwFileHandlers = 1
-let g:loaded_netrwPlugin       = 1
-let g:loaded_netrwSettings     = 1
-let g:loaded_rrhelper          = 1
-let g:loaded_shada_plugin      = 1
-let g:loaded_spellfile_plugin  = 1
-let g:loaded_tarPlugin         = 1
-let g:loaded_tutor_mode_plugin = 1
-let g:loaded_vimballPlugin     = 1
-let g:loaded_zipPlugin         = 1
+" Change the shape of the cursor according to the current mode.
+" Only works in iTerm with or without tmux.
+" See http://vim.wikia.com/wiki/Change_cursor_shape_in_different_modes
+if !empty($TMUX)
+  " Inside a tmux session.
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+  " Not inside a tmux session.
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
 
 if g:darkvim_enable_guicolors == 1
   set t_Co=256

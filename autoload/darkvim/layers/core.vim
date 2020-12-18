@@ -33,20 +33,19 @@ function! darkvim#layers#core#plugins() abort
 				\ }])
 
 	" Highlight jump
-	"
 	call add(l:plugins, ['deris/vim-shot-f', {
 				\ 'on_map' : { 'nxo' : '<Plug>' }
 				\ }])
 
 	" copy paste
-	call add(l:plugins, ['christoomey/vim-system-copy', {
-				\ 'on_map' : { 'n' : [ 'cp', 'cP', 'cv', 'cV'], }
-				\ }])
+	" call add(l:plugins, ['christoomey/vim-system-copy', {
+	"			\ 'on_map' : { 'n' : [ 'cp', 'cP', 'cv', 'cV'], }
+	"			\ }])
 
 	" [, ], }, { mappings
 	" call add(plugins, ['tpope/vim-unimpaired'])
 
-	" Trigger a mode with a keymap and repeat it usign another keymap.
+	" Trigger a mode with a keymap and repeat it using another keymap.
 	call add(l:plugins, ['kana/vim-submode', {
 				\ 'nolazy' : 1,
 				\ }])
@@ -128,10 +127,29 @@ function! darkvim#layers#core#plugins() abort
 				\ 'nolazy' : 1,
 				\ }])
 
+	call add(l:plugins, ['altercation/vim-colors-solarized', {
+				\ 'nolazy' : 1,
+				\ }])
+
+	call add(l:plugins, ['sonph/onehalf', {
+				\ 'rtp': 'vim/',
+				\ 'nolazy' : 1,
+				\ }])
+
+   call add(l:plugins, ['vim-airline/vim-airline', {
+				\ 'nolazy' : 1,
+				\ }])
+	call add(l:plugins, ['vim-airline/vim-airline-themes', {
+				\ 'nolazy' : 1,
+				\ }])
+
 	return l:plugins
 endfunction
 
 function! darkvim#layers#core#config() abort
+	let g:airline#extensions#vista#enabled=0
+	let g:airline#extensions#bookmark#enabled=0
+
    let g:which_key_use_floating_win = 1
 	" Which-Key toplevel mappings, no guide need for these mappings
 	nnoremap <silent> z :<c-u>WhichKey 'z'<CR>

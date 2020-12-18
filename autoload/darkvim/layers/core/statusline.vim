@@ -4,146 +4,148 @@ scriptencoding utf8
 function! darkvim#layers#core#statusline#plugins() abort
 	let l:plugins = []
 
-	" Statusbar plugin
-	call add(l:plugins, ['itchyny/lightline.vim', {
-				\ 'depends' : ['vim-devicons'],
-				\ 'on_event': ['VimEnter'],
-				\ }])
-	" Tabline plubin
-	call add(l:plugins, ['mengelbrecht/lightline-bufferline', {
-				\ 'on_event': ['VimEnter'],
-				\ }])
+	" " Statusbar plugin
+	" call add(l:plugins, ['itchyny/lightline.vim', {
+	"			\ 'depends' : ['vim-devicons'],
+	"			\ 'on_event': ['VimEnter'],
+	"			\ }])
+	" " Tabline plubin
+	" call add(l:plugins, ['mengelbrecht/lightline-bufferline', {
+	"			\ 'on_event': ['VimEnter'],
+	"			\ }])
 
+	call add(l:plugins, ['vim-airline/vim-airline'])
+	call add(l:plugins, ['vim-airline/vim-airline-themes'])
 	return l:plugins
 endfunction
 
 function! darkvim#layers#core#statusline#config() abort
 	" lightline configuration
 	" g:darkvim_colorscheme comes from darkvim.vim
-	let g:lightline = {
-				\ 'colorscheme': g:darkvim_colorscheme,
-				\ 'separator' : {
-				\   'left': '',
-				\   'right': '',
-				\ },
-				\ 'subseparator' : {
-				\   'left': '',
-				\   'right': '',
-				\ },
-				\ 'tabline_separator' : {
-				\   'left': '',
-				\   'right': '',
-				\ },
-				\ 'tabline_subseparator' : {
-				\   'left': '',
-				\   'right': '',
-				\ },
-				\ 'mode_map' : {
-				\   'n' : 'Normal',
-				\   'i' : 'Insert',
-				\   'R' : 'Replace',
-				\   'v' : 'Visual',
-				\   'V' : 'V-Line',
-				\   '\<C-v>' : 'V-Block',
-				\   'c' : 'Command',
-				\   's' : 'Select',
-				\   'S' : 'S-Line',
-				\   '\<C-s>' : 'S-Block',
-				\   't' : 'Terminal',
-				\ },
-				\ 'active' : {
-				\   'left' : [
-				\     ['mode'],
-				\     ['git_branch', 'git_changes'],
-				\     ['paste_enabled', 'diff_mode', 'file_name_active', 'tags_status', 'modified',
-				\      'asyncrun_status', 'read_only'],
-				\   ],
-				\   'right' : [
-				\     ['position'],
-				\     ['spell'],
-				\     ['file_format', 'file_type', 'file_encoding'],
-				\     ['linter_status'],
-				\   ],
-				\ },
-				\ 'inactive' : {
-				\   'left' : [
-				\     ['window_number', 'diff_mode', 'file_name_inactive'],
-				\   ],
-				\   'right' : [
-				\     [ 'file_format', 'file_type', 'file_encoding', 'position' ],
-				\   ],
-				\ },
-				\ 'tabline' : {
-				\   'left': [
-				\     ['buffers'],
-				\   ],
-				\   'right': [
-				\     ['cwd', 'tabs'],
-				\   ],
-				\ },
-				\ 'tab' : {
-				\   'active'   : ['tabnum', 'tab_name'],
-				\   'inactive' : ['tabnum', 'tab_name'],
-				\ },
-				\ 'component_expand' : {
-				\   'cwd'           : 'getcwd',
-				\   'paste_enabled' : 'darkvim#layers#core#statusline#paste_enabled',
-				\   'diff_mode'     : 'darkvim#layers#core#statusline#diff_mode',
-				\   'modified'      : 'darkvim#layers#core#statusline#modified',
-				\   'read_only'     : 'darkvim#layers#core#statusline#read_only',
-				\   'linter_status' : 'darkvim#layers#core#statusline#linter_status',
-				\   'buffers'       : 'lightline#bufferline#buffers',
-				\  },
-				\ 'component_function' : {
-				\   'window_number'         : 'darkvim#layers#core#statusline#window_number',
-				\   'mode'               : 'darkvim#layers#core#statusline#mode',
-				\   'git_branch'         : 'darkvim#layers#core#statusline#git_branch',
-				\   'git_changes'        : 'darkvim#layers#core#statusline#git_changes',
-				\   'file_name_active'   : 'darkvim#layers#core#statusline#file_name_active',
-				\   'file_name_inactive' : 'darkvim#layers#core#statusline#file_name_inactive',
-				\   'tags_status'        : 'darkvim#layers#core#statusline#tags_status',
-				\   'file_format'        : 'darkvim#layers#core#statusline#file_format',
-				\   'file_type'          : 'darkvim#layers#core#statusline#file_type',
-				\   'file_encoding'      : 'darkvim#layers#core#statusline#file_encoding',
-				\   'spell'              : 'darkvim#layers#core#statusline#spell',
-				\   'position'           : 'darkvim#layers#core#statusline#position',
-				\   'asyncrun_status'     : 'darkvim#layers#core#statusline#asyncrun_status',
-				\ },
-				\ 'tab_component_function' : {
-				\  'tab_name' : 'darkvim#layers#core#statusline#tab_name',
-				\ },
-				\ 'component_type'   : {
-				\   'buffers'       : 'tabsel',
-				\   'paste_enabled' : 'hint',
-				\   'diff_mode'     : 'hint',
-				\   'modified'      : 'hint',
-				\   'read_only'     : 'warning',
-				\   'linter_status' : 'warning',
-				\ },
-				\ 'component_visible_condition' : {
-				\   'window_number'      : '!empty(darkvim#layers#core#statusline#window_number)',
-				\   'mode'               : '!empty(darkvim#layers#core#statusline#mode)',
-				\   'git_branch'         : '!empty(darkvim#layers#core#statusline#git_branch)',
-				\   'git_changes'        : '!empty(darkvim#layers#core#statusline#git_changes)',
-				\   'file_name_active'   : '!empty(darkvim#layers#core#statusline#file_name_active)',
-				\   'file_name_inactive' : '!empty(darkvim#layers#core#statusline#file_name_inactive)',
-				\   'tags_status'        : '!empty(darkvim#layers#core#statusline#tags_status)',
-				\   'file_format'        : '!empty(darkvim#layers#core#statusline#file_format)',
-				\   'file_type'          : '!empty(darkvim#layers#core#statusline#file_type)',
-				\   'file_encoding'      : '!empty(darkvim#layers#core#statusline#file_encoding)',
-				\   'spell'              : '!empty(darkvim#layers#core#statusline#spell)',
-				\   'position'           : '!empty(darkvim#layers#core#statusline#position)',
-				\   'asyncrun_status'    : '!empty(darkvim#layers#core#statusline#asyncrun_status)',
-				\ },
-				\ }
-
-	" Bufferline configuration
-	let g:lightline#bufferline#modified          = ' '
-	let g:lightline#bufferline#read_only         = ' '
-	let g:lightline#bufferline#unnamed           = 'No Name'
-	let g:lightline#bufferline#show_number       = 2
-	let g:lightline#bufferline#enable_devicons   = 1
-	let g:lightline#bufferline#number_map        = g:darkvim#layers#core#statusline#number_map
+	" let g:lightline = {
+	"			\ 'colorscheme': g:darkvim_colorscheme,
+	"			\ 'separator' : {
+	"			\   'left': '',
+	"			\   'right': '',
+	"			\ },
+	"			\ 'subseparator' : {
+	"			\   'left': '',
+	"			\   'right': '',
+	"			\ },
+	"			\ 'tabline_separator' : {
+	"			\   'left': '',
+	"			\   'right': '',
+	"			\ },
+	"			\ 'tabline_subseparator' : {
+	"			\   'left': '',
+	"			\   'right': '',
+	"			\ },
+	"			\ 'mode_map' : {
+	"			\   'n' : 'Normal',
+	"			\   'i' : 'Insert',
+	"			\   'R' : 'Replace',
+	"			\   'v' : 'Visual',
+	"			\   'V' : 'V-Line',
+	"			\   '\<C-v>' : 'V-Block',
+	"			\   'c' : 'Command',
+	"			\   's' : 'Select',
+	"			\   'S' : 'S-Line',
+	"			\   '\<C-s>' : 'S-Block',
+	"			\   't' : 'Terminal',
+	"			\ },
+	"			\ 'active' : {
+	"			\   'left' : [
+	"			\     ['mode'],
+	"			\     ['git_branch', 'git_changes'],
+	"			\     ['paste_enabled', 'diff_mode', 'file_name_active', 'tags_status', 'modified',
+	"			\      'asyncrun_status', 'read_only'],
+	"			\   ],
+	"			\   'right' : [
+	"			\     ['position'],
+	"			\     ['spell'],
+	"			\     ['file_format', 'file_type', 'file_encoding'],
+	"			\     ['linter_status'],
+	"			\   ],
+	"			\ },
+	"			\ 'inactive' : {
+	"			\   'left' : [
+	"			\     ['window_number', 'diff_mode', 'file_name_inactive'],
+	"			\   ],
+	"			\   'right' : [
+	"			\     [ 'file_format', 'file_type', 'file_encoding', 'position' ],
+	"			\   ],
+	"			\ },
+	"			\ 'tabline' : {
+	"			\   'left': [
+	"			\     ['buffers'],
+	"			\   ],
+	"			\   'right': [
+	"			\     ['cwd', 'tabs'],
+	"			\   ],
+	"			\ },
+	"			\ 'tab' : {
+	"			\   'active'   : ['tabnum', 'tab_name'],
+	"			\   'inactive' : ['tabnum', 'tab_name'],
+	"			\ },
+	"			\ 'component_expand' : {
+	"			\   'cwd'           : 'getcwd',
+	"			\   'paste_enabled' : 'darkvim#layers#core#statusline#paste_enabled',
+	"			\   'diff_mode'     : 'darkvim#layers#core#statusline#diff_mode',
+	"			\   'modified'      : 'darkvim#layers#core#statusline#modified',
+	"			\   'read_only'     : 'darkvim#layers#core#statusline#read_only',
+	"			\   'linter_status' : 'darkvim#layers#core#statusline#linter_status',
+	"			\   'buffers'       : 'lightline#bufferline#buffers',
+	"			\  },
+	"			\ 'component_function' : {
+	"			\   'window_number'         : 'darkvim#layers#core#statusline#window_number',
+	"			\   'mode'               : 'darkvim#layers#core#statusline#mode',
+	"			\   'git_branch'         : 'darkvim#layers#core#statusline#git_branch',
+	"			\   'git_changes'        : 'darkvim#layers#core#statusline#git_changes',
+	"			\   'file_name_active'   : 'darkvim#layers#core#statusline#file_name_active',
+	"			\   'file_name_inactive' : 'darkvim#layers#core#statusline#file_name_inactive',
+	"			\   'tags_status'        : 'darkvim#layers#core#statusline#tags_status',
+	"			\   'file_format'        : 'darkvim#layers#core#statusline#file_format',
+	"			\   'file_type'          : 'darkvim#layers#core#statusline#file_type',
+	"			\   'file_encoding'      : 'darkvim#layers#core#statusline#file_encoding',
+	"			\   'spell'              : 'darkvim#layers#core#statusline#spell',
+	"			\   'position'           : 'darkvim#layers#core#statusline#position',
+	"			\   'asyncrun_status'     : 'darkvim#layers#core#statusline#asyncrun_status',
+	"			\ },
+	"			\ 'tab_component_function' : {
+	"			\  'tab_name' : 'darkvim#layers#core#statusline#tab_name',
+	"			\ },
+	"			\ 'component_type'   : {
+	"			\   'buffers'       : 'tabsel',
+	"			\   'paste_enabled' : 'hint',
+	"			\   'diff_mode'     : 'hint',
+	"			\   'modified'      : 'hint',
+	"			\   'read_only'     : 'warning',
+	"			\   'linter_status' : 'warning',
+	"			\ },
+	"			\ 'component_visible_condition' : {
+	"			\   'window_number'      : '!empty(darkvim#layers#core#statusline#window_number)',
+	"			\   'mode'               : '!empty(darkvim#layers#core#statusline#mode)',
+	"			\   'git_branch'         : '!empty(darkvim#layers#core#statusline#git_branch)',
+	"			\   'git_changes'        : '!empty(darkvim#layers#core#statusline#git_changes)',
+	"			\   'file_name_active'   : '!empty(darkvim#layers#core#statusline#file_name_active)',
+	"			\   'file_name_inactive' : '!empty(darkvim#layers#core#statusline#file_name_inactive)',
+	"			\   'tags_status'        : '!empty(darkvim#layers#core#statusline#tags_status)',
+	"			\   'file_format'        : '!empty(darkvim#layers#core#statusline#file_format)',
+	"			\   'file_type'          : '!empty(darkvim#layers#core#statusline#file_type)',
+	"			\   'file_encoding'      : '!empty(darkvim#layers#core#statusline#file_encoding)',
+	"			\   'spell'              : '!empty(darkvim#layers#core#statusline#spell)',
+	"			\   'position'           : '!empty(darkvim#layers#core#statusline#position)',
+	"			\   'asyncrun_status'    : '!empty(darkvim#layers#core#statusline#asyncrun_status)',
+	"			\ },
+	"			\ }
+	" 
+	" " Bufferline configuration
+	" let g:lightline#bufferline#modified          = ' '
+	" let g:lightline#bufferline#read_only         = ' '
+	" let g:lightline#bufferline#unnamed           = 'No Name'
+	" let g:lightline#bufferline#show_number       = 2
+	" let g:lightline#bufferline#enable_devicons   = 1
+	" let g:lightline#bufferline#number_map        = g:darkvim#layers#core#statusline#number_map
 
 	" No need to update lightline aggresively
 	" augroup LightlineCustom
@@ -153,6 +155,33 @@ function! darkvim#layers#core#statusline#config() abort
 	"             \   call lightline#update() |
 	"             \ endif
 	" augroup END
+
+let g:airline_theme=g:darkvim_colorscheme       " For other built in themes see
+                                        "   https://github.com/vim-airline/vim-airline/wiki/Screenshots
+set laststatus=2                        " Load airline even on a single split.
+set noshowmode                          " Disable vim's default mode indicator.
+let g:airline_inactive_collapse=1
+let g:airline#extensions#tabline#fnamemod=':p:.'
+let g:airline#extensions#tabline#fnamecollapse=1
+let g:airline#extensions#tabline#left_sep=' '
+let g:airline#extensions#tabline#left_alt_sep='|'
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+let g:airline_mode_map = {
+      \ '__' : '-',
+      \ 'n'  : '▸ N',
+      \ 'N'  : '▸ N',
+      \ 'i'  : '▸ I',
+      \ 'I'  : '▸ I',
+      \ 'r'  : '▸ R',
+      \ 'R'  : '▸ R',
+      \ 'v'  : '▸ V',
+      \ 'V'  : '▸ V',
+      \ 's'  : '▸ S',
+      \ 'S'  : '▸ S',
+      \ 'c'  : '▸ C',
+      \ 'C'  : '▸ C',
+      \ }
 endfunction
 
 let g:darkvim#layers#core#statusline#number_map =

@@ -27,9 +27,6 @@ let g:darkvim_smartcloseignoreft      = [
 			\ 'defx',
 			\ ]
 
-let g:darkvim_libclang_path = '/usr/local/Cellar/llvm/8.0.1/lib/libclang.dylib'
-let g:darkvim_clang_path = '/usr/bin/clang'
-
 " return [status, dir]
 " status: 0 : no argv
 "         1 : dir

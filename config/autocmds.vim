@@ -19,5 +19,10 @@ augroup darkvim_core
       \ if &l:diff | diffupdate | endif
   autocmd BufEnter * let b:_darkvim_project_name = get(g:, '_darkvim_project_name', '')
   autocmd BufEnter,FileType * call darkvim#mapping#localleader#refresh_lang_mappings()
+  autocmd BufWritePre /tmp/*          setlocal noundofile
+  autocmd BufWritePre COMMIT_EDITMSG  setlocal noundofile
+  autocmd BufWritePre MERGE_MSG       setlocal noundofile
+  autocmd BufWritePre *.tmp           setlocal noundofile
+  autocmd BufWritePre *.bak           setlocal noundofile
 augroup END
 

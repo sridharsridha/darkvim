@@ -194,11 +194,6 @@ function! s:denite_filter_settings() abort
   " Window options
   setlocal signcolumn=yes nocursorline nonumber norelativenumber
 
-  " Disable Deoplete auto-completion within Denite filter window
-  if exists('*deoplete#custom#buffer_option')
-    call deoplete#custom#buffer_option('auto_complete', v:false)
-  endif
-
   " Denite Filter window key mappings
   inoremap <silent><buffer><expr> <C-t>   denite#do_map('do_action', 'tabopen')
   inoremap <silent><buffer><expr> <C-v>   denite#do_map('do_action', 'vsplit')
@@ -213,10 +208,12 @@ function! s:denite_filter_settings() abort
 
   nnoremap <silent><buffer><expr> q       denite#do_map('quit')
   nnoremap <silent><buffer><expr> <Esc>   denite#do_map('quit')
-  imap     <silent><buffer><nowait>       <C-g>   <Plug>(denite_filter_quit):q<Cr>
+  imap     <silent><buffer>       <C-g>   <Plug>(denite_filter_quit):q<Cr>
+  nmap     <silent><buffer>       <C-g>   <Plug>(denite_filter_quit):q<Cr>
   imap     <silent><buffer>       <C-c>   <Plug>(denite_filter_quit):q<Cr>
+  nmap     <silent><buffer>       <C-c>   <Plug>(denite_filter_quit):q<Cr>
 
-  inoremap <silent><buffer>       jk      <Esc><C-w>p
+  inoremap <silent><buffer><expr> jk      <Esc><C-w>p
   nnoremap <silent><buffer>       jk      <C-w>p
 endfunction
 

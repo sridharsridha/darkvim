@@ -7,7 +7,7 @@ function! darkvim#layers#edit#plugins() abort
 
 	" Bullets support
 	call add(l:plugins, ['dkarter/bullets.vim', {
-				\ 'on_ft': ['gitcommit', 'txt', 'markdown', 'md', 'config'],
+				\ 'on_ft': ['gitcommit', 'text', 'markdown', 'md', 'config'],
 				\ }])
 
 	" Adds bunch of testobjs (quotes, brackets, etc with a, i, A, I, n, l)
@@ -123,10 +123,10 @@ function! darkvim#layers#edit#config() abort
 
 	" TextObj Line
 	let g:textobj_line_no_default_key_mappings=1
-	vmap aL <Plug>(textobj-line-a)
-	omap aL <plug>(textobj-line-a)
-	vmap iL <Plug>(textobj-line-i)
-	omap iL <Plug>(textobj-line-i)
+	vmap al <Plug>(textobj-line-a)
+	omap al <plug>(textobj-line-a)
+	vmap il <Plug>(textobj-line-i)
+	omap il <Plug>(textobj-line-i)
 
 	" TextObj Entire
 	let g:textobj_entire_no_default_key_mappings=1
@@ -254,7 +254,7 @@ function! darkvim#layers#edit#config() abort
 	call darkvim#mapping#space#group(['x', 'm'], 'Move')
 	call darkvim#mapping#space#submode2('TextMoveJ', 'n', '', ['x', 'm', 'j'],
 				\ ':normal! ddp<cr>',
-				\ 'move-text-down (enter submode j)')
+				\ 'move-text-down j')
 	call darkvim#mapping#space#submode_map('TextMoveJ', 'n', '', 'j',
 				\ ':noautocmd silent! m .+1<cr>')
 	call darkvim#mapping#space#submode_map('TextMoveJ', 'n', '', 'k',
@@ -262,7 +262,7 @@ function! darkvim#layers#edit#config() abort
 
 	call darkvim#mapping#space#submode2('TextMoveK', 'n', '', ['x', 'm', 'k'],
 				\ ':normal! ddkP<cr>',
-				\ 'move-text-up(enter submode k)' )
+				\ 'move-text-up k' )
 	call darkvim#mapping#space#submode_map('TextMoveK', 'n', '', 'j',
 				\ ':noautocmd silent! m .+1<cr>')
 	call darkvim#mapping#space#submode_map('TextMoveK', 'n', '', 'k',
@@ -272,14 +272,14 @@ function! darkvim#layers#edit#config() abort
 	call darkvim#mapping#space#group(['x', 'd'], 'Duplicate')
 	call darkvim#mapping#space#submode2('TextDupJ', 'n', '', ['x', 'd', 'j'],
 				\ 'mzyyP`z',
-				\ 'duplicate-line-down (enter submode j)')
+				\ 'duplicate-line-down j')
 	call darkvim#mapping#space#submode_map('TextDupJ', 'n', '', 'j',
 				\ 'mzyyP`z')
 	call darkvim#mapping#space#submode_map('TextDupJ', 'n', '', 'k',
 				\ 'mzyyP`zk')
 	call darkvim#mapping#space#submode2('TextDupK', 'n', '', ['x', 'd', 'k'],
 				\ 'mzyyP`zk',
-				\ 'duplicate-line-up (enter submode k)')
+				\ 'duplicate-line-up k')
 	call darkvim#mapping#space#submode_map('TextDupK', 'n', '', 'j',
 				\ 'mzyyP`z')
 	call darkvim#mapping#space#submode_map('TextDupK', 'n', '', 'k',

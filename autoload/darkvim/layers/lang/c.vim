@@ -3,8 +3,6 @@
 " This layer provides C family language code completion and syntax checking.
 " Requires clang.
 
-let g:darkvim_clang_path = 'clang'
-
 function! darkvim#layers#lang#c#plugins() abort
 	let l:plugins = []
 

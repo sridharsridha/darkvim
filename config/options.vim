@@ -2,38 +2,28 @@ scriptencoding utf-8
 
 " General:
 " ----------------------------------------------------------------------------
-set mouse=nv                 " Disable mouse in command-line mode
-set isfname-==               " Exclude = from isfilename.
 set path+=**                 " Directories to search when using gf
 set report=0                 " Don't report on line changes
 set hidden                   " hide buffers when abandoned instead of unload
-set fileformats=unix,dos,mac " Use Unix as the standard file type
 set magic                    " For regular expressions turn magic on
 set virtualedit=block        " Position cursor anywhere in visual block
-set colorcolumn=+0            " Don't syntax highlight long lines
-set nojoinspaces             " Insert two spaces after a '.', '?' and '!' with join
-
+set noerrorbells visualbell t_vb=       " No bell sounds.
+autocmd GUIEnter * set visualbell t_vb=
 set timeoutlen=300
 set ttimeoutlen=30
-
 " always use system clipboard as unnamed register
 set clipboard=unnamed,unnamedplus
-
 " ----------------------------------------------------------------------------
-
-
 
 " WildMenu:
 " ----------------------------------------------------------------------------
-if has('wildmenu')
-   set wildignorecase
-   set wildignore+=.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*
-   set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store
-   set wildignore+=**/node_modules/**,**/bower_modules/**,*/.sass-cache/*
-   set wildignore+=application/vendor/**,**/vendor/ckeditor/**,media/vendor/**
-   set wildignore+=__pycache__,*.egg-info,.pytest_cache,.mypy_cache/**
-   set wildcharm=<C-z>  " substitue for 'wildchar' (<Tab>) in macros
-endif
+set wildignorecase
+set wildignore+=.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*
+set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store
+set wildignore+=**/node_modules/**,**/bower_modules/**,*/.sass-cache/*
+set wildignore+=application/vendor/**,**/vendor/ckeditor/**,media/vendor/**
+set wildignore+=__pycache__,*.egg-info,.pytest_cache,.mypy_cache/**
+set wildcharm=<C-z>  " substitue for 'wildchar' (<Tab>) in macros
 " ----------------------------------------------------------------------------
 
 " Directories:
@@ -59,27 +49,6 @@ set viewdir=$HOME/.cache/darkvim/view/
 
 set undofile
 set history=100
-
-" if has('nvim')
-"    "  ShaDa/viminfo:
-"    "   ' - Maximum number of previously edited files marks
-"    "   < - Maximum number of lines saved for each register
-"    "   @ - Maximum number of items in the input-line history to be
-"    "   s - Maximum size of an item contents in KiB
-"    "   h - Disable the effect of 'hlsearch' when loading the shada
-"    set shada=!,'300,<50,@100,s10,h
-" else
-"    set viminfo='300,<10,@50,h,n$HOME/.cache/darkvim/viminfo
-" endif
-
-augroup user_persistent_undo
-   autocmd!
-   au BufWritePre /tmp/*          setlocal noundofile
-   au BufWritePre COMMIT_EDITMSG  setlocal noundofile
-   au BufWritePre MERGE_MSG       setlocal noundofile
-   au BufWritePre *.tmp           setlocal noundofile
-   au BufWritePre *.bak           setlocal noundofile
-augroup END
 " ----------------------------------------------------------------------------
 
 " Indents:
@@ -97,10 +66,7 @@ set ignorecase      " Search ignoring case
 set smartcase       " Keep case when searching with *
 set infercase       " Adjust case in insert completion mode
 set complete=.,w,b  " C-n completion: Scan buffers and windows
-
-if exists('+inccommand')
-   set inccommand=nosplit
-endif
+set inccommand=split
 
 if executable('rg')
    let &grepprg = 'rg --vimgrep' . (&smartcase ? ' --smart-case' : '')
@@ -111,33 +77,21 @@ endif
 
 " Behaviour:
 " ----------------------------------------------------------------------------
-set autoread
 set splitbelow splitright " Splits open bottom right
+set switchbuf=usetab,newtab
 set completeopt=menuone   " menuone: show the pupmenu when only one match
 set completeopt+=noselect " Do not select a match in the menu
 " Do not insert any text for a match until the user selects from menu
-set completeopt+=noinsert
-
-" disable preview scratch window,
-if exists('+completepopup')
-   set completeopt+=popup
-   set completepopup=height:4,width:60,highlight:InfoPopup
-endif
+set completeopt+=noinsert " Do not auto insert the match
+set completeopt+=preview " show extra information about the current completion
 " ----------------------------------------------------------------------------
 
 " Editor UI:
 " ----------------------------------------------------------------------------
 set number           " Don't show line numbers
+set relativenumber
 set nofoldenable
-set showtabline=2
-
-if has('conceal') && v:version >= 703
-   " For snippet_complete marker
-   set conceallevel=2 concealcursor=niv
-endif
-
-if exists('+previewpopup')
-   set previewpopup=height:10,width:60
-endif
-
+set showtabline=1
+set conceallevel=2 concealcursor=niv " For snippet_complete marker
+set lazyredraw                          " Don't redraw while executing macros.
 " ----------------------------------------------------------------------------

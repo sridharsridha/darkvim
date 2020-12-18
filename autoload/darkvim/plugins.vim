@@ -21,7 +21,7 @@ function! darkvim#plugins#load() abort
 			" Installation check.
 			echom 'Starting to install vim-plugins, it may take some time based on internet speed.'
 			echom 'Kindly do not close the neovim during this process'
-			call input('Shall we begin...?')
+			" call input('Shall we begin...?')
 			call dein#install()
 		endif
 	else
