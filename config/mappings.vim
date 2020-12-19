@@ -65,45 +65,16 @@ call darkvim#mapping#leader#def('nnoremap', ['x', 'm'],
 			\ 'call call(' . string(function('s:append_modeline')) . ', [])',
 			\ 'append-modeline', 1)
 
-if has('unnamedplus')
-	call darkvim#mapping#leader#def('nnoremap', ['p'],
-				\ '"+p',
-				\ 'paste-after-here', 2)
-	call darkvim#mapping#leader#def('nnoremap', ['P'],
-				\ '"+P',
-				\ 'paste-before-here', 2)
-	call darkvim#mapping#leader#def('vnoremap', ['y'],
-				\ '"+y',
-				\ 'copy-text')
-	call darkvim#mapping#leader#def('nnoremap', ['y'],
-				\ '"+Y',
-				\ 'copy-line')
-	call darkvim#mapping#leader#def('nnoremap', ['x'],
-				\ '"+Y dd"',
-				\ 'cut-line')
-	call darkvim#mapping#leader#def('vnoremap', ['x'],
-				\ '"+y gvd"',
-				\ 'cut-text', 2)
-else
-	call darkvim#mapping#leader#def('nnoremap', ['p'],
-				\ '"*p',
-				\ 'paste-after-here', 2)
-	call darkvim#mapping#leader#def('nnoremap', ['P'],
-				\ '"*P',
-				\ 'paste-before-here', 2)
-	call darkvim#mapping#leader#def('vnoremap', ['y'],
-				\ '"*y',
-				\ 'copy-text')
-	call darkvim#mapping#leader#def('nnoremap', ['y'],
-				\ '"*Y',
-				\ 'copy-line')
-	call darkvim#mapping#leader#def('nnoremap', ['x'],
-				\ '"*Y dd"',
-				\ 'cut-line')
-	call darkvim#mapping#leader#def('vnoremap', ['x'],
-				\ '"*y gvd"',
-				\ 'cut-text', 2)
-endif
+
+call darkvim#mapping#leader#def('nnoremap', ['X'],
+			\ '"+Y dd"',
+			\ 'cut-line')
+call darkvim#mapping#leader#def('nnoremap', ['x'],
+			\ '"+y d"',
+			\ 'cut-line')
+call darkvim#mapping#leader#def('vnoremap', ['x'],
+			\ '"+y gvd"',
+			\ 'cut-text', 2)
 
 " Unimpaired bindings
 " Quickly add empty lines
@@ -203,17 +174,12 @@ function! s:browse_files(local) abort
 		exe 'tabnew' l:directory
 	endif
 endfunction
-call darkvim#mapping#leader#group(['f'], 'Files')
-call darkvim#mapping#leader#group(['f', 'c'], 'Config')
-call darkvim#mapping#leader#def('nnoremap', ['f', 'c', 'g'],
+call darkvim#mapping#leader#group(['c'], 'Config')
+call darkvim#mapping#leader#def('nnoremap', ['c', 'g'],
 			\ 'call call(' . string(function('s:browse_files')) . ', [0])',
 			\ 'open-global-config-dir', 1)
-call darkvim#mapping#leader#def('nnoremap', ['f', 'c', 'l'],
+call darkvim#mapping#leader#def('nnoremap', ['c', 'l'],
 			\ 'call call(' . string(function('s:browse_files')) . ', [1])',
 			\ 'open-local-config-dir', 1)
 
-" Open the macOS dictionary on current word
-call darkvim#mapping#leader#def('nmap', ['?'],
-			\ '!open dict://<cword><CR>',
-			\ 'open-dictonary-mac', 1)
 

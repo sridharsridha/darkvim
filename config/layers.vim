@@ -1,17 +1,17 @@
 " Essential layers
 call darkvim#layers#load('core')
-" call darkvim#layers#load('core#statusline')
+call darkvim#layers#load('core#statusline')
 call darkvim#layers#load('edit')
 call darkvim#layers#load('tools')
 call darkvim#layers#load('tmux')
 
 " Optional
-" call darkvim#layers#load('git')
+call darkvim#layers#load('git')
 call darkvim#layers#load('tags')
-" call darkvim#layers#load('shell')
+call darkvim#layers#load('shell')
 call darkvim#layers#load('format')
 call darkvim#layers#load('denite')
-" call darkvim#layers#load('checkers')
+call darkvim#layers#load('checkers')
 call darkvim#layers#load('lsp')
 
 " Lang support

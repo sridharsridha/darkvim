@@ -7,8 +7,7 @@ set report=0                 " Don't report on line changes
 set hidden                   " hide buffers when abandoned instead of unload
 set magic                    " For regular expressions turn magic on
 set virtualedit=block        " Position cursor anywhere in visual block
-set noerrorbells visualbell t_vb=       " No bell sounds.
-autocmd GUIEnter * set visualbell t_vb=
+set noerrorbells visualbell t_vb= " No bell sounds.
 set timeoutlen=300
 set ttimeoutlen=30
 " always use system clipboard as unnamed register

@@ -27,86 +27,8 @@ let g:darkvim_smartcloseignoreft      = [
 			\ 'defx',
 			\ ]
 
-" return [status, dir]
-" status: 0 : no argv
-"         1 : dir
-"         2 : filename
-function! s:parser_argv() abort
-	if !argc()
-		return [0]
-	elseif argv(0) ==# '-'
-		return [0]
-	elseif argv(0) =~# '/$'
-		let l:f = fnamemodify(expand(argv(0)), ':p')
-		if isdirectory(l:f)
-			return [1, l:f]
-		else
-			return [1, getcwd()]
-		endif
-	elseif argv(0) ==# '.'
-		return [1, getcwd()]
-	elseif isdirectory(expand(argv(0)))
-		return [1, fnamemodify(expand(argv(0)), ':p')]
-	else
-		return [2, argv()]
-	endif
-endfunction
-
-function! darkvim#welcome() abort
-	if !get(g:, 'darkvim_welcome_enable', 1)
-		return
-	endif
-
-	if get(g:, '_darkvim_session_loaded', 0) == 1
-		return
-	endif
-	exe 'cd' fnameescape(g:_darkvim_enter_dir)
-	if exists(':Startify') == 2
-		Startify
-		if isdirectory(bufname(1))
-			bwipeout! 1
-		endif
-	endif
-	" if darkvim#layers#core#statusline#medium_window() ||
-	"          \ darkvim#layers#core#statusline#tiny_window() ||
-	"          \ darkvim#layers#core#statusline#small_window()
-	"    return
-	" endif
-	" if exists(':Defx') == 2
-	"    Defx -direction='botright'
-	"    wincmd p
-	" endif
-endfunction
-
-" Setup welcome page if status is darkvim is loaded with no argv
-" or given a directory name as argument
-function! s:setup_welcome() abort
-	let l:status = s:parser_argv()
-
-	" If do not start Vim with filename, Define autocmd for opening welcome page
-	if l:status[0] == 0
-		let g:_darkvim_enter_dir = fnamemodify(getcwd(), ':~')
-		let l:setup_welcome_autocmd = 1
-	elseif l:status[0] == 1
-		let g:_darkvim_enter_dir = fnamemodify(l:status[1], ':~')
-		let l:setup_welcome_autocmd = 1
-	else
-		let l:setup_welcome_autocmd = 0
-	endif
-
-	if l:setup_welcome_autocmd == 1
-		augroup DVwelcome
-			au!
-			autocmd VimEnter * call darkvim#welcome()
-		augroup END
-	endif
-endfunction
-
 " Top level begin function for darkvim
 function! darkvim#start() abort
-	" Before loading darkvim, We need to parser argvs and setup welcome page
-	call s:setup_welcome()
-
 	" Loading default configuration
 	call darkvim#util#load_config('options.vim')
 	call darkvim#util#load_config('layers.vim')

@@ -1,4 +1,3 @@
-
 " Better-whitespace
 let g:better_whitespace_ctermcolor = 203
 let g:better_whitespace_guicolor = '#ff5f5f'

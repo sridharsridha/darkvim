@@ -2,9 +2,7 @@ scriptencoding utf-8
 
 " debug hook: holds all added plugins from all added layers
 let s:_darkvim_plugins = []
-
-let g:dein#install_message_type='title'
-
+let g:dein#lazy_rplugins = 1
 function! darkvim#plugins#get() abort
 	return deepcopy(s:_darkvim_plugins)
 endfunction
@@ -66,18 +64,20 @@ function! s:load_plugins() abort
 				endif
 				call s:plugin_add(l:name, l:options)
 				" Setup dein config for hook_source
-				if dein#tap(l:sname) && get(l:options, 'loadconf', 0)
-					call dein#config(g:dein#name, {
-								\ 'hook_source' : 'call darkvim#util#load_config("plugins/' .
-								\ split(g:dein#name,'\.')[0] . '.vim")'
-								\ })
-				endif
-				" Load plugins configuration equal to hook_add
-				if dein#tap(l:sname) && get(l:options, 'loadconf_before', 0)
-					call dein#config(g:dein#name, {
-								\ 'hook_add' : 'call darkvim#util#load_config("plugins_before/' .
-								\ split(g:dein#name,'\.')[0] . '.vim")'
-								\ })
+				if dein#tap(l:sname)
+					if get(l:options, 'loadconf', 0)
+						call dein#config(g:dein#name, {
+									\ 'hook_source' : 'call darkvim#util#load_config("plugins/' .
+									\ split(g:dein#name,'\.')[0] . '.vim")'
+									\ })
+					endif
+					" Load plugins configuration equal to hook_add
+					if get(l:options, 'loadconf_before', 0)
+						call dein#config(g:dein#name, {
+									\ 'hook_add' : 'call darkvim#util#load_config("plugins_before/' .
+									\ split(g:dein#name,'\.')[0] . '.vim")'
+									\ })
+					endif
 				endif
 			else
 				let l:options = {'lazy' : 1}
@@ -91,11 +91,9 @@ endfunction
 function! s:install_dein() abort
 	let l:Fsep = '/'
 	"auto install dein
-	if filereadable(expand(g:darkvim_plugin_bundle_dir)
+	if !filereadable(expand(g:darkvim_plugin_bundle_dir)
 				\ . join(['repos', 'github.com',
-				\ 'Shougo', 'dein.vim', 'README.md'],
-				\ l:Fsep))
-	else
+				\ 'Shougo', 'dein.vim', 'README.md'], l:Fsep))
 		if executable('git')
 			exec '!git clone https://github.com/Shougo/dein.vim "'
 						\ . expand(g:darkvim_plugin_bundle_dir)
@@ -110,5 +108,5 @@ function! s:install_dein() abort
 	exec 'set runtimepath+='. fnameescape(g:darkvim_plugin_bundle_dir)
 				\ . join(['repos', 'github.com', 'Shougo',
 				\ 'dein.vim'], l:Fsep)
-endf
+endfunction
 

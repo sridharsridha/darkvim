@@ -23,3 +23,15 @@ function! darkvim#util#has_exec(command) abort
     endif
     return s:has_exec_cache[a:command]
 endfunction
+
+" Find if given text in sart of line
+function! darkvim#util#is_start_of_line(mapping) abort
+	let l:text_before_cursor = getline('.')[0 : col('.')-1]
+	let l:mapping_pattern = '\V' . escape(a:mapping, '\')
+	let l:comment_pattern = '\V' . escape(substitute(&l:commentstring,
+				\ '%s.*$', '', ''), '\')
+	return (l:text_before_cursor =~? '^' . ('\v(' . l:comment_pattern . '\v)?') .
+				\ '\s*\v' . l:mapping_pattern . '\v$')
+endfunction
+
+

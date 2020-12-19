@@ -213,7 +213,7 @@ function! s:denite_filter_settings() abort
   imap     <silent><buffer>       <C-c>   <Plug>(denite_filter_quit):q<Cr>
   nmap     <silent><buffer>       <C-c>   <Plug>(denite_filter_quit):q<Cr>
 
-  inoremap <silent><buffer><expr> jk      <Esc><C-w>p
+  inoremap <silent><buffer>       jk      <Esc><C-w>p
   nnoremap <silent><buffer>       jk      <C-w>p
 endfunction
 

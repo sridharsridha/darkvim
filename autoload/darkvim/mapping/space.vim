@@ -95,7 +95,7 @@ endfunction
 
 function! darkvim#mapping#space#submode(name, mode, opt, enter_keys, map_key,
 			\ cmd, desc) abort
-	if exists('*submode#enter_with')
+	if dein#tap('vim-submode')
 		let l:merged_keys = join(a:enter_keys, '')
 		call submode#enter_with(a:name, a:mode, a:opt, '<Space>'.l:merged_keys, a:cmd)
 		call submode#map(a:name, a:mode, a:opt, a:map_key, a:cmd)
@@ -106,17 +106,17 @@ endfunction
 
 function! darkvim#mapping#space#submode2(name, mode, opt, enter_keys, cmd,
 			\ desc) abort
-	" if exists('*submode#enter_with')
+	if dein#tap('vim-submode')
 		let l:merged_keys = join(a:enter_keys, '')
 		call submode#enter_with(a:name, a:mode, a:opt, '<Space>'.l:merged_keys, a:cmd)
 		call darkvim#mapping#space#guide(a:enter_keys, a:desc . ' submode')
 		call submode#leave_with(a:name, a:mode, a:opt, '<Esc>')
-	" endif
+	endif
 endfunction
 
 function! darkvim#mapping#space#submode_map(submode, modes, options, lhs, rhs) abort
-	" if exists('*submode#map')
+	if dein#tap('vim-submode')
 		call submode#map(a:submode, a:modes, a:options, a:lhs, a:rhs)
-	" endif
+	endif
 endfunction
 

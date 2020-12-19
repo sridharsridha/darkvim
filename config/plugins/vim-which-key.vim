@@ -1,5 +1,4 @@
 " Which-Key
-let g:which_key_exit = ["\<C-g>", "\<Esc>"]
 call which_key#register('<space>', 'g:_darkvim_mappings_space')
 call which_key#register(g:darkvim_windows_leader, 'g:_darkvim_mappings_windows')
 call which_key#register('g', 'g:_darkvim_mappings_g')

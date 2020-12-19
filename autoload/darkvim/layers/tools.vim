@@ -35,16 +35,15 @@ function! darkvim#layers#tools#plugins() abort
 				\ }])
 
 	" Bookmarks
-	call add(l:plugins, ['MattesGroeger/vim-bookmarks', {
-				\ 'on_cmd' : darkvim#util#prefix('Bookmark',
-				\                ['ShowAll', 'Toggle', 'Annotate', 'Next', 'Prev']),
-				\ 'loadconf' : 1,
-				\ }])
+	" call add(l:plugins, ['MattesGroeger/vim-bookmarks', {
+	"			\ 'on_cmd' : darkvim#util#prefix('Bookmark',
+	"			\                ['ShowAll', 'Toggle', 'Annotate', 'Next', 'Prev']),
+	"			\ 'loadconf' : 1,
+	"			\ }])
 
-	" Capture command output to a buffer
-	call add(l:plugins, ['tyru/capture.vim', {
-				\ 'on_cmd' : ['Capture'],
-				\ }])
+
+	call add(l:plugins, ['MattesGroeger/vim-bookmarks'])
+
 
 	" Profile startuptime
 	call add(l:plugins, ['tweekmonster/startuptime.vim', {
@@ -199,6 +198,13 @@ function! darkvim#layers#tools#config() abort
 				\ 'next-alt-file (enter submode n)')
 
 	" bootmark key binding
+	let g:bookmark_no_default_key_mappings = 1
+	let g:bookmark_sign = '♥'
+	let g:bookmark_highlight_lines = 1
+	highlight link BookmarkSign SignifySignAdd
+	highlight link BookmarkAnnotationSign SignifySignChange
+	highlight link BookmarkAnnotationLine CursorLine
+	highlight link BookmarkLine CursorLine
 	nnoremap <silent> mm :<C-u>BookmarkToggle<Cr>
 	nnoremap <silent> mi :<C-u>BookmarkAnnotate<Cr>
 	nnoremap <silent> ml :<C-u>BookmarkShowAll<Cr>
@@ -212,7 +218,7 @@ function! darkvim#layers#tools#config() abort
 	" Info window
 	let g:infowindow_timeout = 0  " Do not close automatically
 	" Toggle info window for current buffer
-	nnoremap <silent> <C-g> <cmd>call plugin#info_window#toggle()<CR>
+	nnoremap <silent> <C-g> <cmd>call plugin#infowindow#toggle()<CR>
 
 	" Cheatsheet
 	let g:CheatSheetFt = 'cheatsheet'

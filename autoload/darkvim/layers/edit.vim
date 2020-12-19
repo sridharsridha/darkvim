@@ -5,13 +5,9 @@ scriptencoding utf-8
 function! darkvim#layers#edit#plugins() abort
 	let l:plugins = []
 
-	" Bullets support
-	call add(l:plugins, ['dkarter/bullets.vim', {
-				\ 'on_ft': ['gitcommit', 'text', 'markdown', 'md', 'config'],
-				\ }])
-
 	" Adds bunch of testobjs (quotes, brackets, etc with a, i, A, I, n, l)
 	call add(l:plugins, ['wellle/targets.vim', {
+				\ 'loadconf_before' : 1,
 				\ 'nolazy' : 1,
 				\ }])
 
@@ -19,12 +15,14 @@ function! darkvim#layers#edit#plugins() abort
 	call add(l:plugins, ['kana/vim-textobj-indent', {
 				\ 'depends':[ 'vim-textobj-user' ],
 				\ 'on_map':{'vo':'<Plug>(textobj-indent-'},
+				\ 'loadconf_before' : 1,
 				\ }])
 
 	" textobj 'L' for selecting line
 	call add(l:plugins, ['kana/vim-textobj-line', {
 				\ 'depends':[ 'vim-textobj-user' ],
 				\ 'on_map':{'vo':'<Plug>(textobj-line-'},
+				\ 'loadconf_before' : 1,
 				\ }])
 
 	" textobj 'e' for selection entire text
@@ -32,18 +30,21 @@ function! darkvim#layers#edit#plugins() abort
 	call add(l:plugins, ['kana/vim-textobj-entire', {
 				\ 'depends':[ 'vim-textobj-user' ],
 				\ 'on_map':{'vo':'<Plug>(textobj-entire-'},
+				\ 'loadconf_before' : 1,
 				\ }])
 
 	" textobj 'c/C' for seletin comments
 	call add(l:plugins, ['glts/vim-textobj-comment', {
 				\ 'depends':[ 'vim-textobj-user' ],
 				\ 'on_map':{'vo':'<Plug>(textobj-comment-'},
+				\ 'loadconf_before' : 1,
 				\ }])
 
 	" textobj 'f/F' for selecting functions
 	call add(l:plugins, ['kana/vim-textobj-function', {
-				\ 'depends':[ 'vim-textobj-user' ],
-				\ 'on_map':{'vo':'<Plug>(textobj-function-'},
+				\ 'depends' : [ 'vim-textobj-user' ],
+				\ 'on_map' : {'vo':'<Plug>(textobj-function-'},
+				\ 'loadconf_before' : 1,
 				\ }])
 
 	" add/change/del quotes etc around word
@@ -59,11 +60,19 @@ function! darkvim#layers#edit#plugins() abort
 	" Improved J
 	call add(l:plugins, ['osyo-manga/vim-jplus', {
 				\ 'on_map' : {'n' : '<Plug>(jplus'},
+				\ 'loadconf_before' : 1,
 				\ }])
 
-	" Table Mode for writing tables triggered using "||"
+	" Bullets/List/Checkbox support
+	call add(l:plugins, ['dkarter/bullets.vim', {
+				\ 'on_ft': ['gitcommit', 'text', 'markdown', 'md', 'config'],
+				\ 'loadconf_before' : 1,
+				\ }])
+
+	" Table Mode for writing tables triggered using '||'
 	call add(l:plugins, ['dhruvasagar/vim-table-mode', {
 				\ 'on_cmd': darkvim#util#prefix('TableMode', ['Toggle', 'Enable', 'Disable']),
+				\ 'loadconf_before' : 1,
 				\ }])
 
 	" Align text motion support gl, gL motion
@@ -74,18 +83,20 @@ function! darkvim#layers#edit#plugins() abort
 	" Convert text into table using delimiters helful for formatting code
 	call add(l:plugins, ['godlygeek/tabular', {
 				\ 'on_cmd' : ['Tabularize'],
+				\ 'loadconf_before' : 1,
 				\ }])
 
 	" Faster j and k movement
 	call add(l:plugins, ['rhysd/accelerated-jk', {
-				\ 'on_map' : {'n' : '<Plug>(accelerated_'}
+				\ 'on_map' : {'n' : '<Plug>(accelerated_'},
+				\ 'loadconf_before' : 1,
 				\ }])
 
 	" Split and join code
 	call add(l:plugins, ['AndrewRadev/splitjoin.vim', {
 				\ 'on_cmd': darkvim#util#prefix('Splitjoin', ['Join', 'Split']),
 				\ 'on_map': {'n': ['gJ', 'gS']},
-				\ 'loadconf' : 1,
+				\ 'loadconf_before' : 1,
 				\ }])
 
 	" Exchange text between two regions
@@ -101,6 +112,7 @@ function! darkvim#layers#edit#plugins() abort
 				\ 'on_cmd': darkvim#util#prefix('Sideways', ['Left', 'Right']),
 				\ }])
 
+	" Covert a number between different base representations
 	call add(l:plugins, ['glts/vim-magnum'])
 	call add(l:plugins, ['glts/vim-radical', {
 				\ 'depends' : ['vim-magnum', 'vim-repeat'],
@@ -110,127 +122,9 @@ function! darkvim#layers#edit#plugins() abort
 endfunction
 
 function! darkvim#layers#edit#config() abort
-	" TextObj Indent
-	let g:textobj_indent_no_default_key_mappings=1
-	vmap ai <Plug>(textobj-indent-a)
-	omap ai <Plug>(textobj-indent-a)
-	vmap ii <Plug>(textobj-indent-i)
-	omap ii <Plug>(textobj-indent-i)
-	vmap aI <Plug>(textobj-indent-same-i)
-	omap aI <Plug>(textobj-indent-same-i)
-	vmap iI <Plug>(textobj-indent-same-a)
-	omap iI <Plug>(textobj-indent-same-a)
-
-	" TextObj Line
-	let g:textobj_line_no_default_key_mappings=1
-	vmap al <Plug>(textobj-line-a)
-	omap al <plug>(textobj-line-a)
-	vmap il <Plug>(textobj-line-i)
-	omap il <Plug>(textobj-line-i)
-
-	" TextObj Entire
-	let g:textobj_entire_no_default_key_mappings=1
-	vmap ae <Plug>(textobj-entire-a)
-	omap ae <Plug>(textobj-entire-a)
-	vmap ie <Plug>(textobj-entire-i)
-	omap ie <Plug>(textobj-entire-i)
-
-	" TextObj Comment
-	let g:textobj_comment_no_default_key_mappings = 1
-	vmap ac <Plug>(textobj-comment-a)
-	omap ac <Plug>(textobj-comment-a)
-	vmap ic <Plug>(textobj-comment-i)
-	omap ic <Plug>(textobj-comment-i)
-	vmap aC <Plug>(textobj-comment-big-a)
-	omap aC <Plug>(textobj-comment-big-a)
-	vmap iC <Plug>(textobj-comment-big-i)
-	omap iC <Plug>(textobj-comment-big-i)
-
-	" TextObj Function
-	let g:textobj_function_no_default_key_mappings = 1
-	vmap af <Plug>(textobj-function-a)
-	omap af <Plug>(textobj-function-a)
-	vmap if <Plug>(textobj-function-i)
-	omap if <Plug>(textobj-function-i)
-	vmap aF <Plug>(textobj-function-A)
-	omap aF <Plug>(textobj-function-A)
-	vmap iF <Plug>(textobj-function-I)
-	omap iF <Plug>(textobj-function-I)
-
-	" Jplus
-	nmap <silent> J <Plug>(jplus)
-	vmap <silent> J <Plug>(jplus)
-
-	" Table Mode trigger and disabling while in insert mode
-	inoreabbrev <expr> <bar><bar>
-				\ darkvim#layers#edit#is_start_of_line('\|\|')?
-				\ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
-	inoreabbrev <expr> __
-				\ darkvim#layers#edit#is_start_of_line('__')?
-				\ '<c-o>:silent! TableModeDisable<cr>' : '__'
-
-	" Tablular
-	call darkvim#mapping#space#group(['x'], 'Text')
-	call darkvim#mapping#space#group(['x', 'a'], 'Align')
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', '#'],
-				\ 'Tabularize /#',
-				\ 'align-region-at-#', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', '%'],
-				\ 'Tabularize /%',
-				\ 'align-region-at-%', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', '&'],
-				\ 'Tabularize /&',
-				\ 'align-region-at-&', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', '('],
-				\ 'Tabularize /(',
-				\ 'align-region-at-(', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', ')'],
-				\ 'Tabularize /)',
-				\ 'align-region-at-)', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', '['],
-				\ 'Tabularize /[',
-				\ 'align-region-at-[', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', ']'],
-				\ 'Tabularize /]',
-				\ 'align-region-at-]', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', '{'],
-				\ 'Tabularize /{',
-				\ 'align-region-at-{', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', '}'],
-				\ 'Tabularize /}',
-				\ 'align-region-at-}', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', ','],
-				\ 'Tabularize /,',
-				\ 'align-region-at-,', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', '.'],
-				\ 'Tabularize /.',
-				\ 'align-region-at-.', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', ':'],
-				\ 'Tabularize /:',
-				\ 'align-region-at-:', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', ';'],
-				\ 'Tabularize /;',
-				\ 'align-region-at-;', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', '='],
-				\ 'Tabularize /===\|<=>\|\(&&\|||\|<<\|>>\|\/\/\)=\|=\~[#?]\?\|=>\|[:+/*!%^=><&|.?-]\?=[#?]\?/l1r1',
-				\ 'align-region-at-=', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', 'o'],
-				\ 'Tabularize /&&\|||\|\.\.\|\*\*\|<<\|>>\|\/\/\|[-+*/.%^><&|?]/l1r1',
-				\ 'align-region-at-operator, such as +,-,*,/,%,^,etc', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', '¦'],
-				\ 'Tabularize /¦',
-				\ 'align-region-at-¦', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', '<Bar>'],
-				\ 'Tabularize /|',
-				\ 'align-region-at-|', 1, 1)
-	call darkvim#mapping#space#def('nmap', ['x', 'a', '<space>'],
-				\ 'Tabularize /\s\ze\S/l0',
-				\ 'align-region-at-space', 1, 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 'a', 'r'],
-				\ 'call call(' . string(function('s:align_at_regular_expression')) . ',[])',
-				\ 'align-region-at-user-specified-regexp', 1)
 
 	" String concatination and spliting mapping
+	call darkvim#mapping#space#group(['x'], 'Text')
 	call darkvim#mapping#space#group(['x', 's'], 'String')
 	call darkvim#mapping#space#def('nnoremap', ['x', 's', 'j'],
 				\ 'call call(' . string(function('s:string_join_with')) . ',[])',
@@ -285,9 +179,6 @@ function! darkvim#layers#edit#config() abort
 	call darkvim#mapping#space#submode_map('TextDupK', 'n', '', 'k',
 				\ 'mzyyP`zk')
 
-	" Accelerated j and k
-	nmap <silent>j <Plug>(accelerated_jk_gj)
-	nmap <silent>k <Plug>(accelerated_jk_gk)
 
 endfunction
 
@@ -397,25 +288,4 @@ function! s:is_string(l, c) abort
 	return synIDattr(synID(a:l, a:c, 1), 'name') ==
 				\ get(s:string_hi, &filetype, &filetype . 'String')
 endfunction
-
-function! s:align_at_regular_expression() abort
-	let l:re = input(':Tabularize /')
-	if !empty(l:re)
-		exe 'Tabularize /' . l:re
-	else
-		normal! :
-		echo 'empty input, canceled!'
-	endif
-endfunction
-
-" quickly enable / disable table mode in insert mode by using || or __ :
-function! darkvim#layers#edit#is_start_of_line(mapping) abort
-	let l:text_before_cursor = getline('.')[0 : col('.')-1]
-	let l:mapping_pattern = '\V' . escape(a:mapping, '\')
-	let l:comment_pattern = '\V' . escape(substitute(&l:commentstring,
-				\ '%s.*$', '', ''), '\')
-	return (l:text_before_cursor =~? '^' . ('\v(' . l:comment_pattern . '\v)?') .
-				\ '\s*\v' . l:mapping_pattern . '\v$')
-endfunction
-
 

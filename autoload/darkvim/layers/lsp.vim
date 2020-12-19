@@ -46,17 +46,30 @@ function! darkvim#layers#lsp#plugins() abort
 				\ 'loadconf' : 1,
 				\ }])
 
-	" Symbol tree
-	call add(l:plugins, ['liuchengxu/vista.vim', {
-				\ 'on_cmd': 'Vista',
-				\ 'on_func': ['vista#', 'vista#RunForNearestMethodOrFunction'],
-				\ 'loadconf' : 1,
-				\ }])
+	" " Symbol tree
+	" " Airline has some issue with lazy loading this plugin
+	" call add(l:plugins, ['liuchengxu/vista.vim', {
+	"			\ 'on_cmd': 'Vista',
+	"			\ 'on_func': ['vista#', 'vista#RunForNearestMethodOrFunction'],
+	"			\ 'loadconf' : 1,
+	"			\ }])
+
+	call add(l:plugins, ['liuchengxu/vista.vim'])
 
 	return l:plugins
 endfunction
 
 function! darkvim#layers#lsp#config() abort
+
+	" Vista
+	let g:vista_sidebar_width = 35
+	let g:vista_echo_cursor_strategy = 'floating_win'
+	let g:vista_highlight_whole_line = 1
+	let g:vista_echo_cursor = 1
+	let g:vista_blink = [2, 500]
+	let g:vista_stay_on_open = 0
+	let g:vista_cursor_delay = 800
+
 	let g:complete_parameter_use_ultisnips_mapping = 1
 
 	imap <expr> <M-/> neosnippet#expandable() ? "\<Plug>(neosnippet_expand)" : ""
