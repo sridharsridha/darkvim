@@ -15,16 +15,16 @@ let g:defx_icons_mark_icon = '✓'
 let g:defx_icons_parent_icon = ''
 
 call defx#custom#option('_', {
-      \ 'columns': 'mark:indent:icon:filename:type:icons:size:git',
+      \ 'columns': 'mark:indent:icons:filename:icon:size:git',
       \ 'winwidth': get(g:, 'darkvim_sidebar_width', 30),
       \ 'split': 'vertical',
       \ 'direction': s:direction,
       \ 'show_ignored_files': g:_darkvim_filetree_show_hidden_files,
       \ 'root_marker': ' ',
-      \ 'floating_preview': 0,
+      \ 'floating_preview': 1,
       \ 'vertical_preview': 1,
-      \ 'preview_width': 80,
-      \ 'preview_height': 15,
+      \ 'preview_width': 100,
+      \ 'preview_height': 30,
       \ })
 
 call defx#custom#column('mark', {
@@ -51,7 +51,8 @@ call defx#custom#column('git', 'indicators', {
       \ })
 
 call defx#custom#column('filename', {
-      \ 'max_width': -90,
+      \ 'min_width': 23,
+      \ 'max_width': -55,
       \ })
 
 call defx#custom#column('time', {'format': '%Y%m%d %H:%M'})
@@ -104,9 +105,8 @@ augroup defx_init
         \ (!has('vim_starting') && winnr('$') == 1  && g:_darkvim_autoclose_filetree
         \ && &filetype ==# 'defx') |
         \ call s:close_last_defx_windows() | endif
-
   " Move focus to the next window if current buffer is defx
-  " autocmd TabLeave * if &filetype == 'defx' | wincmd w | endif
+  autocmd TabLeave * if &filetype == 'defx' | wincmd w | endif
   autocmd User defx-preview setlocal number winblend=4
 augroup END
 
@@ -202,7 +202,7 @@ function! s:defx_settings()
   " Toggle hidden files
   nnoremap <silent><buffer><expr> a defx#do_action('toggle_ignored_files')
   " Preview
-  nnoremap <silent><buffer><expr> <A-v> defx#do_action('preview')
+  nnoremap <silent><buffer><expr> P defx#do_action('preview')
   nnoremap <silent><buffer>       <A-w> <C-w>P
   " Redraw
   nnoremap <silent><buffer><expr> <C-r> defx#do_action('redraw')
@@ -217,10 +217,6 @@ function! s:defx_settings()
   nnoremap <silent><buffer><expr> <C-g>  defx#do_action('print')
   " Save session
   nnoremap <silent><buffer><expr> se     defx#do_action('save_session')
-  " Open new defx buffer
-  nnoremap <silent><buffer>       sp
-        \ :execute 'Defx -new -split=horizontal -direction= ' . b:defx.paths[0]<CR>
-        \ :wincmd p<CR>:execute float2nr(&lines /2) . 'wincmd _ '<CR>
   " Change directory
   nnoremap <silent><buffer><expr><nowait> \ defx#do_action('change_vim_cwd')
   nnoremap <silent><buffer><expr><nowait> &  defx#do_action('cd', getcwd())
@@ -233,6 +229,11 @@ function! s:defx_settings()
         \ defx#do_action('resize', defx#get_context().winwidth + 5)
   nnoremap <silent><buffer><expr> <
         \ defx#do_action('resize', defx#get_context().winwidth - 5)
+
+  " Open new defx buffer
+  nnoremap <silent><buffer>       sp
+        \ :execute 'Defx -new -split=horizontal -direction= ' . b:defx.paths[0]<CR>
+        \ :wincmd p<CR>:execute float2nr(&lines /2) . 'wincmd _ '<CR>
 
   " Custom Defx Actions
   " smart h/l

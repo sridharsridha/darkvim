@@ -14,8 +14,7 @@ endfunction
 
 function! darkvim#layers#shell#config() abort
 	" Deol
-	call darkvim#mapping#space#group(['t'], 'Terminal')
-	call darkvim#mapping#space#def('nnoremap', ['t', 't'], 'call call('
+	call darkvim#mapping#space#def('nnoremap', ["'"], 'call call('
 				\ . string(function('s:open_default_shell')) . ', [])',
 				\ 'open-shell-in-buffer-dir', 1)
 
