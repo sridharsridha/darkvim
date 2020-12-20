@@ -20,7 +20,7 @@ call darkvim#mapping#space#def('nnoremap', ['x', 'a', '='], 'Tabularize /===\|<=
 call darkvim#mapping#space#def('nnoremap', ['x', 'a', 'o'], 'Tabularize /&&\|||\|\.\.\|\*\*\|<<\|>>\|\/\/\|[-+*/.%^><&|?]/l1r1', 'align-region-at-operator, such as +,-,*,/,%,^,etc', 1, 1)
 call darkvim#mapping#space#def('nnoremap', ['x', 'a', '¦'], 'Tabularize /¦', 'align-region-at-¦', 1, 1)
 call darkvim#mapping#space#def('nnoremap', ['x', 'a', '<Bar>'], 'Tabularize /|', 'align-region-at-|', 1, 1)
-call darkvim#mapping#space#def('nmap', ['x', 'a', '<space>'], 'Tabularize /\s\ze\S/l0', 'align-region-at-space', 1, 1)
+call darkvim#mapping#space#def('nmap', ['x', 'a', 's'], 'Tabularize /\s\ze\S/l0', 'align-region-at-space', 1, 1)
 
 function! s:align_at_regular_expression() abort
 	let l:re = input(':Tabularize /')

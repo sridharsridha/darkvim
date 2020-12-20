@@ -110,6 +110,7 @@ function! darkvim#layers#edit#plugins() abort
 	" Move an item in a delimiter-separated list left or right
 	call add(l:plugins, ['AndrewRadev/sideways.vim', {
 				\ 'on_cmd': darkvim#util#prefix('Sideways', ['Left', 'Right']),
+				\ 'loadconf_before' : 1,
 				\ }])
 
 	" Covert a number between different base representations
@@ -118,13 +119,42 @@ function! darkvim#layers#edit#plugins() abort
 				\ 'depends' : ['vim-magnum', 'vim-repeat'],
 				\ 'on_map' : {'nvx' : ['gA', 'crd', 'crx', 'cro', 'crb']}
 				\ }])
+
+	" Whitespace showing
+	call add(l:plugins, ['ntpeters/vim-better-whitespace', {
+				\ 'on_event' : ['InsertEnter'],
+				\ 'on_cmd' : ['StripWhitespace',
+				\             'ToggleWhitespace',
+				\             'DisableWhitespace',
+				\             'EnableWhitespace'],
+				\ 'loadconf_before' : 1,
+				\ }])
+
 	return l:plugins
 endfunction
 
 function! darkvim#layers#edit#config() abort
 
-	" String concatination and spliting mapping
+	" Uppercase/Lowercase
+	call darkvim#mapping#space#def('vnoremap', ['x', 'u'], 'gu', 'set the selected text to lower case', 0)
+	call darkvim#mapping#space#def('vnoremap', ['x', 'U'], 'gU', 'set the selected text to up case', 0)
+
 	call darkvim#mapping#space#group(['x'], 'Text')
+	call darkvim#mapping#space#group(['x', 'w'], 'Word')
+	call darkvim#mapping#space#def('vnoremap', ['x', 'w', 'c'], 'normal! ' . ":'<,'>s/\\\w\\+//gn" . "\<cr>", 'count the words in the select region', 1)
+
+	call darkvim#mapping#space#group(['x', 'j'], 'Justification')
+	call darkvim#mapping#space#def('nnoremap', ['x', 'j', 'l'], 'silent call call('
+				\ . string(function('s:set_justification_to')) . ', ["left"])',
+				\ 'set-the-justification-to-left', 1)
+	call darkvim#mapping#space#def('nnoremap', ['x', 'j', 'c'], 'silent call call('
+				\ . string(function('s:set_justification_to')) . ', ["center"])',
+				\ 'set-the-justification-to-center', 1)
+	call darkvim#mapping#space#def('nnoremap', ['x', 'j', 'r'], 'silent call call('
+				\ . string(function('s:set_justification_to')) . ', ["right"])',
+				\ 'set-the-justification-to-right', 1)
+
+	" String concatination and spliting mapping
 	call darkvim#mapping#space#group(['x', 's'], 'String')
 	call darkvim#mapping#space#def('nnoremap', ['x', 's', 'j'],
 				\ 'call call(' . string(function('s:string_join_with')) . ',[])',
@@ -132,17 +162,9 @@ function! darkvim#layers#edit#config() abort
 	call darkvim#mapping#space#def('nnoremap', ['x', 's', 's'],
 				\ 'call call(' . string(function('s:string_split')) . ',[0])',
 				\ 'split-sexp', 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 's', 'S'],
+	call darkvim#mapping#space#def('nnoremap', ['x', 's', 'n'],
 				\ 'call call(' . string(function('s:string_split')) . ',[])',
 				\ 'split-and-add-newline', 1)
-
-	" Sideways
-	call darkvim#mapping#space#def('nnoremap', ['x', 's', 'h'],
-				\ 'SidewaysLeft',
-				\ 'shift-string-left', 1)
-	call darkvim#mapping#space#def('nnoremap', ['x', 's', 'l'],
-				\ 'SidewaysRight',
-				\ 'shift-string-right', 1)
 
 	" Move lines using submode
 	call darkvim#mapping#space#group(['x', 'm'], 'Move')
@@ -163,7 +185,7 @@ function! darkvim#layers#edit#config() abort
 				\ ':noautocmd silent! m .-2<cr>')
 
 	" Duplicate lines
-	call darkvim#mapping#space#group(['x', 'd'], 'Duplicate')
+	call darkvim#mapping#space#group(['x', 'c'], 'copy')
 	call darkvim#mapping#space#submode2('TextDupJ', 'n', '', ['x', 'd', 'j'],
 				\ 'mzyyP`z',
 				\ 'duplicate-line-down j')
@@ -179,7 +201,76 @@ function! darkvim#layers#edit#config() abort
 	call darkvim#mapping#space#submode_map('TextDupK', 'n', '', 'k',
 				\ 'mzyyP`zk')
 
+	call darkvim#mapping#space#group(['x', 't'], 'Transpose')
+	call darkvim#mapping#space#def('nnoremap', ['x', 't', 'c'], 'call call('
+				\ . string(function('s:transpose_with_previous')) . ', ["character"])',
+				\ 'swap-current-character-with-previous-one', 1)
+	call darkvim#mapping#space#def('nnoremap', ['x', 't', 'w'], 'call call('
+				\ . string(function('s:transpose_with_previous')) . ', ["word"])',
+				\ 'swap-current-word-with-previous-one', 1)
+	call darkvim#mapping#space#def('nnoremap', ['x', 't', 'l'], 'call call('
+				\ . string(function('s:transpose_with_previous')) . ', ["line"])',
+				\ 'swap-current-line-with-previous-one', 1)
+	call darkvim#mapping#space#def('nnoremap', ['x', 't', 'C'], 'call call('
+				\ . string(function('s:transpose_with_next')) . ', ["character"])',
+				\ 'swap-current-character-with-next-one', 1)
+	call darkvim#mapping#space#def('nnoremap', ['x', 't', 'W'], 'call call('
+				\ . string(function('s:transpose_with_next')) . ', ["word"])',
+				\ 'swap-current-word-with-next-one', 1)
+	call darkvim#mapping#space#def('nnoremap', ['x', 't', 'L'], 'call call('
+				\ . string(function('s:transpose_with_next')) . ', ["line"])',
+				\ 'swap-current-line-with-next-one', 1)
 
+endfunction
+
+function! s:transpose_with_previous(type) abort
+	let l:save_register = @"
+	if a:type ==# 'line'
+		if line('.') > 1
+			normal! kddp
+		endif
+	elseif a:type ==# 'word'
+		normal! yiw
+		let l:cw = @"
+		normal! geyiw
+		let l:tw = @"
+		if l:cw !=# l:tw
+			let @" = l:cw
+			normal! viwp
+			let @" = l:tw
+			normal! eviwp
+		endif
+	elseif a:type ==# 'character'
+		if col('.') > 1
+			normal! hxp
+		endif
+	endif
+	let @" = l:save_register
+endfunction
+
+function! s:transpose_with_next(type) abort
+	let l:save_register = @"
+	if a:type ==# 'line'
+		if line('.') < line('$')
+			normal! ddp
+		endif
+	elseif a:type ==# 'word'
+		normal! yiw
+		let l:cw = @"
+		normal! wyiw
+		let l:nw = @"
+		if l:cw !=# l:nw
+			let @" = l:cw
+			normal! viwp
+			let @" = l:nw
+			normal! geviwp
+		endif
+	elseif a:type ==# 'character'
+		if col('.') < col('$')-1
+			normal! xp
+		endif
+	endif
+	let @" = l:save_register
 endfunction
 
 " String Joinning functions
@@ -287,5 +378,37 @@ let s:string_hi = {
 function! s:is_string(l, c) abort
 	return synIDattr(synID(a:l, a:c, 1), 'name') ==
 				\ get(s:string_hi, &filetype, &filetype . 'String')
+endfunction
+
+function! s:set_justification_to(align) abort
+	let l:startlinenr = line("'{")
+	let l:endlinenr = line("'}")
+	if getline(l:startlinenr) ==# ''
+		let l:startlinenr += 1
+	endif
+	if getline(l:endlinenr) ==# ''
+		let l:endlinenr -= 1
+	endif
+	let l:lineList = map(getline(l:startlinenr, l:endlinenr), 'trim(v:val)')
+	let l:maxlength = 0
+	for l:line in l:lineList
+		let l:length = strdisplaywidth(l:line)
+		if l:length > l:maxlength
+			let l:maxlength = l:length
+		endif
+	endfor
+
+	if a:align ==# 'left'
+		execute l:startlinenr . ',' . l:endlinenr . ":left\<cr>"
+	elseif a:align ==# 'center'
+		execute l:startlinenr . ',' . l:endlinenr . ':center ' . l:maxlength . "\<cr>"
+	elseif a:align ==# 'right'
+		execute l:startlinenr . ',' . l:endlinenr . ':right  ' . l:maxlength . "\<cr>"
+	endif
+
+	unlet l:startlinenr
+	unlet l:endlinenr
+	unlet l:lineList
+	unlet l:maxlength
 endfunction
 

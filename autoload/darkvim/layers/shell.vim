@@ -14,8 +14,8 @@ endfunction
 
 function! darkvim#layers#shell#config() abort
 	" Deol
-	call darkvim#mapping#space#group(['a'], 'Applications')
-	call darkvim#mapping#space#def('nnoremap', ['a', 's'], 'call call('
+	call darkvim#mapping#space#group(['t'], 'Terminal')
+	call darkvim#mapping#space#def('nnoremap', ['t', 't'], 'call call('
 				\ . string(function('s:open_default_shell')) . ', [])',
 				\ 'open-shell-in-buffer-dir', 1)
 
@@ -24,12 +24,12 @@ function! darkvim#layers#shell#config() abort
 		" exe 'tnoremap <silent><C-h>  <C-\><C-n>:<C-u>wincmd h<CR>'
 		" exe 'tnoremap <silent><C-k>    <C-\><C-n>:<C-u>wincmd k<CR>'
 		" exe 'tnoremap <silent><C-j>  <C-\><C-n>:<C-u>wincmd j<CR>'
-		" exe 'tnoremap <silent><C-Left> <C-\><C-n>:<C-u>wincmd l<CR>'
-		" exe 'tnoremap <silent><C-Right>  <C-\><C-n>:<C-u>wincmd h<CR>'
-		" exe 'tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>'
-		" exe 'tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>'
-		" exe 'tnoremap <silent><M-Left>  <C-\><C-n>:<C-u>bprev<CR>'
-		" exe 'tnoremap <silent><M-Right>  <C-\><C-n>:<C-u>bnext<CR>'
+		exe 'tnoremap <silent><C-Right> <C-\><C-n>:<C-u>wincmd l<CR>'
+		exe 'tnoremap <silent><C-Left>  <C-\><C-n>:<C-u>wincmd h<CR>'
+		exe 'tnoremap <silent><C-Up>    <C-\><C-n>:<C-u>wincmd k<CR>'
+		exe 'tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>'
+		exe 'tnoremap <silent><M-Left>  <C-\><C-n>:<C-u>bprev<CR>'
+		exe 'tnoremap <silent><M-Right>  <C-\><C-n>:<C-u>bnext<CR>'
 		exe 'tnoremap <silent><esc>     <C-\><C-n>'
 		exe 'tnoremap <silent>jk        <C-\><C-n>'
 	endif

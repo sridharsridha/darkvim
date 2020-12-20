@@ -59,7 +59,9 @@ function! darkvim#layers#core#plugins() abort
 	call add(l:plugins, ['kana/vim-textobj-user'])
 
 	" Icons
-	call add(l:plugins, ['ryanoasis/vim-devicons'])
+	call add(l:plugins, ['ryanoasis/vim-devicons', {
+				\ 'nolazy' : 1,
+				\ }])
 
 	" Multiple cursor support
 	call add(l:plugins, ['terryma/vim-multiple-cursors', {
@@ -130,12 +132,6 @@ function! darkvim#layers#core#plugins() abort
 	call add(l:plugins, ['t9md/vim-choosewin', {
 				\ 'on_map' : {'ni' : '<Plug>'},
 				\ 'on_cmd' : darkvim#util#prefix('ChooseWin', ['', 'Swap']),
-				\ }])
-
-	" Whitespace showing
-	call add(l:plugins, ['ntpeters/vim-better-whitespace', {
-				\ 'on_event' : ['InsertEnter'],
-				\ 'loadconf_before' : 1,
 				\ }])
 
 	" Colorscheme

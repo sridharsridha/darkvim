@@ -7,6 +7,7 @@ function! darkvim#mapping#windows#init() abort
 	let g:_darkvim_mappings_windows = {'name' : 'Windows/Tabs/Buffers'}
 
 	nnoremap  <silent>q :<C-u>call darkvim#mapping#windows#smart_close()<cr>
+	nnoremap  <silent>Q :<C-u>call darkvim#mapping#windows#smart_close()<cr>
 
 	call darkvim#mapping#windows#def('nnoremap', ['2'],
 				\ 'silent only | vs | wincmd w',

@@ -6,14 +6,23 @@ function! darkvim#layers#tags#plugins() abort
 	call add(l:plugins, ['ludovicchabant/vim-gutentags', {
 				\ 'on_event' : [ 'BufReadPost' ],
 				\ 'loadconf' : 1,
+				\ 'loadconf_before' : 1,
 				\ }])
+
+	" Open symbols window
+	call add(l:plugins, ['majutsushi/tagbar', {
+				\ 'on_cmd' : ['TagbarToggle'],
+				\ 'loadconf' : 1,
+				\ 'loadconf_before' : 1,
+				\ }])
+
 
 	return l:plugins
 endfunction
 
 function! darkvim#layers#tags#config() abort
 	" Gutentags
-	call darkvim#mapping#space#group(['c'], 'Cscope')
+	call darkvim#mapping#space#group(['c'], 'Tags')
 	call darkvim#mapping#space#def('nnoremap', ['c', 'u'],
 				\ 'GutentagsUpdate!',
 				\ 'update-tags-cur-proj', 1)
@@ -22,6 +31,7 @@ function! darkvim#layers#tags#config() abort
 				\ 'update-tags-cur-file', 1)
 
 	" Cscope
+	call darkvim#mapping#space#group(['c'], 'Tags')
 	call darkvim#mapping#space#def('nnoremap', ['c', 'd'],
 				\ 'call darkvim#plugins#cscope#find("d", expand("<cword>"))',
 				\ 'find-functions-called-by-this-function', 1)

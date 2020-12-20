@@ -22,4 +22,22 @@ let g:neoformat_python_yapf = {
 
 let g:neoformat_enabled_python = ['yapf']
 
+function! ToggleAutoFormatCode() abort
+  if !exists('#AutoFormatCode#BufWritePre')
+    augroup AutoFormatCode
+      autocmd!
+      autocmd BufWritePre * undojoin | Neoformat
+    augroup END
+  else
+    augroup AutoFormatCode
+      autocmd!
+    augroup END
+  endif
+endfunction
+
+call darkvim#mapping#space#group(['b'], 'Buffer')
+call darkvim#mapping#space#def('nnoremap', ['b', 'f'], 'Neoformat', 'format-code', 1)
+
+command! ToggleAutoFormatCode :call ToggleAutoFormatCode()
+call darkvim#mapping#space#def('nnoremap', ['b', 'F'], 'ToggleAutoFormatcode', 'toggle-auto-format', 1)
 

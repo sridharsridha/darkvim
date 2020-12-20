@@ -34,4 +34,29 @@ function! darkvim#util#is_start_of_line(mapping) abort
 				\ '\s*\v' . l:mapping_pattern . '\v$')
 endfunction
 
+function! darkvim#util#find_file_explorer() abort
+  " Detect terminal file-explorer
+  let s:file_explorer = get(g:, 'darkvim_terminal_file_explorer', '')
+  if empty(s:file_explorer)
+    for l:explorer in ['lf', 'fd', 'hunter', 'ranger', 'vifm', 'fzf']
+      if executable(l:explorer)
+        let s:file_explorer = l:explorer
+        break
+      endif
+    endfor
+  endif
+  return s:file_explorer
+endfunction
 
+" Split tmux and run a command on the given dir
+function! darkvim#util#tmux_split_run(cmd, cwd) abort
+    if empty('$TMUX')
+        return
+    endif
+    if a:cwd ==# ''
+        let l:cwd = getcwd()
+    else
+        let l:cwd = a:cwd
+    endif
+   silent execute '!tmux split-window -p 30 -c '. l:cwd . ' ' . a:cmd | redraw!
+endfunction
