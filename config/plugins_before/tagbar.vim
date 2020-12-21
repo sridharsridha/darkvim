@@ -1,6 +1,6 @@
 
 " Tagbar
-call darkvim#mapping#space#group(['c'], 'Tags')
-call darkvim#mapping#space#def('nnoremap', ['c', 'S'],
+call darkvim#mapping#space#group(['t'], 'Tags')
+call darkvim#mapping#space#def('nnoremap', ['t', 'w'],
 			\ 'TagbarToggle',
 			\ 'open-tagbar-window', 1)

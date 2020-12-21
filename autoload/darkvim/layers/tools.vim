@@ -98,16 +98,17 @@ function! darkvim#layers#tools#config() abort
 
   " Alternate files
   call darkvim#mapping#space#group(['j'], 'Jump')
-  call darkvim#mapping#space#def('nnoremap', ['j', 'a' ],
+  call darkvim#mapping#space#group(['j', 'a'], 'AlternateFile')
+  call darkvim#mapping#space#def('nnoremap', ['j', 'a', 'a'],
 	\ 'A',
 	\ 'open', 1)
-  call darkvim#mapping#space#def('nnoremap', ['j', 'g'],
+  call darkvim#mapping#space#def('nnoremap', ['j', 'a', 'v'],
 	\ 'AV',
 	\ 'open-vertical-split', 1)
-  call darkvim#mapping#space#def('nnoremap', ['j', 'v'],
+  call darkvim#mapping#space#def('nnoremap', ['j', 'a', 'g'],
 	\ 'AS',
 	\ 'open-horizontal-split', 1)
-  call darkvim#mapping#space#submode('AltFile', 'n', '', ['j', 'n'], 'n',
+  call darkvim#mapping#space#submode('AltFile', 'n', '', ['j', 'a', 'n'], 'n',
 	\ ':AN<cr>',
 	\ 'next-alt-file (enter submode n)')
 

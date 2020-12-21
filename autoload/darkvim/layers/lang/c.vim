@@ -9,12 +9,6 @@ function! darkvim#layers#lang#c#plugins() abort
 	call add(l:plugins, ['octol/vim-cpp-enhanced-highlight', {
 				\ 'on_ft' : ['c', 'cpp'],
 				\ }])
-	if darkvim#layers#is_loaded('lsp')
-		call add(l:plugins, ['jackguo380/vim-lsp-cxx-highlight', {
-					\ 'on_ft' : ['c', 'cpp'],
-					\ }])
-	endif
-
 	return l:plugins
 endfunction
 

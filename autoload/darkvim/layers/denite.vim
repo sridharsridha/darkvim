@@ -24,46 +24,64 @@ endfunction
 function! darkvim#layers#denite#config() abort
    let g:neoyank#file = g:darkvim_plugin_bundle_dir . 'neoyank'
 
-   call darkvim#mapping#space#group(['f'], 'File')
    call darkvim#mapping#space#group(['b'], 'Buffer')
+   call darkvim#mapping#space#group(['b', 'p'], 'Parent-Directory')
    call darkvim#mapping#space#group(['d'], 'Directory')
-   call darkvim#mapping#space#group(['y'], 'Yank')
+   call darkvim#mapping#space#group(['f'], 'File')
    call darkvim#mapping#space#group(['j'], 'Jump')
+   call darkvim#mapping#space#group(['p'], 'Project')
    call darkvim#mapping#space#group(['q'], 'Quickfix')
-   call darkvim#mapping#space#group(['s'], 'Search')
-   call darkvim#mapping#space#group(['s'], 'Search')
-   call darkvim#mapping#space#group(['r'], 'Resume')
    call darkvim#mapping#space#group(['r'], 'Register')
+   call darkvim#mapping#space#group(['s'], 'Search')
+   call darkvim#mapping#space#group(['t'], 'Tags')
+   call darkvim#mapping#space#group(['y'], 'Yank')
+   call darkvim#mapping#space#group(['T'], 'Colorscheme')
 
-   " Quick access files
-   call darkvim#mapping#def('nnoremap <silent><nowait>', '<C-p>', ':DeniteProjectDir file/rec<cr>', 'files-in-current-working-dir')
+   " Resume
+   call darkvim#mapping#space#group(['r'], 'Resume')
    call darkvim#mapping#space#def('nnoremap', ['r', 'l'], 'Denite -resume', 'resume-fuzzy-finder', 1)
 
+   " Quick access files
+   call darkvim#mapping#def('nnoremap <silent><nowait>', '<C-p>', ':Denite file/rec<cr>', 'list-files')
+
+   "Project
+   call darkvim#mapping#space#def('nnoremap', ['p', 'f'], 'DeniteProjectDir file/rec', 'list-files', 1)
+   call darkvim#mapping#space#def('nnoremap', ['p', 'F'], 'DeniteProjectDir file/rec/noignore', 'list-files-noignore', 1)
+   call darkvim#mapping#space#def('nnoremap', ['p', 'd'], 'execute "DeniteProjectDir directory_rec', 'list-dir', 1)
+   call darkvim#mapping#space#def('nnoremap', ['p', 'D'], 'execute "DeniteProjectDir directory_rec/noignore', 'list-dir-noignore', 1)
+
    " Files listing
-   call darkvim#mapping#space#def('nnoremap', ['f', 'r'], 'Denite fast_file_mru', 'open-recent-list', 1)
-   call darkvim#mapping#space#def('nnoremap', ['f', 'f'], 'DeniteBufferDir file/rec', 'file-list-bufdir', 1)
-   call darkvim#mapping#space#def('nnoremap', ['f', 'F'], 'DeniteBufferDir file/rec/noignore', 'file-list-bufdir-noignore', 1)
-   call darkvim#mapping#space#def('nnoremap', ['f', 'L'], 'DeniteCursorWord line', 'lines', 1)
-   call darkvim#mapping#space#def('nnoremap', ['f', 'o'], 'Denite outline', 'outline', 1)
-   call darkvim#mapping#space#def('nnoremap', ['f', 'm'], 'Denite mark', 'marks', 1)
-   call darkvim#mapping#space#def('nnoremap', ['f', '?'], 'call call('.string(function('s:denite_tasklist')).', [])', 'file-tasklist', 1)
+   call darkvim#mapping#space#def('nnoremap', ['f', 'f'], 'Denite file/rec', 'list-files', 1)
+   call darkvim#mapping#space#def('nnoremap', ['f', 'F'], 'Denite file/rec/noignore', 'list-files-noignore', 1)
+
+   call darkvim#mapping#space#def('nnoremap', ['f', 'r'], 'Denite file_mru', 'list-recent-files', 1)
+   call darkvim#mapping#space#def('nnoremap', ['f', 'm'], 'Denite mark', 'list-marks', 1)
+   call darkvim#mapping#space#def('nnoremap', ['f', '?'], 'call call('.string(function('s:denite_tasklist')).', [])', 'list-tasks', 1)
+   call darkvim#mapping#space#def('nnoremap', ['f', 'i'], 'call call('. string(function('s:denite_scan_dir')) .', [])', 'scan-files', 1)
+   call darkvim#mapping#space#def('nnoremap', ['f', 'I'], 'call call('. string(function('s:denite_scan_dir')) .', [0])', 'scan-files-noignore', 1)
 
    " Buffers
-   call darkvim#mapping#space#def('nnoremap', ['b', 'b'], 'Denite buffer', 'buffer-list', 1)
-   call darkvim#mapping#space#def('nnoremap', ['b', 'f'], 'DeniteBufferDir file/rec', 'files-curbuf-dir', 1)
-   call darkvim#mapping#space#def('nnoremap', ['b', 'F'], 'DeniteBufferDir file/rec/noignore', 'files-curbuf-dir-noignore', 1)
-   call darkvim#mapping#space#def('nnoremap', ['b', 'p'], 'execute "Denite file/rec:" . expand("%:p:h:h")', 'files-parent-dir', 1)
-   call darkvim#mapping#space#def('nnoremap', ['b', 'p'], 'execute "Denite file/rec/noignore:" . expand("%:p:h:h")', 'files-parent-dir-noignore', 1)
+   call darkvim#mapping#space#def('nnoremap', ['b', 'b'], 'Denite buffer', 'list-buffers', 1)
+   call darkvim#mapping#space#def('nnoremap', ['b', 'f'], 'DeniteBufferDir file/rec', 'list-files', 1)
+   call darkvim#mapping#space#def('nnoremap', ['b', 'F'], 'DeniteBufferDir file/rec/noignore', 'list-files-noignore', 1)
+
+   call darkvim#mapping#space#def('nnoremap', ['b', 'p', 'f'], 'execute "Denite file/rec:" . expand("%:p:h:h")', 'list-file-parent-dir', 1)
+   call darkvim#mapping#space#def('nnoremap', ['b', 'p', 'f'], 'execute "Denite file/rec/noignore:" . expand("%:p:h:h")', 'list-files-parent-dir-noignore', 1)
+   call darkvim#mapping#space#def('nnoremap', ['b', 'p', 'd'], 'execute "Denite directory_rec:" . expand("%:p:h:h")', 'list-parent-dir', 1)
+   call darkvim#mapping#space#def('nnoremap', ['b', 'p', 'D'], 'execute "Denite directory_rec/noignore:" . expand("%:p:h:h")', 'list-parent-dir-noignore', 1)
+   call darkvim#mapping#space#def('nnoremap', ['b', 's'], 'DeniteCursorWord line:forward', 'search-word', 1)
+   call darkvim#mapping#space#def('vnoremap', ['b', 's'], 'call call('.string(function('s:denite_visual_search')).', ["forward"])', 'search-selection', 1)
 
    " Directory
-   call darkvim#mapping#space#def('nnoremap', ['d', 'f'], 'DeniteBufferDir directory_rec', 'subdirs-in-curbuf-dir', 1)
-   call darkvim#mapping#space#def('nnoremap', ['d', 'F'], 'DeniteBufferDir directory_rec/noignore', 'subdirs-in-curbuf-dir', 1)
-   call darkvim#mapping#space#def('nnoremap', ['d', 'p'], 'DeniteBufferDir --no-start-filter parent_dirs', 'subdirs-in-curbuf-dir', 1)
-   call darkvim#mapping#space#def('nnoremap', ['d', 'z'], 'Denite z', 'subdirs-in-curbuf-dir', 1)
-   call darkvim#mapping#space#def('nnoremap', ['d', 'm'], 'Denite dirmark', 'list-dirmarks', 1)
-   call darkvim#mapping#space#def('nnoremap', ['d', 'i'], 'call call('. string(function('s:denite_scan_dir')) .', [])', 'scan-dir', 1)
-   call darkvim#mapping#space#def('nnoremap', ['d', 'I'], 'call call('. string(function('s:denite_scan_dir')) .', [0])', 'scan-dir-noignore', 1)
+   call darkvim#mapping#space#def('nnoremap', ['d', 'f'], 'Denite directory_rec', 'list-dir', 1)
+   call darkvim#mapping#space#def('nnoremap', ['d', 'F'], 'Denite directory_rec/noignore', 'list-dir-noignore', 1)
+
+   call darkvim#mapping#space#def('nnoremap', ['d', 'r'], 'Denite directory_mru', 'list-mru-dirs', 1)
+   call darkvim#mapping#space#def('nnoremap', ['d', 'z'], 'Denite z', 'list-zoxide-db', 1)
+   call darkvim#mapping#space#def('nnoremap', ['d', 'm'], 'Denite dirmark', 'list-dirmark', 1)
    call darkvim#mapping#space#def('nnoremap', ['d', '?'], 'call call('.string(function('s:denite_tasklist')).', ["."])', 'dir-tasklist', 1)
+   call darkvim#mapping#space#def('nnoremap', ['d', 's'], 'DeniteCursorWord -no-start-filter -no-empty grep', 'search-cursor-word', 1)
+   call darkvim#mapping#space#def('nnoremap', ['d', 'S'], 'Denite -no-start-filter -no-empty grep', 'search-input', 1)
 
    " Yank
    call darkvim#mapping#space#def('nnoremap', ['y', 'f'], 'Denite neoyank', 'yank-history', 1)
@@ -72,29 +90,24 @@ function! darkvim#layers#denite#config() abort
    call darkvim#mapping#space#def('nnoremap', ['r', 'f'], 'Denite register', 'register', 1)
 
    " Lists
-   call darkvim#mapping#space#def('nnoremap', ['q', 'l'], 'Denite location_list', 'loc-list', 1)
+   call darkvim#mapping#space#def('nnoremap', ['q', 'l'], 'Denite location_list', 'location-list', 1)
    call darkvim#mapping#space#def('nnoremap', ['q', 'f'], 'Denite -post-action=suspend quickfix', 'quickfix', 1)
 
    " Jumps
+   call darkvim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'outline', 1)
    call darkvim#mapping#space#def('nnoremap', ['j', 'f'], 'Denite jump', 'jumplist', 1)
    call darkvim#mapping#space#def('nnoremap', ['j', 'c'], 'Denite change', 'changelist', 1)
 
    " Search
-   call darkvim#mapping#space#def('nnoremap', ['s', 'f'], 'call call('. string(function('s:denite_grep')) .', [1])', 'search-project', 1)
-   call darkvim#mapping#space#def('nnoremap', ['s', 'F'], 'call call('. string(function('s:denite_grep')) .', [0])', 'search-project-noignore', 1)
-   call darkvim#mapping#space#def('nnoremap', ['s', 'i'], 'call call('. string(function('s:denite_grep')) .', [1, 1])', 'search-project-interactive', 1)
-   call darkvim#mapping#space#def('nnoremap', ['s', 'I'], 'call call('. string(function('s:denite_grep')) .', [0, 1])', 'search-project-interactive-noignore', 1)
-   call darkvim#mapping#space#def('nnoremap', ['s', 'G'], 'Denite -no-start-filter -no-empty grep', 'search-input', 1)
-   call darkvim#mapping#space#def('nnoremap', ['s', 'g'], 'DeniteCursorWord -no-start-filter -no-empty grep', 'search-cursor-word', 1)
-   call darkvim#mapping#space#def('nnoremap', ['s', 'w'], 'DeniteCursorWord line:forward', 'search-word-in-file', 1)
-   call darkvim#mapping#space#def('vnoremap', ['s', 'w'], 'call call('.string(function('s:denite_visual_search')).', ["forward"])', 'search-word-vs', 1)
+   call darkvim#mapping#space#def('nnoremap', ['s', 'f'], 'call call('. string(function('s:denite_grep')) .', [1])', 'search', 1)
+   call darkvim#mapping#space#def('nnoremap', ['s', 'F'], 'call call('. string(function('s:denite_grep')) .', [0])', 'search-noignore', 1)
+   call darkvim#mapping#space#def('nnoremap', ['s', 'i'], 'call call('. string(function('s:denite_grep')) .', [1, 1])', 'search-interactive', 1)
+   call darkvim#mapping#space#def('nnoremap', ['s', 'I'], 'call call('. string(function('s:denite_grep')) .', [0, 1])', 'search-interactive-noignore', 1)
 
-   call darkvim#mapping#space#group(['c'], 'Tags')
-   call darkvim#mapping#space#def('nnoremap', ['c', 'l'], 'Denite tag', 'tags', 1)
+   call darkvim#mapping#space#def('nnoremap', ['t', 'f'], 'Denite tag', 'tags', 1)
 
    " Colorscheme
-   call darkvim#mapping#space#group(['C'], 'Colorscheme')
-   call darkvim#mapping#space#def('nnoremap', ['C', 'f'], 'Denite colorscheme', 'colorschemes', 1)
+   call darkvim#mapping#space#def('nnoremap', ['T', 'f'], 'Denite colorscheme', 'colorschemes', 1)
 
    call darkvim#mapping#space#group(['k'], 'Vim')
    call darkvim#mapping#space#def('nnoremap', ['k', 'C'], 'Denite command', 'commands', 1)

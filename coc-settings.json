@@ -17,9 +17,8 @@
    "diagnostic.infoSign": "",
    "diagnostic.hintSign": "",
    "diagnostic.refreshOnInsertMode": true,
-   "diagnostic.refreshAfterSave": true,
    "list.indicator": "➭",
    "python.jediEnabled": true,
    "python.linting.enabled": true,
-   "clangd.semanticHighlighting": false
+   "clangd.semanticHighlighting": true
 }
