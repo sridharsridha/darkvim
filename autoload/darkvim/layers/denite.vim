@@ -32,16 +32,17 @@ function! darkvim#layers#denite#config() abort
    call darkvim#mapping#space#group(['q'], 'Quickfix')
    call darkvim#mapping#space#group(['s'], 'Search')
    call darkvim#mapping#space#group(['s'], 'Search')
+   call darkvim#mapping#space#group(['r'], 'Resume')
+   call darkvim#mapping#space#group(['r'], 'Register')
 
    " Quick access files
    call darkvim#mapping#def('nnoremap <silent><nowait>', '<C-p>', ':DeniteProjectDir file/rec<cr>', 'files-in-current-working-dir')
-   call darkvim#mapping#space#def('nnoremap', ['f', '<space>'], 'Denite -resume', 'resume-fuzzy-finder', 1)
+   call darkvim#mapping#space#def('nnoremap', ['r', 'l'], 'Denite -resume', 'resume-fuzzy-finder', 1)
 
    " Files listing
    call darkvim#mapping#space#def('nnoremap', ['f', 'r'], 'Denite fast_file_mru', 'open-recent-list', 1)
-   call darkvim#mapping#space#def('nnoremap', ['f', 'f'], 'Denite file/rec', 'file-list', 1)
-   call darkvim#mapping#space#def('nnoremap', ['f', 'F'], 'Denite file/rec/noignore', 'file-list-noignore', 1)
-   call darkvim#mapping#space#def('nnoremap', ['f', 'l'], 'Denite line', 'lines', 1)
+   call darkvim#mapping#space#def('nnoremap', ['f', 'f'], 'DeniteBufferDir file/rec', 'file-list-bufdir', 1)
+   call darkvim#mapping#space#def('nnoremap', ['f', 'F'], 'DeniteBufferDir file/rec/noignore', 'file-list-bufdir-noignore', 1)
    call darkvim#mapping#space#def('nnoremap', ['f', 'L'], 'DeniteCursorWord line', 'lines', 1)
    call darkvim#mapping#space#def('nnoremap', ['f', 'o'], 'Denite outline', 'outline', 1)
    call darkvim#mapping#space#def('nnoremap', ['f', 'm'], 'Denite mark', 'marks', 1)
@@ -65,8 +66,10 @@ function! darkvim#layers#denite#config() abort
    call darkvim#mapping#space#def('nnoremap', ['d', '?'], 'call call('.string(function('s:denite_tasklist')).', ["."])', 'dir-tasklist', 1)
 
    " Yank
-   call darkvim#mapping#space#def('nnoremap', ['y', 'r'], 'Denite register', 'register', 1)
    call darkvim#mapping#space#def('nnoremap', ['y', 'f'], 'Denite neoyank', 'yank-history', 1)
+
+   " Regsiter
+   call darkvim#mapping#space#def('nnoremap', ['r', 'f'], 'Denite register', 'register', 1)
 
    " Lists
    call darkvim#mapping#space#def('nnoremap', ['q', 'l'], 'Denite location_list', 'loc-list', 1)

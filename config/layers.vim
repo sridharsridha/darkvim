@@ -6,6 +6,8 @@ call darkvim#layers#load('tools')
 call darkvim#layers#load('tmux')
 
 " Optional
+call darkvim#layers#load('highlights')
+call darkvim#layers#load('tools')
 call darkvim#layers#load('git')
 call darkvim#layers#load('file_explorer')
 call darkvim#layers#load('tags')

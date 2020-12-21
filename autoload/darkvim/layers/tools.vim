@@ -2,18 +2,8 @@
 function! darkvim#layers#tools#plugins() abort
   let l:plugins = []
 
-  " Show indent line highlight
-  call add(l:plugins, ['nathanaelkane/vim-indent-guides', {
-	\ 'on_cmd' : darkvim#util#prefix('IndentGuides', ['Enable', 'Toggle']),
-	\ 'loadconf_before' : 1,
-	\ }])
 
   " Highlight words under cursor
-  call add(l:plugins, ['t9md/vim-quickhl' , {
-	\ 'on_map' : {'nx' : '<Plug>(quickhl'},
-	\ 'loadconf_before' : 1,
-	\ }])
-
   " Fancy start screen
   call add(l:plugins, ['mhinz/vim-startify', {
 	\ 'on_cmd' : ['Startify'],
@@ -26,9 +16,6 @@ function! darkvim#layers#tools#plugins() abort
   "			\                ['ShowAll', 'Toggle', 'Annotate', 'Next', 'Prev']),
   "			\ 'loadconf' : 1,
   "			\ }])
-
-
-  call add(l:plugins, ['MattesGroeger/vim-bookmarks'])
 
   " Profile startuptime
   call add(l:plugins, ['tweekmonster/startuptime.vim', {
@@ -114,9 +101,6 @@ function! darkvim#layers#tools#config() abort
   call darkvim#mapping#space#def('nnoremap', ['j', 'a' ],
 	\ 'A',
 	\ 'open', 1)
-  call darkvim#mapping#space#def('nnoremap', ['j', 't'],
-	\ 'AT',
-	\ 'open-new-tab', 1)
   call darkvim#mapping#space#def('nnoremap', ['j', 'g'],
 	\ 'AV',
 	\ 'open-vertical-split', 1)
@@ -127,30 +111,6 @@ function! darkvim#layers#tools#config() abort
 	\ ':AN<cr>',
 	\ 'next-alt-file (enter submode n)')
 
-  call darkvim#mapping#space#def('nnoremap', ['j', 'A'],
-	\ 'IH',
-	\ 'open-uc', 1)
-  call darkvim#mapping#space#def('nnoremap', ['j', 'T'],
-	\ 'IHT',
-	\ 'open-uc-new-tab', 1)
-  call darkvim#mapping#space#def('nnoremap', ['j', 'G'],
-	\ 'IHV',
-	\ 'open-uc-vertical-split', 1)
-  call darkvim#mapping#space#def('nnoremap', ['j', 'V'],
-	\ 'IHS',
-	\ 'open-uc-horizontal-split', 1)
-  call darkvim#mapping#space#submode('AltFileF', 'n', '', ['j', 'N'], 'N',
-	\ ':IHN<cr>',
-	\ 'next-alt-file (enter submode n)')
-
-  " bootmark key binding
-  let g:bookmark_no_default_key_mappings = 1
-  let g:bookmark_sign = '♥'
-  let g:bookmark_highlight_lines = 1
-  highlight link BookmarkSign SignifySignAdd
-  highlight link BookmarkAnnotationSign SignifySignChange
-  highlight link BookmarkAnnotationLine CursorLine
-  highlight link BookmarkLine CursorLine
   nnoremap <silent> mm :<C-u>BookmarkToggle<Cr>
   nnoremap <silent> mi :<C-u>BookmarkAnnotate<Cr>
   nnoremap <silent> ml :<C-u>BookmarkShowAll<Cr>
