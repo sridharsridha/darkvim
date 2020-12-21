@@ -1,4 +1,4 @@
-let g:_darkvim_autoclose_filetree = 1
+let g:_darkvim_autoclose_filetree = 0
 function! s:explore_current_dir(cur) abort
   if !a:cur
     let g:_darkvim_autoclose_filetree = 0

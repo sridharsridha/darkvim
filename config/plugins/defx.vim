@@ -2,7 +2,7 @@
 scriptencoding utf-8
 
 let g:_darkvim_filetree_show_hidden_files = 1
-let g:_darkvim_autoclose_filetree = 1
+let g:_darkvim_autoclose_filetree = 0
 
 if get(g:, 'darkvim_filetree_direction', 'left') ==# 'right'
   let s:direction = 'botright'

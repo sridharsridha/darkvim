@@ -21,16 +21,7 @@ function! darkvim#layers#tags#plugins() abort
 endfunction
 
 function! darkvim#layers#tags#config() abort
-	" Gutentags
 	call darkvim#mapping#space#group(['t'], 'Tags')
-	call darkvim#mapping#space#def('nnoremap', ['t', 'u'],
-				\ 'GutentagsUpdate!',
-				\ 'update-tags-cur-proj', 1)
-	call darkvim#mapping#space#def('nnoremap', ['t', 'U'],
-				\ 'GutentagsUpdate',
-				\ 'update-tags-cur-file', 1)
-
-	" Cscope
 	call darkvim#mapping#space#def('nnoremap', ['t', 'd'],
 				\ 'call darkvim#plugins#cscope#find("d", expand("<cword>"))',
 				\ 'find-functions-called-by-this-function', 1)

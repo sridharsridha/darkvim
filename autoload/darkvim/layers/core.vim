@@ -16,11 +16,6 @@ function! darkvim#layers#core#plugins() abort
 				\ 'on_event' : ['InsertEnter'],
 				\ }])
 
-	" Match paren
-	call add(l:plugins, ['andymass/vim-matchup', {
-				\ 'on_event' : ['BufReadPost'],
-				\ 'loadconf_before': 1,
-				\ }])
 
 	" Toggle search highlights automatically
 	call add(l:plugins, ['romainl/vim-cool', {

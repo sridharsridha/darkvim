@@ -22,12 +22,6 @@ function! darkvim#layers#tools#plugins() abort
 	\ 'on_cmd' : ['StartupTime'],
 	\ }])
 
-  " info window
-  call add(l:plugins, ['mcchrish/info-window.nvim', {
-	\ 'on_cmd': ['InfoWindowToggle'],
-	\ 'on_func': ['infowindow#toggle'],
-	\ }])
-
   " Cheat
   call add(l:plugins, ['dbeniamine/cheat.sh-vim', {
 	\ 'name': 'cheat_sheet',
@@ -111,20 +105,6 @@ function! darkvim#layers#tools#config() abort
   call darkvim#mapping#space#submode('AltFile', 'n', '', ['j', 'a', 'n'], 'n',
 	\ ':AN<cr>',
 	\ 'next-alt-file (enter submode n)')
-
-  nnoremap <silent> mm :<C-u>BookmarkToggle<Cr>
-  nnoremap <silent> mi :<C-u>BookmarkAnnotate<Cr>
-  nnoremap <silent> ml :<C-u>BookmarkShowAll<Cr>
-  nnoremap <silent> mn :<C-u>BookmarkNext<Cr>
-  nnoremap <silent> mp :<C-u>BookmarkPrev<Cr>
-  nnoremap <silent> mc :<C-u>BookmarkClear<Cr>
-  nnoremap <silent> mx :<C-u>BookmarkClearAll<Cr>
-  nnoremap <silent> mkk :<C-u>BookmarkMoveUp<Cr>
-  nnoremap <silent> mjj :<C-u>BookmarkMoveDown<Cr>
-
-  " Info window
-  " Toggle info window for current buffer
-  nnoremap <silent> <C-g> <cmd>call infowindow#toggle()<CR>:MatchupWhereAmI?<CR>
 
   " Cheatsheet
   let g:CheatSheetFt = 'cheatsheet'

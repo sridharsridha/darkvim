@@ -62,22 +62,15 @@ call s:denite_resize(g:denite_position)
 
 " MATCHERS
 " Fruzzy matcher
-let g:fruzzy#usenative = 0
-let g:fruzzy#sortonempty = 0
-call denite#custom#source('_', 'matchers', ['matcher/fruzzy',
-      \ 'matcher/ignore_globs'])
-call denite#custom#source('tag', 'matchers', ['matcher/substring'])
-call denite#custom#source('line', 'matchers', ['matcher/regexp'])
-call denite#custom#source('default', 'sorters', ['sorter/rank'])
+" let g:fruzzy#usenative = 0
+" let g:fruzzy#sortonempty = 0
+" call denite#custom#source('_', 'matchers', ['matcher/fruzzy',
+"      \ 'matcher/ignore_globs'])
+" call denite#custom#source('tag', 'matchers', ['matcher/substring'])
+" call denite#custom#source('line', 'matchers', ['matcher/regexp'])
+" call denite#custom#source('default', 'sorters', ['sorter/rank'])
 call denite#custom#source('z', 'sorters', ['sorter_z'])
 
-" SORTERS
-" Default is 'sorter/rank'
-call denite#custom#source('z', 'sorters', ['sorter_z'])
-" Other matcher and sorting options
-call denite#custom#source('line', 'matchers', ['matcher/regexp'])
-call denite#custom#source('default', 'sorters', ['sorter/rank'])
-call denite#custom#source('z', 'sorters', ['sorter_z'])
 " Devicon converter
 call denite#custom#source('file/rec,file/rec/noignore,buffer,fast_file_mru,'
       \ .'directory_rec,directory_rec/noignore,parent_dirs,grep,z',

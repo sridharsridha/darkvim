@@ -120,16 +120,6 @@ function! darkvim#layers#edit#plugins() abort
 				\ 'on_map' : {'nvx' : ['gA', 'crd', 'crx', 'cro', 'crb']}
 				\ }])
 
-	" Whitespace showing
-	call add(l:plugins, ['ntpeters/vim-better-whitespace', {
-				\ 'on_event' : ['InsertEnter'],
-				\ 'on_cmd' : ['StripWhitespace',
-				\             'ToggleWhitespace',
-				\             'DisableWhitespace',
-				\             'EnableWhitespace'],
-				\ 'loadconf_before' : 1,
-				\ }])
-
 	return l:plugins
 endfunction
 
@@ -186,14 +176,14 @@ function! darkvim#layers#edit#config() abort
 
 	" Duplicate lines
 	call darkvim#mapping#space#group(['x', 'c'], 'copy')
-	call darkvim#mapping#space#submode2('TextDupJ', 'n', '', ['x', 'd', 'j'],
+	call darkvim#mapping#space#submode2('TextDupJ', 'n', '', ['x', 'c', 'j'],
 				\ 'mzyyP`z',
 				\ 'duplicate-line-down j')
 	call darkvim#mapping#space#submode_map('TextDupJ', 'n', '', 'j',
 				\ 'mzyyP`z')
 	call darkvim#mapping#space#submode_map('TextDupJ', 'n', '', 'k',
 				\ 'mzyyP`zk')
-	call darkvim#mapping#space#submode2('TextDupK', 'n', '', ['x', 'd', 'k'],
+	call darkvim#mapping#space#submode2('TextDupK', 'n', '', ['x', 'c', 'k'],
 				\ 'mzyyP`zk',
 				\ 'duplicate-line-up k')
 	call darkvim#mapping#space#submode_map('TextDupK', 'n', '', 'j',

@@ -1,3 +1,7 @@
+let g:which_key_use_floating_win = 1
+let g:which_key_default_group_name = 'Unknown'
+let g:which_key_exit = ["\<C-g>", "\<Esc>"]
+
 " Which-Key
 call which_key#register('<space>', 'g:_darkvim_mappings_space')
 call which_key#register(g:darkvim_windows_leader, 'g:_darkvim_mappings_windows')

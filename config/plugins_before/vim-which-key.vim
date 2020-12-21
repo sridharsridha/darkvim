@@ -1,7 +1,3 @@
-let g:which_key_use_floating_win = 1
-let g:which_key_default_group_name = 'Unknown'
-let g:which_key_exit = ["\<C-g>", "\<Esc>"]
-
 " Which-Key toplevel mappings, no guide need for these mappings
 nnoremap <silent> z :<c-u>WhichKey 'z'<CR>
 nnoremap <silent><nowait> g :<c-u>WhichKey 'g'<CR>
