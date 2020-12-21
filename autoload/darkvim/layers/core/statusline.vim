@@ -189,6 +189,14 @@ let g:airline_mode_map = {
    \ }
 
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_highlighting_cache = 1
+let g:airline#extensions#tagbar#enabled = 0
+let g:airline#extensions#neomake#enabled = 0
+let g:airline#extensions#gina#enabled = 0
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#hunks#enabled = 0
+let g:airline#extensions#branch#enabled = 0
+
 endfunction
 
 " let g:darkvim#layers#core#statusline#number_map =
