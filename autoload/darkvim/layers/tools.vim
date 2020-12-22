@@ -44,40 +44,27 @@ function! darkvim#layers#tools#plugins() abort
 
   " Resize window automatically on switching
   call add(l:plugins, ['justincampbell/vim-eighties', {
-	\ 'on_cmd': [ 'EightiesResize' ],
+	\ 'on_cmd': darkvim#util#prefix('TmuxNavigate', ['Left', 'Down', 'Up', 'Right']),
+	\ 'loadconf': 1,
 	\ }])
 
-  " Shell tools
-  call add(l:plugins, ['tpope/vim-eunuch', {
-	\ 'on_cmd' : ['Delete', 'Unlink', 'Move', 'Rename', 'Chmod', 'Mkdir',
-	\             'Cfind', 'Clocate', 'Lfind', 'Llocate', 'Wall',
-	\             'SudoWrite', 'SudoEdit'],
-	\ }])
+ "  " Shell tools
+ "  call add(l:plugins, ['tpope/vim-eunuch', {
+	" \ 'on_cmd' : ['Delete', 'Unlink', 'Move', 'Rename', 'Chmod', 'Mkdir',
+	" \             'Cfind', 'Clocate', 'Lfind', 'Llocate', 'Wall',
+	" \             'SudoWrite', 'SudoEdit'],
+	" \ }])
 
   " Quickrun
   call add(l:plugins, ['thinca/vim-quickrun', {
-	\ 'on_cmd': ['QuickRun']
+	\ 'on_cmd': ['QuickRun'],
+	\ 'loadconf_before': 1,
 	\ }])
 
   return l:plugins
 endfunction
 
 function! darkvim#layers#tools#config() abort
-  let g:eighties_extra_width = 0
-  let g:eighties_bufname_additional_patterns = [
-	\ '__Gundo__',
-	\ '__Gundo_Preview__',
-	\ '__committia_diff__',
-	\ '__committia_status__',
-	\ 'Vista',
-	\ 'Defx',
-	\ 'agit',
-	\ 'gina-blame',
-	\ 'gina-log',
-	\ ]
-  call darkvim#mapping#windows#def('nnoremap', ['r'],
-	\ 'EightiesResize',
-	\ 'resize-window', 1)
 
   " Startify
   call darkvim#mapping#space#group(['a'], 'Applications')
@@ -189,66 +176,4 @@ function! darkvim#layers#tools#config() abort
 	\ 'ScratchPreview',
 	\ 'open-scratch-pad-in-preview-window', 1)
 
-  " Quickrun
-  call darkvim#mapping#space#group(['r'], 'Run')
-  call darkvim#mapping#space#def('nnoremap', ['r', 'r'],
-	\ 'QuickRun',
-	\ 'quickly-run-current-buffer', 1, 1)
-  call darkvim#mapping#space#def('nnoremap', ['r', 'j'],
-	\ 'call call(' . string(function('s:quickrun_goto')) . ', [])',
-	\ 'explore-current-directory', 1)
-  call darkvim#mapping#space#def('nnoremap', ['r', 'q'],
-	\ 'call call(' . string(function('s:quickrun_close')) . ', [])',
-	\ 'explore-current-directory', 1)
 endfunction
-
-" Jump to the output window for QuickRun.
-" If being already inside and have jumped before with this function to it,
-" jump back to the origin window.
-function! s:quickrun_goto() abort
-  " Check if being within the QuickRun window and if the jump command has been
-  " used, so the jump will be done back.
-  if get(s:, 'previous_window_id', -1) > 0 && &filetype ==# 'quickrun'
-    call win_gotoid(s:previous_window_id)
-    unlet s:previous_window_id
-    " Jump to the QuickRun window.
-  else
-    call s:jump_or_close(v:false)
-  endif
-endfunction
-
-" Close to the output window for QuickRun.
-" Jumps back from the window from where invoked.
-function! s:quickrun_close() abort
-  call s:jump_or_close(v:true)
-endfunction
-
-" Find out which window contains the QuickRun buffer.
-" Jumps to the buffer, while remember from where jumped.
-" Close the window and jump back if the argument is true.
-"
-" Arguments:
-"   close - boolean if the window should be closed
-function! s:jump_or_close(close) abort
-  " Ask each open window if it contains the quickrun output buffer.
-  let g:quickrun_win_id = -1
-  windo if &filetype ==# 'quickrun' | let g:quickrun_win_id = win_getid() | endif
-" Check if a quickrun output window is open.
-if g:quickrun_win_id > 0
-  let s:previous_window_id = win_getid()
-  call win_gotoid(g:quickrun_win_id)
-  " Close and jump back if requested.
-  if a:close
-    norm q
-    " Jump back to previous window if it was not invoked from within the
-    " already closed quickrun window.
-    if g:quickrun_win_id !=# s:previous_window_id
-      call win_gotoid(s:previous_window_id)
-      unlet s:previous_window_id
-    endif
-  endif
-else
-  echom 'No QuickRun output window open!'
-endif
-endfunction
-

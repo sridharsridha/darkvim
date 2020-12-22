@@ -134,14 +134,14 @@ function! darkvim#layers#core#plugins() abort
 				\ 'nolazy' : 1,
 				\ }])
 
-	call add(l:plugins, ['altercation/vim-colors-solarized', {
-				\ 'nolazy' : 1,
-				\ }])
-
-	call add(l:plugins, ['sonph/onehalf', {
-				\ 'rtp': 'vim/',
-				\ 'nolazy' : 1,
-				\ }])
+	" call add(l:plugins, ['altercation/vim-colors-solarized', {
+	"			\ 'nolazy' : 1,
+	"			\ }])
+	"
+	" call add(l:plugins, ['sonph/onehalf', {
+	"			\ 'rtp': 'vim/',
+	"			\ 'nolazy' : 1,
+	"			\ }])
 
 	return l:plugins
 endfunction

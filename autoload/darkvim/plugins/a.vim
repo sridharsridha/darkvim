@@ -567,9 +567,9 @@ call darkvim#plugins#a#add_ext_map('cc','h')
 call darkvim#plugins#a#add_ext_map('CC','H,h')
 call darkvim#plugins#a#add_ext_map('cxx','h')
 call darkvim#plugins#a#add_ext_map('CXX','H')
-call darkvim#plugins#a#add_ext_map('tac','tin,itin')
+call darkvim#plugins#a#add_ext_map('itin','tin')
 call darkvim#plugins#a#add_ext_map('tin','tac')
-call darkvim#plugins#a#add_ext_map('itin','tac')
+call darkvim#plugins#a#add_ext_map('tac','tin,itin')
 
 " Mappings for PSL7
 call darkvim#plugins#a#add_ext_map('psl','ph')

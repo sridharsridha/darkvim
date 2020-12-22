@@ -76,9 +76,9 @@ function! darkvim#layers#edit#plugins() abort
 				\ }])
 
 	" Align text motion support gl, gL motion
-	call add(l:plugins, ['tommcdo/vim-lion', {
-				\ 'on_map': {'n': ['gl', 'gL']},
-				\ }])
+	" call add(l:plugins, ['tommcdo/vim-lion', {
+	"			\ 'on_map': {'n': ['gl', 'gL']},
+	"			\ }])
 
 	" Convert text into table using delimiters helful for formatting code
 	call add(l:plugins, ['godlygeek/tabular', {

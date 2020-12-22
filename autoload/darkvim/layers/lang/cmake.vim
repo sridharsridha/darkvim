@@ -1,5 +1,4 @@
 " cmake.vim : cmake file support for darkvim
-
 function! darkvim#layers#lang#cmake#plugins() abort
 	let l:plugins = []
 

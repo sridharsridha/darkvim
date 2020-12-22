@@ -38,7 +38,7 @@ function! darkvim#util#find_file_explorer() abort
   " Detect terminal file-explorer
   let s:file_explorer = get(g:, 'darkvim_terminal_file_explorer', '')
   if empty(s:file_explorer)
-    for l:explorer in ['lf', 'fd', 'hunter', 'ranger', 'vifm', 'fzf']
+    for l:explorer in ['lf', 'hunter', 'ranger', 'vifm']
       if executable(l:explorer)
         let s:file_explorer = l:explorer
         break

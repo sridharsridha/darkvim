@@ -1,9 +1,9 @@
 " Sideways
-call darkvim#mapping#space#group(['x'], 'Text')
-call darkvim#mapping#space#group(['x', 'l'], 'ListItem')
-call darkvim#mapping#space#def('nnoremap', ['x', 'l', 'h'],
+call darkvim#mapping#space#group(['c'], 'Code')
+call darkvim#mapping#space#group(['c', 's'], 'ListItem')
+call darkvim#mapping#space#def('nnoremap', ['c', 's', 'h'],
 			\ 'SidewaysLeft',
 			\ 'shift-list-item-left', 1)
-call darkvim#mapping#space#def('nnoremap', ['x', 'l', 'l'],
+call darkvim#mapping#space#def('nnoremap', ['c', 's', 'l'],
 			\ 'SidewaysRight',
 			\ 'shift-list-item-right', 1)
