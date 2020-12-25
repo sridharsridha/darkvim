@@ -1,5 +1,4 @@
 " tmux.vim tmux layer for darkvim
-"
 function! darkvim#layers#tmux#plugins() abort
 	let l:plugins = []
 
@@ -8,14 +7,14 @@ function! darkvim#layers#tmux#plugins() abort
 				\ 'on_cmd': darkvim#util#prefix('TmuxNavigate', ['Left', 'Down', 'Up', 'Right']),
 				\ }])
 
-	" Vim and tmux clipboard sharing
-	call add(l:plugins, ['roxma/vim-tmux-clipboard', {
-				\ 'nolazy' : 1,
-				\ }])
-
 	" Vim and tmux pane common resize command
 	call add(l:plugins, ['RyanMillerC/better-vim-tmux-resizer', {
 				\ 'on_cmd': darkvim#util#prefix('TmuxResize', ['Left', 'Down', 'Up', 'Right']),
+				\ }])
+
+	" Vim and tmux clipboard sharing
+	call add(l:plugins, ['roxma/vim-tmux-clipboard', {
+            \ 'on_event' : ['InsertEnter'],
 				\ }])
 
 	" tmux config file support

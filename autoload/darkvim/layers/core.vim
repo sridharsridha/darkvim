@@ -24,9 +24,9 @@ function! darkvim#layers#core#plugins() abort
 				\ }])
 
 	" Automagic indentation configuration, that just works.
-	call add(l:plugins, ['tpope/vim-sleuth', {
-				\ 'nolazy' : 1,
-				\ }])
+	" call add(l:plugins, ['tpope/vim-sleuth', {
+	"			\ 'nolazy' : 1,
+	"			\ }])
 
 	" Highlight jump
 	call add(l:plugins, ['deris/vim-shot-f', {
@@ -37,7 +37,7 @@ function! darkvim#layers#core#plugins() abort
 
 	" Trigger a mode with a keymap and repeat it using another keymap.
 	call add(l:plugins, ['kana/vim-submode', {
-				\ 'loadconf_before' : 1,
+				\ 'loadconf' : 1,
 				\ 'nolazy' : 1,
 				\ }])
 
@@ -59,10 +59,10 @@ function! darkvim#layers#core#plugins() abort
 				\ }])
 
 	" Multiple cursor support
-	call add(l:plugins, ['terryma/vim-multiple-cursors', {
-				\ 'on_event' : ['BufReadPost'],
-				\ 'loadconf_before' : 1,
-				\ }])
+	" call add(l:plugins, ['terryma/vim-multiple-cursors', {
+	"			\ 'on_event' : ['BufReadPost'],
+	"			\ 'loadconf_before' : 1,
+	"			\ }])
 
 	" Capture command output to a buffer
 	call add(l:plugins, ['tyru/capture.vim', {
@@ -76,10 +76,17 @@ function! darkvim#layers#core#plugins() abort
 				\ }])
 
 	" Dein ui
-	call add(l:plugins, ['wsdjeg/dein-ui.vim', {
-				\ 'on_cmd' : ['DeinUpdate'],
-				\ 'loadconf_before' : 1,
-				\ }])
+	" call add(l:plugins, ['wsdjeg/dein-ui.vim', {
+	"			\ 'on_cmd' : ['DeinUpdate'],
+	"			\ 'loadconf_before' : 1,
+	"			\ }])
+
+   " Vim rooter
+   call add(l:plugins, ['airblade/vim-rooter', {
+            \ 'on_func' : 'FindRootDirectory',
+            \ 'on_cmd' : ['Rooter', 'RooterToggle'],
+            \ 'loadconf' : 1,
+            \ }])
 
 	" Commenter
 	call add(l:plugins, ['tyru/caw.vim', {
@@ -143,10 +150,17 @@ function! darkvim#layers#core#plugins() abort
 	"			\ 'nolazy' : 1,
 	"			\ }])
 
+   " call add(l:plugins, ['tomasiser/vim-code-dark', {
+   "         \ 'nolazy' : 1,
+   "         \ }])
 	return l:plugins
 endfunction
 
 function! darkvim#layers#core#config() abort
-
+	" vim-devicons
+	let g:webdevicons_enable = 1
+	let g:webdevicons_enable_airline_tabline = 1
+	let g:webdevicons_enable_airline_statusline = 1
+	let g:webdevicons_enable_denite = 1
 endfunction
 

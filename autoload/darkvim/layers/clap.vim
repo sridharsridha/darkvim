@@ -11,14 +11,14 @@ endfunction
 
 function! darkvim#layers#clap#config() abort
 	let g:clap_cache_directory = $HOME.'/.cache/darkvim/clap'
-	let g:clap_theme = 'material_design_dark'
-	" let g:clap_layout = { 'relative': 'editor' }
+	" let g:clap_theme = 'material_design_dark'
+	let g:clap_layout = { 'width' : '90%', 'col' : '5%' }
 	let g:clap_enable_icon = 1
 	" let g:clap_search_box_border_style = 'curve'
 	let g:clap_provider_grep_enable_icon = 1
-	let g:clap_prompt_format = '%spinner%%forerunner_status% %provider_id%: '
-	highlight! link ClapMatches Function
-	highlight! link ClapNoMatchesFound WarningMsg
+	" let g:clap_prompt_format = '%spinner%%forerunner_status% %provider_id%: '
+	" highlight! link ClapMatches Function
+	" highlight! link ClapNoMatchesFound WarningMsg
 
 	augroup clap_init
 		autocmd!
@@ -154,5 +154,5 @@ function! s:clap_mappings() abort
 	nnoremap <silent> <buffer> <Esc> :call clap#handler#exit()<CR>
 
 	inoremap <silent> <buffer> <Esc> <C-R>=clap#navigation#linewise('down')<CR><C-R>=clap#navigation#linewise('up')<CR><Esc>
-	inoremap <silent> <buffer> jj    <C-R>=clap#navigation#linewise('down')<CR><C-R>=clap#navigation#linewise('up')<CR><Esc>
+	inoremap <silent> <buffer> jk    <C-R>=clap#navigation#linewise('down')<CR><C-R>=clap#navigation#linewise('up')<CR><Esc>
 endfunction

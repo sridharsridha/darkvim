@@ -126,6 +126,7 @@ endfunction
 function! darkvim#layers#edit#config() abort
 
 	" Uppercase/Lowercase
+	call darkvim#mapping#space#group(['x'], 'Text')
 	call darkvim#mapping#space#def('vnoremap', ['x', 'u'], 'gu', 'set the selected text to lower case', 0)
 	call darkvim#mapping#space#def('vnoremap', ['x', 'U'], 'gU', 'set the selected text to up case', 0)
 
