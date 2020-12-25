@@ -120,6 +120,12 @@ function! darkvim#layers#edit#plugins() abort
 				\ 'on_map' : {'nvx' : ['gA', 'crd', 'crx', 'cro', 'crb']}
 				\ }])
 
+	" Multiple cursor support
+	call add(l:plugins, ['terryma/vim-multiple-cursors', {
+				\ 'on_event' : ['BufReadPost'],
+				\ 'loadconf_before' : 1,
+				\ }])
+
 	return l:plugins
 endfunction
 

@@ -58,12 +58,6 @@ function! darkvim#layers#core#plugins() abort
 				\ 'nolazy' : 1,
 				\ }])
 
-	" Multiple cursor support
-	" call add(l:plugins, ['terryma/vim-multiple-cursors', {
-	"			\ 'on_event' : ['BufReadPost'],
-	"			\ 'loadconf_before' : 1,
-	"			\ }])
-
 	" Capture command output to a buffer
 	call add(l:plugins, ['tyru/capture.vim', {
 				\ 'on_cmd' : ['Capture'],
