@@ -189,6 +189,8 @@ let g:airline_mode_map = {
    \ }
 
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':.'
+let g:airline#extensions#tabline#fnamecollapse = 0
 let g:airline_highlighting_cache = 1
 let g:airline#extensions#tagbar#enabled = 0
 let g:airline#extensions#neomake#enabled = 0

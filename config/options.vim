@@ -13,6 +13,14 @@ set timeoutlen=300
 set ttimeoutlen=30
 " always use system clipboard as unnamed register
 set clipboard=unnamed,unnamedplus
+
+"  ShaDa/viminfo:
+"   ' - Maximum number of previously edited files marks
+"   < - Maximum number of lines saved for each register
+"   @ - Maximum number of items in the input-line history to be
+"   s - Maximum size of an item contents in KiB
+"   h - Disable the effect of 'hlsearch' when loading the shada
+set shada=!,'300,<50,@100,s10,h
 " ----------------------------------------------------------------------------
 
 " WildMenu:
@@ -95,3 +103,4 @@ set showtabline=1
 set conceallevel=2 concealcursor=niv " For snippet_complete marker
 set lazyredraw                          " Don't redraw while executing macros.
 " ----------------------------------------------------------------------------
+

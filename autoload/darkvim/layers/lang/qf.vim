@@ -2,10 +2,23 @@
 function! darkvim#layers#lang#qf#plugins() abort
 	let l:plugins = []
 
-	" call add(plugins, ['romainl/vim-qf', {
-	" \ 'on_ft' : 'qf',
-	" \ 'on_func' : 'qf#OpenQuickfix'}])
-	call add(l:plugins, ['romainl/vim-qf'])
+	call add(l:plugins, ['romainl/vim-qf', {
+				\ 'on_ft' : ['qf'],
+				\ }])
+
+	call add(l:plugins, ['yssl/QFEnter', {
+				\ 'on_ft' : ['qf'],
+				\ 'loadconf_before' : 1,
+				\ }])
+
+	call add(l:plugins, ['itchyny/vim-qfedit', {
+				\ 'on_ft' : ['qf'],
+				\ }])
+
+	call add(l:plugins, ['thinca/vim-qfreplace', {
+				\ 'on_cmd' : ['Qfreplace'],
+				\ 'on_ft' : ['qf'],
+				\ }])
 
 	return l:plugins
 endfunction

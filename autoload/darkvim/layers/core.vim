@@ -88,40 +88,11 @@ function! darkvim#layers#core#plugins() abort
             \ 'loadconf_before' : 1,
             \ }])
 
-   " Searching for word/cword
-   call add(l:plugins, ['mhinz/vim-grepper', {
-            \ 'on_map' : {'nxv' : '<plug>(GrepperOperator)'},
-            \ 'on_cmd' : ['Grepper'],
-            \ 'loadconf' : 1,
-            \ 'loadconf_before' : 1,
-            \ }])
-
-   " Interactive replace
-   call add(l:plugins, ['brooth/far.vim', {
-            \ 'on_cmd': darkvim#util#prefix('F', ['ar', 'arp', '']),
-            \ 'loadconf_before' : 1,
-            \ }])
-
    " Browser helper
    call add(l:plugins, ['tyru/open-browser.vim', {
             \ 'on_cmd' : darkvim#util#prefix('OpenBrowser', ['SmartSearch', '', 'Search']),
             \ 'on_map' : {'nx' : '<Plug>(openbrowser-'},
             \ 'loadconf_before' : 1,
-            \ }])
-
-   " Quickfix
-   call add(l:plugins, ['yssl/QFEnter', {
-            \ 'on_ft' : ['qf'],
-            \ 'loadconf_before' : 1,
-            \ }])
-
-   call add(l:plugins, ['itchyny/vim-qfedit', {
-            \ 'on_ft' : ['qf'],
-            \ }])
-
-   call add(l:plugins, ['thinca/vim-qfreplace', {
-            \ 'on_cmd' : ['Qfreplace'],
-            \ 'on_ft' : ['qf'],
             \ }])
 
    " Choose window by visual selection
@@ -130,19 +101,25 @@ function! darkvim#layers#core#plugins() abort
             \ 'on_cmd' : darkvim#util#prefix('ChooseWin', ['', 'Swap']),
             \ }])
 
-   " Colorscheme
-   call add(l:plugins, ['morhetz/gruvbox', {
-            \ 'nolazy' : 1,
-            \ }])
+	" Choose window by visual selection
+	call add(l:plugins, ['t9md/vim-choosewin', {
+				\ 'on_map' : {'ni' : '<Plug>'},
+				\ 'on_cmd' : darkvim#util#prefix('ChooseWin', ['', 'Swap']),
+				\ }])
 
-   " call add(l:plugins, ['altercation/vim-colors-solarized', {
-   "        \ 'nolazy' : 1,
-   "        \ }])
-   "
-   " call add(l:plugins, ['sonph/onehalf', {
-   "        \ 'rtp': 'vim/',
-   "        \ 'nolazy' : 1,
-   "        \ }])
+	" Colorscheme
+	call add(l:plugins, ['morhetz/gruvbox', {
+				\ 'nolazy' : 1,
+				\ }])
+
+	" call add(l:plugins, ['altercation/vim-colors-solarized', {
+	"			\ 'nolazy' : 1,
+	"			\ }])
+	"
+	" call add(l:plugins, ['sonph/onehalf', {
+	"			\ 'rtp': 'vim/',
+	"			\ 'nolazy' : 1,
+	"			\ }])
 
    " call add(l:plugins, ['tomasiser/vim-code-dark', {
    "         \ 'nolazy' : 1,
