@@ -95,12 +95,6 @@ function! darkvim#layers#core#plugins() abort
             \ 'loadconf_before' : 1,
             \ }])
 
-   " Choose window by visual selection
-   call add(l:plugins, ['t9md/vim-choosewin', {
-            \ 'on_map' : {'ni' : '<Plug>'},
-            \ 'on_cmd' : darkvim#util#prefix('ChooseWin', ['', 'Swap']),
-            \ }])
-
 	" Choose window by visual selection
 	call add(l:plugins, ['t9md/vim-choosewin', {
 				\ 'on_map' : {'ni' : '<Plug>'},
