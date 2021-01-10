@@ -54,10 +54,6 @@ function! darkvim#layers#lsp#plugins() abort
 				\ 'loadconf' : 1,
 				\ }])
 
-	call add(l:plugins, ['liuchengxu/vista.vim', {
-            \ 'on_source' : ['coc.nvim'],
-            \ }])
-
 	return l:plugins
 endfunction
 

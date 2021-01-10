@@ -102,5 +102,6 @@ set nofoldenable
 set showtabline=1
 set conceallevel=2 concealcursor=niv " For snippet_complete marker
 set lazyredraw                          " Don't redraw while executing macros.
+set showtabline=2
 " ----------------------------------------------------------------------------
 
