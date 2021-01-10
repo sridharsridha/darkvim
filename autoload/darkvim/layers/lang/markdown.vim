@@ -1,67 +1,59 @@
 
 function! darkvim#layers#lang#markdown#plugins() abort
 	let l:plugins = []
-	call add(l:plugins, ['plasticboy/vim-markdown', {
-				\ 'on_ft' : 'markdown',
-				\ }])
-	call add(l:plugins, ['mzlogin/vim-markdown-toc', {
-				\ 'on_ft' : 'markdown',
-				\ }])
-	call add(l:plugins, ['lvht/tagbar-markdown', {
-				\ 'on_source' : ['tagbar'],
-				\ }])
+	" call add(l:plugins, ['plasticboy/vim-markdown', {
+	"			\ 'on_ft' : 'markdown',
+	"			\ }])
+	" call add(l:plugins, ['mzlogin/vim-markdown-toc', {
+	"			\ 'on_ft' : 'markdown',
+	"			\ }])
+	" call add(l:plugins, ['lvht/tagbar-markdown', {
+	"			\ 'on_source' : ['tagbar'],
+	"			\ }])
 
-	" check node package managers to ensure building of 2 plugins below
-	if executable('npm')
-		let s:node_pkgm = 'npm'
-	elseif executable('yarn')
-		let s:node_pkgm = 'yarn'
-	else
-		let s:node_pkgm = ''
-	endif
 	call add(l:plugins, ['iamcco/markdown-preview.nvim', {
-				\ 'on_ft' : 'markdown',
+				\ 'on_ft' : ['markdown', 'pandoc.markdown', 'rmd'],
 				\ 'depends': 'open-browser.vim',
-				\ 'build' : 'cd app & ' . s:node_pkgm . ' install',
+				\ 'build' : 'cd app & yarn install',
 				\ }])
 	return l:plugins
 endfunction
 
 function! darkvim#layers#lang#markdown#config() abort
-	let g:vim_markdown_conceal = 0
-	let g:vim_markdown_conceal_code_blocks = 0
-	let g:vim_markdown_toc_autofit = 1
-	let g:markdown_enable_mappings = 1
-	let g:markdown_enable_insert_mode_leader_mappings = 0
-	let g:markdown_enable_spell_checking = 1
+	" let g:vim_markdown_conceal = 0
+	" let g:vim_markdown_conceal_code_blocks = 0
+	" let g:vim_markdown_toc_autofit = 1
+	" let g:markdown_enable_mappings = 1
+	" let g:markdown_enable_insert_mode_leader_mappings = 0
+	" let g:markdown_enable_spell_checking = 1
+	"
+	" let l:remarkrc = s:generate_remarkrc()
+	" let g:neoformat_enabled_markdown = ['remark']
+	" let g:neoformat_markdown_remark = {
+	"			\ 'exe': 'remark',
+	"			\ 'args': ['--no-color', '--silent'] + (empty(l:remarkrc) ?  [] : ['-r', l:remarkrc]),
+	"			\ 'stdin': 1,
+	"			\ }
+	"
+	" let g:mkdp_browserfunc = 'openbrowser#open'
 
-	let l:remarkrc = s:generate_remarkrc()
-	let g:neoformat_enabled_markdown = ['remark']
-	let g:neoformat_markdown_remark = {
-				\ 'exe': 'remark',
-				\ 'args': ['--no-color', '--silent'] + (empty(l:remarkrc) ?  [] : ['-r', l:remarkrc]),
-				\ 'stdin': 1,
-				\ }
+	" call darkvim#mapping#localleader#reg_lang_mappings_cb('markdown', function('s:mappings'))
 
-	let g:mkdp_browserfunc = 'openbrowser#open'
+	" nnoremap <silent> <plug>(markdown-insert-link) :call <SID>markdown_insert_link(0, 0)<Cr>
+	" xnoremap <silent> <plug>(markdown-insert-link) :<C-u> call <SID>markdown_insert_link(1, 0)<Cr>
+	" nnoremap <silent> <plug>(markdown-insert-picture) :call <SID>markdown_insert_link(0, 1)<Cr>
+	" xnoremap <silent> <plug>(markdown-insert-picture) :<C-u> call <SID>markdown_insert_link(1, 1)<Cr>
 
-	call darkvim#mapping#localleader#reg_lang_mappings_cb('markdown', function('s:mappings'))
-
-	nnoremap <silent> <plug>(markdown-insert-link) :call <SID>markdown_insert_link(0, 0)<Cr>
-	xnoremap <silent> <plug>(markdown-insert-link) :<C-u> call <SID>markdown_insert_link(1, 0)<Cr>
-	nnoremap <silent> <plug>(markdown-insert-picture) :call <SID>markdown_insert_link(0, 1)<Cr>
-	xnoremap <silent> <plug>(markdown-insert-picture) :<C-u> call <SID>markdown_insert_link(1, 1)<Cr>
-
-	augroup darkvim_layer_lang_markdown
-		autocmd!
-		autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
-	augroup END
+	" augroup darkvim_layer_lang_markdown
+	" 	autocmd!
+	" 	autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
+	" augroup END
 endfunction
 
 function! s:mappings() abort
-	call darkvim#mapping#localleader#def('nmap', ['p'], 'MarkdownPreview', 'Real-time markdown preview', 1)
-	call darkvim#mapping#localleader#def('nmap', ['k'], '<plug>(markdown-insert-link)', 'add link url', 0, 1)
-	call darkvim#mapping#localleader#def('nmap', ['K'], '<plug>(markdown-insert-picture)', 'add link picture', 0, 1)
+	" call darkvim#mapping#localleader#def('nmap', ['p'], 'MarkdownPreview', 'Real-time markdown preview', 1)
+	" call darkvim#mapping#localleader#def('nmap', ['k'], '<plug>(markdown-insert-link)', 'add link url', 0, 1)
+	" call darkvim#mapping#localleader#def('nmap', ['K'], '<plug>(markdown-insert-picture)', 'add link picture', 0, 1)
 endfunction
 
 function! s:generate_remarkrc() abort

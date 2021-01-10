@@ -14,30 +14,14 @@ endfunction
 
 function! darkvim#layers#checkers#config() abort
 	call darkvim#mapping#space#group(['e'], 'Errors')
-	call darkvim#mapping#space#def('nnoremap', ['e', 'e'], 'call call('
-				\ . string(function('s:toggle_syntax_checker')) . ', [1])',
-				\ 'toggle-syntax-checker', 1)
-	call darkvim#mapping#space#def('nnoremap', ['e', 'E'], 'call call('
-				\ . string(function('s:toggle_syntax_checker')) . ', [0])',
-				\ 'toggle-syntax-checker', 1)
-	call darkvim#mapping#space#def('nnoremap', ['e', 'l'], 'call call('
-				\ . string(function('s:toggle_show_error')) . ', [])',
-				\ 'toggle-showing-the-error-list', 1)
-	call darkvim#mapping#space#def('nnoremap', ['e', 'n'], 'call call('
-				\ . string(function('s:jump_to_next_error')) . ', [])',
-				\ 'next-error', 1)
-	call darkvim#mapping#space#def('nnoremap', ['e', 'p'], 'call call('
-				\ . string(function('s:jump_to_previous_error')) . ', [])',
-				\ 'previous-error', 1)
-	call darkvim#mapping#space#def('nnoremap', ['e', 'v'], 'call call('
-				\ . string(function('s:verify_syntax_setup')) . ', [])',
-				\ 'verify-syntax-setup', 1)
-	call darkvim#mapping#space#def('nnoremap', ['e', 'e'], 'call call('
-				\ . string(function('s:explain_the_error')) . ', [])',
-				\ 'explain-the-error', 1)
-	call darkvim#mapping#space#def('nnoremap', ['e', 'c'], 'call call('
-				\ . string(function('s:clear_errors')) . ', [])',
-				\ 'clear-all-errors', 1)
+	call darkvim#mapping#space#def('nnoremap', ['e', 'e'], 'call call(' . string(function('s:toggle_syntax_checker')) . ', [1])', 'toggle-syntax-checker', 1)
+	call darkvim#mapping#space#def('nnoremap', ['e', 'E'], 'call call(' . string(function('s:toggle_syntax_checker')) . ', [0])', 'toggle-syntax-checker', 1)
+	call darkvim#mapping#space#def('nnoremap', ['e', 'l'], 'call call(' . string(function('s:toggle_show_error')) . ', [])', 'toggle-showing-the-error-list', 1)
+	call darkvim#mapping#space#def('nnoremap', ['e', 'n'], 'call call(' . string(function('s:jump_to_next_error')) . ', [])', 'next-error', 1)
+	call darkvim#mapping#space#def('nnoremap', ['e', 'p'], 'call call(' . string(function('s:jump_to_previous_error')) . ', [])', 'previous-error', 1)
+	call darkvim#mapping#space#def('nnoremap', ['e', 'v'], 'call call(' . string(function('s:verify_syntax_setup')) . ', [])', 'verify-syntax-setup', 1)
+	call darkvim#mapping#space#def('nnoremap', ['e', 'e'], 'call call(' . string(function('s:explain_the_error')) . ', [])', 'explain-the-error', 1)
+	call darkvim#mapping#space#def('nnoremap', ['e', 'c'], 'call call(' . string(function('s:clear_errors')) . ', [])', 'clear-all-errors', 1)
 endfunction
 
 function! s:toggle_show_error() abort

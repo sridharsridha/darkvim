@@ -110,7 +110,7 @@ function! darkvim#mapping#space#submode2(name, mode, opt, enter_keys, cmd,
 		let l:merged_keys = join(a:enter_keys, '')
 		call submode#enter_with(a:name, a:mode, a:opt, '<Space>'.l:merged_keys, a:cmd)
 		call darkvim#mapping#space#guide(a:enter_keys, a:desc . ' submode')
-		call submode#leave_with(a:name, a:mode, a:opt, '<Esc>')
+		"call submode#leave_with(a:name, a:mode, a:opt, '<Esc>')
 	endif
 endfunction
 

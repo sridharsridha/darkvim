@@ -73,9 +73,6 @@ function! darkvim#layers#fzf#config() abort
 	" Regsiter
 	call darkvim#mapping#space#def('nnoremap', ['r', 'f'], 'FZFRegister', 'register', 1)
 
-	" Lists
-	call darkvim#mapping#space#def('nnoremap', ['q', 'l'], 'FZFLocationList', 'location-list', 1)
-	call darkvim#mapping#space#def('nnoremap', ['q', 'f'], 'FZFQuickfix', 'quickfix', 1)
 
 	" Jumps
 	call darkvim#mapping#space#def('nnoremap', ['j', 'i'], 'FZFOutline', 'outline', 1)
@@ -93,6 +90,8 @@ function! darkvim#layers#fzf#config() abort
 	call darkvim#mapping#space#def('nnoremap', ['T', 'f'], 'FZFColors', 'colorschemes', 1)
 
 	call darkvim#mapping#space#group(['k'], 'Vim')
+	call darkvim#mapping#space#def('nnoremap', ['k', 'l'], 'FZFLocationList', 'location-list', 1)
+	call darkvim#mapping#space#def('nnoremap', ['k', 'f'], 'FZFQuickfix', 'quickfix', 1)
 	call darkvim#mapping#space#def('nnoremap', ['k', 'C'], 'FZFCommands', 'commands', 1)
 	call darkvim#mapping#space#def('nnoremap', ['k', '?'], 'FZFHelptags', 'help-tags', 1)
 	call darkvim#mapping#space#def('nnoremap', ['k', 'k'], 'FZFMaps', 'keymappings', 1)

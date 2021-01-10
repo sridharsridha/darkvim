@@ -193,11 +193,13 @@ let g:airline#extensions#tabline#fnamemod = ':.'
 let g:airline#extensions#tabline#fnamecollapse = 0
 let g:airline_highlighting_cache = 1
 let g:airline#extensions#tagbar#enabled = 0
+let g:airline#extensions#vista#enabled = 0
 let g:airline#extensions#neomake#enabled = 0
 let g:airline#extensions#gina#enabled = 0
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#hunks#enabled = 0
 let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#ctrlspace#enabled = 0
 
 endfunction
 

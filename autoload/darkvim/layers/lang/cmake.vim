@@ -15,37 +15,18 @@ function! darkvim#layers#lang#cmake#plugins() abort
 endfunction
 
 function! darkvim#layers#lang#cmake#config() abort
-
-	let g:cmake_default_build_dir = 'cmake-build-debug'
-	let g:cmake_console_size = 10
 	let g:cmake_link_compile_commands = 1
 	call darkvim#mapping#space#group(['m'], 'Make')
-	call darkvim#mapping#space#def('nmap', ['m', 'g'],
-				\ 'CMakeGenerate',
-				\ 'generate-cmake-build-files', 1)
-	call darkvim#mapping#space#def('nnoremap', ['m', 'c'],
-				\ 'CMakeClean',
-				\ 'clean-cmake-project', 1)
-	call darkvim#mapping#space#def('nnoremap', ['m', 'b'],
-				\ 'CMakeBuild --parallel 7',
-				\ 'build-cmake-project', 1)
-	call darkvim#mapping#space#def('nmap', ['m', 'B'],
-				\ '<Plug>(CMakeBuildTarget)',
-				\ 'build-cmake-target')
-	call darkvim#mapping#space#def('nmap', ['m', 'i'],
-				\ 'CMakeInstall',
-				\ 'install-cmake-project', 2)
+	call darkvim#mapping#space#def('nmap', ['m', 'g'], 'CMakeGenerate', 'generate-cmake-build-files', 1)
+	call darkvim#mapping#space#def('nnoremap', ['m', 'c'], 'CMakeClean', 'clean-cmake-project', 1)
+	call darkvim#mapping#space#def('nnoremap', ['m', 'b'], 'CMakeBuild --parallel 7', 'build-cmake-project', 1)
+	call darkvim#mapping#space#def('nmap', ['m', 'B'], '<Plug>(CMakeBuildTarget)', 'build-cmake-target')
+	call darkvim#mapping#space#def('nmap', ['m', 'i'], 'CMakeInstall', 'install-cmake-project', 2)
 
-	call darkvim#mapping#space#def('nnoremap', ['m', 'o'], 'call call('
-				\ . string(function('s:toggle_cmake_console')) . ', [])',
-				\ 'toggle-cmake-console', 1)
-	call darkvim#mapping#space#def('nnoremap', ['m', 'a'], 'call call('
-				\ . string(function('s:cmake_auto_reload')) . ', [1])',
-				\ 'enable-cmake-auto-reload', 1)
-	call darkvim#mapping#space#def('nnoremap', ['m', 'A'], 'call call('
-				\ . string(function('s:cmake_auto_reload')) . ', [0])',
-				\ 'disable-cmake-auto-reload', 1)
-	call s:cmake_auto_reload(1)
+	call darkvim#mapping#space#def('nnoremap', ['m', 'o'], 'call call(' . string(function('s:toggle_cmake_console')) . ', [])', 'toggle-cmake-console', 1)
+	call darkvim#mapping#space#def('nnoremap', ['m', 'a'], 'call call(' . string(function('s:cmake_auto_reload')) . ', [1])', 'enable-cmake-auto-reload', 1)
+	call darkvim#mapping#space#def('nnoremap', ['m', 'A'], 'call call(' . string(function('s:cmake_auto_reload')) . ', [0])', 'disable-cmake-auto-reload', 1)
+	call s:cmake_auto_reload(0)
 endfunction
 
 function! s:toggle_cmake_console() abort

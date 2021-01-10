@@ -90,10 +90,6 @@ function! darkvim#layers#denite#config() abort
    " Regsiter
    call darkvim#mapping#space#def('nnoremap', ['r', 'f'], 'Denite register', 'register', 1)
 
-   " Lists
-   call darkvim#mapping#space#def('nnoremap', ['q', 'l'], 'Denite location_list', 'location-list', 1)
-   call darkvim#mapping#space#def('nnoremap', ['q', 'f'], 'Denite -post-action=suspend quickfix', 'quickfix', 1)
-
    " Jumps
    call darkvim#mapping#space#def('nnoremap', ['j', 'i'], 'Denite outline', 'outline', 1)
    call darkvim#mapping#space#def('nnoremap', ['j', 'f'], 'Denite jump', 'jumplist', 1)
@@ -111,6 +107,8 @@ function! darkvim#layers#denite#config() abort
    call darkvim#mapping#space#def('nnoremap', ['T', 'f'], 'Denite colorscheme', 'colorschemes', 1)
 
    call darkvim#mapping#space#group(['k'], 'Vim')
+   call darkvim#mapping#space#def('nnoremap', ['k', 'l'], 'Denite location_list', 'location-list', 1)
+   call darkvim#mapping#space#def('nnoremap', ['k', 'f'], 'Denite -post-action=suspend quickfix', 'quickfix', 1)
    call darkvim#mapping#space#def('nnoremap', ['k', 'C'], 'Denite command', 'commands', 1)
    call darkvim#mapping#space#def('nnoremap', ['k', '?'], 'Denite help', 'help-tags', 1)
    call darkvim#mapping#space#def('nnoremap', ['k', 'k'], 'Denite keymap', 'keymappings', 1)
