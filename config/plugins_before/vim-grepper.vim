@@ -2,6 +2,8 @@
 " Vim-Grepper
 let g:grepper = {}
 let g:grepper.open = 1
+let g:grepper.quickfix = 1
+let g:grepper.searchreg = 1
 let g:grepper.switch = 1
 let g:grepper.highlight = 1
 let g:grepper.tools = ['rg', 'ag', 'grep']
@@ -17,3 +19,5 @@ call darkvim#mapping#space#def('nnoremap', ['s', 's'],
 call darkvim#mapping#space#def('nnoremap', ['s', 'S'],
 			\ 'Grepper -cword -noprompt',
 			\ 'search-cwords-in-project', 1)
+
+

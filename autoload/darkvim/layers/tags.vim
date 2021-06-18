@@ -21,13 +21,10 @@ endfunction
 
 function! darkvim#layers#tags#config() abort
 	call darkvim#mapping#space#group(['t'], 'Tags')
-	call darkvim#mapping#space#def('nnoremap', ['t', 'd'],
-				\ 'call darkvim#plugins#cscope#find("d", expand("<cword>"))',
-				\ 'find-functions-called-by-this-function', 1)
 	call darkvim#mapping#space#def('nnoremap', ['t', 'c'],
 				\ 'call darkvim#plugins#cscope#find("c", expand("<cword>"))',
 				\ 'find-functions-calling-this-function', 1)
-	call darkvim#mapping#space#def('nnoremap', ['t', 'g'],
+	call darkvim#mapping#space#def('nnoremap', ['t', 'd'],
 				\ 'call darkvim#plugins#cscope#find("g", expand("<cword>"))',
 				\ 'find-global-definition-of-a-symbol', 1)
 	call darkvim#mapping#space#def('nnoremap', ['t', 's'],

@@ -75,12 +75,18 @@ function! darkvim#layers#core#plugins() abort
    "        \ }])
 
    " Vim rooter
-   call add(l:plugins, ['airblade/vim-rooter', {
-            \ 'on_func' : 'FindRootDirectory',
-            \ 'on_cmd' : ['Rooter', 'RooterToggle'],
-            \ 'loadconf' : 1,
-            \ }])
-
+   " call add(l:plugins, ['airblade/vim-rooter', {
+   "         \ 'on_func' : 'FindRootDirectory',
+   "         \ 'on_cmd' : ['Rooter', 'RooterToggle'],
+   "         \ 'loadconf' : 1,
+   "         \ }])
+   " call add(l:plugins, ['kevinhwang91/nvim-bqf', {
+			"	\ 'nolazy' : 1,
+   "         \ }])
+   " call add(l:plugins, ['nvim-treesitter/nvim-treesitter', {
+   "         \ 'build' : ':TSUpdate',
+			"	\ 'nolazy' : 1,
+   "         \ }])
    " Commenter
    call add(l:plugins, ['tyru/caw.vim', {
             \ 'on_map' : {'nvx' : '<Plug>'},

@@ -50,6 +50,7 @@ function! darkvim#layers#lsp#plugins() abort
 	" Airline has some issue with lazy loading this plugin
 	call add(l:plugins, ['liuchengxu/vista.vim', {
 				\ 'loadconf' : 1,
+            \ 'nolazy' : 1,
 				\ }])
 
 	return l:plugins

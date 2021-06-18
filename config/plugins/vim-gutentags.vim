@@ -14,6 +14,5 @@ let g:gutentags_exclude_filetypes = [
 			\ 'log',
 			\ 'startify'
 			\ ]
-
 let g:gutentags_generate_on_write = 0
 

@@ -22,5 +22,11 @@ function! darkvim#layers#search#plugins() abort
 endfunction
 
 function! darkvim#layers#search#config() abort
+" aug Grepper
+"     au!
+"     au User Grepper call setqflist([], 'r',
+"                \ {'context': {'bqf': {'pattern_hl': histget('/')}}}) |
+"                \ botright copen
+" aug END
 endfunction
 
