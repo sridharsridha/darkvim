@@ -49,8 +49,6 @@ function! darkvim#layers#lsp#plugins() abort
 	" Symbol tree
 	" Airline has some issue with lazy loading this plugin
 	call add(l:plugins, ['liuchengxu/vista.vim', {
-				\ 'on_cmd': 'Vista',
-				\ 'on_func': ['vista#', 'vista#RunForNearestMethodOrFunction'],
 				\ 'loadconf' : 1,
 				\ }])
 

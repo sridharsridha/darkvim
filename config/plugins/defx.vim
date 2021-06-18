@@ -370,7 +370,6 @@ function! s:defx_toggle_width(context) abort
   execute 'vertical resize ' . (l:max == winwidth('.') ? l:original : l:max)
 endfunction
 
-
 " Open file-explorer split with tmux
 function! s:defx_tmux_file_explorer(context) abort
   let l:explorer = darkvim#util#find_file_explorer()

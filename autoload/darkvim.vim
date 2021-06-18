@@ -10,22 +10,9 @@ let g:darkvim_plugin_bundle_dir = $HOME. join(['', '.cache', 'darkvim', ''], '/'
 
 let g:darkvim_colorscheme = 'gruvbox'
 let g:darkvim_windows_leader = 's'
-let g:darkvim_welcome_enable = 1
 let g:darkvim_enable_guicolors = 1
 
 let g:darkvim_commandline_prompt = '➭'
-let g:darkvim_error_symbol       = '✖'
-let g:darkvim_warning_symbol     = '⚠'
-let g:darkvim_info_symbol        = 'i'
-
-let g:darkvim_project_rooter_patterns = ['.git/' ]
-let g:darkvim_project_rooter_automatically = 0
-
-let g:darkvim_smartcloseignorewin     = ['__Tagbar__']
-let g:darkvim_smartcloseignoreft      = [
-			\ 'tagbar',
-			\ 'defx',
-			\ ]
 
 " Top level begin function for darkvim
 function! darkvim#start() abort

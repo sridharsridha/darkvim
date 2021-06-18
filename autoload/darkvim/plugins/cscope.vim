@@ -54,14 +54,13 @@ function! s:run(search_query) abort
 endfunc
 
 function! darkvim#plugins#cscope#open_list() abort
-	botright copen
-   " if exists( ":Denite"  )
-   "    Denite quickfix
-   " elseif exists( ":FZF" )
-   "    FZFQuickfix
-   " else
-   "    botright copen
-   " endif
+   if exists( ":Denite"  )
+      Denite quickfix
+   elseif exists( ":FZF" )
+      FZFQuickfix
+   else
+      botright copen
+   endif
 endfunction
 
 " Find search
@@ -75,7 +74,7 @@ function! darkvim#plugins#cscope#find(what, query) abort
 	let l:query = fnameescape(l:query)
 	cclose
 	call setqflist([])
-	" call s:set_title(a:what, l:query)
+	call s:set_title(a:what, l:query)
 	let l:cmd = 'cs find ' . a:what . ' ' . l:query
 	call s:run(l:cmd)
 	call darkvim#plugins#cscope#open_list()

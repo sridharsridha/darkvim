@@ -12,10 +12,9 @@ function! darkvim#layers#core#plugins() abort
             \ }])
 
    " Paste without needing to set paste. Needs xterm
-   call add(l:plugins, ['ConradIrwin/vim-bracketed-paste', {
-            \ 'on_event' : ['InsertEnter'],
-            \ }])
-
+   " call add(l:plugins, ['ConradIrwin/vim-bracketed-paste', {
+   "         \ 'on_event' : ['InsertEnter'],
+   "         \ }])
 
    " Toggle search highlights automatically
    call add(l:plugins, ['romainl/vim-cool', {
@@ -105,27 +104,9 @@ function! darkvim#layers#core#plugins() abort
 	call add(l:plugins, ['morhetz/gruvbox', {
 				\ 'nolazy' : 1,
 				\ }])
-
-	" call add(l:plugins, ['altercation/vim-colors-solarized', {
-	"			\ 'nolazy' : 1,
-	"			\ }])
-	"
-	" call add(l:plugins, ['sonph/onehalf', {
-	"			\ 'rtp': 'vim/',
-	"			\ 'nolazy' : 1,
-	"			\ }])
-
-   " call add(l:plugins, ['tomasiser/vim-code-dark', {
-   "         \ 'nolazy' : 1,
-   "         \ }])
    return l:plugins
 endfunction
 
 function! darkvim#layers#core#config() abort
-   " vim-devicons
-   let g:webdevicons_enable = 1
-   let g:webdevicons_enable_airline_tabline = 1
-   let g:webdevicons_enable_airline_statusline = 1
-   let g:webdevicons_enable_denite = 1
 endfunction
 

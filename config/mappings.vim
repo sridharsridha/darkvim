@@ -46,65 +46,27 @@ imap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 imap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
 imap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
-" yank and paste
-" Remove spaces at the end of lines
-call darkvim#mapping#leader#group(['x'], 'Text')
-call darkvim#mapping#leader#def('nnoremap', ['x', 'w'],
-			\ 'silent! keeppatterns %substitute/\s\+$//e',
-			\ 'remove-trailing-whitespace', 1)
-" Append modeline after last line in buffer
-" See: http://vim.wikia.com/wiki/Modeline_magic
-function! s:append_modeline() abort
-	let l:modeline = printf(' vim: set ts=%d sw=%d tw=%d %set :',
-				\ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
-	let l:modeline = substitute(&commentstring, '%s', l:modeline, '')
-	call append(line('$'), l:modeline)
-endfunction
-" Append modeline
-call darkvim#mapping#leader#def('nnoremap', ['x', 'm'],
-			\ 'call call(' . string(function('s:append_modeline')) . ', [])',
-			\ 'append-modeline', 1)
-
-
-call darkvim#mapping#leader#def('nnoremap', ['X'],
-			\ '"+Y dd"',
-			\ 'cut-line')
-call darkvim#mapping#leader#def('nnoremap', ['x'],
-			\ '"+y d"',
-			\ 'cut-line')
-call darkvim#mapping#leader#def('vnoremap', ['x'],
-			\ '"+y gvd"',
-			\ 'cut-text', 2)
-
 " Unimpaired bindings
 " Quickly add empty lines
-call darkvim#mapping#leader#group(['l'], 'Line')
-call darkvim#mapping#leader#def('nnoremap', ['l', 'a'],
+call darkvim#mapping#space#group(['x'], 'Text')
+call darkvim#mapping#space#group(['x', 'l'], 'Line')
+call darkvim#mapping#space#def('nnoremap', ['x', 'l', 'a'],
 			\ 'put! =repeat(nr2char(10), v:count1)',
 			\ 'add-empty-line-below', 1)
-call darkvim#mapping#leader#def('nnoremap', ['l', 'b'],
+call darkvim#mapping#space#def('nnoremap', ['x', 'l', 'b'],
 			\ 'put =repeat(nr2char(10), v:count1)',
 			\ 'add-empty-line-above', 1)
 
-" [l or ]l go to next and previous error
-call darkvim#mapping#leader#group(['e'], 'Error')
-call darkvim#mapping#leader#def('nnoremap', ['e', 'p'],
-			\ 'lprevious',
-			\ 'prev-error', 1)
-call darkvim#mapping#leader#def('nnoremap', ['e', 'n'],
-			\ 'lnext',
-			\ 'next-error', 1)
-
 " Switch (window) to the directory of the current opened buffer
-call darkvim#mapping#leader#group(['d'], 'Directory')
-call darkvim#mapping#leader#def('nnoremap', ['d', 'c'],
+call darkvim#mapping#space#group(['d'], 'Directory')
+call darkvim#mapping#space#def('nnoremap', ['d', 'c'],
 			\ 'lcd %:p:h<CR>:pwd',
 			\ 'cd-current-buffer-dir', 1)
 " Yank buffer's relative/absolute path to clipboard
-nnoremap <leader>dY :let @+=expand('%:~:.')<CR>:echo 'Yanked relative path'<CR>
-let g:_darkvim_mappings_leader['d']['Y'] = 'yank-relative-path-current-buffer'
-nnoremap <leader>dy :let @+=expand('%:p')<CR>:echo 'Yanked absolute path'<CR>
-let g:_darkvim_mappings_leader['d']['y'] = 'yank-absolute-path-current-buffer'
+nnoremap <Space>dY :let @+=expand('%:~:.')<CR>:echo 'Yanked relative path'<CR>
+let g:_darkvim_mappings_space['d']['Y'] = 'yank-relative-path-current-buffer'
+nnoremap <Space>dy :let @+=expand('%:p')<CR>:echo 'Yanked absolute path'<CR>
+let g:_darkvim_mappings_space['d']['y'] = 'yank-absolute-path-current-buffer'
 
 " Smart wrap toggle (breakindent and colorcolumn toggle as-well)
 call darkvim#mapping#leader#group(['t'], 'Toggles')
@@ -119,9 +81,6 @@ call darkvim#mapping#leader#def('nnoremap', ['t', 's'],
 call darkvim#mapping#leader#def('nnoremap', ['t', 'n'],
 			\ 'setlocal nonumber!',
 			\ 'toggle-number', 1)
-call darkvim#mapping#leader#def('nnoremap', ['t', 'r'],
-			\ 'setlocal norelativenumber!',
-			\ 'toggle-relativenumber', 1)
 call darkvim#mapping#leader#def('nnoremap', ['t', 'c'],
 			\ 'setlocal nocursorline!',
 			\ 'toggle-cursorline', 1)
@@ -131,6 +90,9 @@ call darkvim#mapping#leader#def('nnoremap', ['t', 'l'],
 call darkvim#mapping#leader#def('nnoremap', ['t', 'h'],
 			\ 'setlocal nohlsearch!',
 			\ 'toggle-search-highlight', 1)
+call darkvim#mapping#leader#def('nnoremap', ['t', 'p'],
+			\ 'setlocal paste!',
+			\ 'toggle-paste', 1)
 " toggles the quickfix window.
 command -bang -nargs=? QFix call QFixToggle(<bang>0)
 function! QFixToggle(forced)
@@ -150,36 +112,5 @@ augroup END
 call darkvim#mapping#leader#def('nnoremap', ['t', 'q'],
 			\ 'QFix',
 			\ 'toggle-quickfix-window', 1)
-
-" Browse config files
-function! s:browse_files(local) abort
-	let l:directory = '~/.config/nvim/'
-	if a:local
-		echom 'Local Config'
-		if finddir(g:darkvim_custom_folder) ==# ''
-			silent call mkdir(expand(g:darkvim_custom_folder), 'p', 0700)
-			silent exe '!touch ' . g:darkvim_custom_folder . '/init.vim'
-		endif
-		let l:directory = g:darkvim_custom_folder
-	endif
-	if darkvim#layers#is_loaded('clap')
-		exe 'Clap files '.l:directory
-   elseif darkvim#layers#is_loaded('ctrlp')
-		exe 'CtrlP '.l:directory
-   elseif darkvim#layers#is_loaded('denite')
-		exe 'Denite '.l:directory
-   elseif darkvim#layers#is_loaded('fzf')
-		exe 'FZF '.l:directory
-	else
-		exe 'tabnew' l:directory
-	endif
-endfunction
-call darkvim#mapping#leader#group(['c'], 'Config')
-call darkvim#mapping#leader#def('nnoremap', ['c', 'g'],
-			\ 'call call(' . string(function('s:browse_files')) . ', [0])',
-			\ 'open-global-config-dir', 1)
-call darkvim#mapping#leader#def('nnoremap', ['c', 'l'],
-			\ 'call call(' . string(function('s:browse_files')) . ', [1])',
-			\ 'open-local-config-dir', 1)
 
 

@@ -16,7 +16,6 @@ function! darkvim#layers#tags#plugins() abort
 				\ 'loadconf_before' : 1,
 				\ }])
 
-
 	return l:plugins
 endfunction
 

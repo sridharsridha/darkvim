@@ -206,6 +206,11 @@ function! darkvim#mapping#windows#group(keys, desc) abort
 endfunction
 
 function! darkvim#mapping#windows#smart_close() abort
+   let g:darkvim_smartcloseignorewin     = ['__Tagbar__']
+   let g:darkvim_smartcloseignoreft      = [
+            \ 'tagbar',
+            \ 'defx',
+            \ ]
 	let l:ignorewin = get(g:,'darkvim_smartcloseignorewin',[])
 	let l:ignoreft = get(g:, 'darkvim_smartcloseignoreft',[])
 	let l:win_count = winnr('$')

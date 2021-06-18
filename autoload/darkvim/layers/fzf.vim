@@ -23,7 +23,9 @@ endfunction
 function! darkvim#layers#fzf#config() abort
 	let g:neoyank#file = g:darkvim_plugin_bundle_dir . 'neoyank'
 	let g:fzf_command_prefix = 'FZF'
+
 	let g:fzf_action = {
+            \ 'ctrl-q': function('darkvim#layers#fzf#build_quickfix_list'),
 				\ 'ctrl-t': 'tab split',
 				\ 'ctrl-g': 'split',
 				\ 'ctrl-v': 'vsplit' }
@@ -291,3 +293,9 @@ function! s:register() abort
 				\ }))
 endfunction
 
+" An action can be a reference to a function that processes selected lines
+function! darkvim#layers#fzf#build_quickfix_list(lines)
+   call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+   copen
+   cc
+endfunction

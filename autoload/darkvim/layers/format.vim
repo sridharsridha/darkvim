@@ -17,7 +17,6 @@ function! darkvim#layers#format#config() abort
 	call darkvim#mapping#space#def('nnoremap', ['c', 'F'], 'call call('.string(function('s:toggle_auto_format')).', [])', 'toggle-auto-format', 1)
 endfunction
 
-
 function! s:toggle_auto_format() abort
   if !exists('#AutoFormatCode#BufWritePre')
     augroup AutoFormatCode

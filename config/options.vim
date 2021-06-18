@@ -11,6 +11,7 @@ set noerrorbells visualbell t_vb= " No bell sounds.
 set colorcolumn=+0
 set timeoutlen=300
 set ttimeoutlen=30
+set wrap
 " always use system clipboard as unnamed register
 set clipboard=unnamed,unnamedplus
 
@@ -97,7 +98,6 @@ set completeopt+=preview " show extra information about the current completion
 " Editor UI:
 " ----------------------------------------------------------------------------
 set number           " Don't show line numbers
-set relativenumber
 set nofoldenable
 set showtabline=1
 set conceallevel=2 concealcursor=niv " For snippet_complete marker
