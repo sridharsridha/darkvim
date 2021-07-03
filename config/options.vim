@@ -98,7 +98,7 @@ set completeopt+=preview " show extra information about the current completion
 " Editor UI:
 " ----------------------------------------------------------------------------
 set number           " Don't show line numbers
-set nofoldenable
+set foldenable
 set showtabline=1
 set conceallevel=2 concealcursor=niv " For snippet_complete marker
 set lazyredraw                          " Don't redraw while executing macros.

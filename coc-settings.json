@@ -20,5 +20,7 @@
    "list.indicator": "➭",
    "python.jediEnabled": true,
    "python.linting.enabled": true,
-   "clangd.semanticHighlighting": true
+   "clangd.semanticHighlighting": true,
+   "clangd.compilationDatabasePath" : "/src",
+   "clangd.arguments" : [ "-j", "7" ]
 }

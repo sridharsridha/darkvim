@@ -4,7 +4,7 @@ function! darkvim#layers#tags#plugins() abort
 
 	" Automatic tag generation
 	call add(l:plugins, ['ludovicchabant/vim-gutentags', {
-				\ 'on_event' : [ 'BufReadPost' ],
+				\ 'on_event' : [ 'BufEnter' ],
 				\ 'loadconf' : 1,
 				\ 'loadconf_before' : 1,
 				\ }])

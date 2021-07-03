@@ -49,14 +49,15 @@ function! darkvim#layers#lsp#plugins() abort
 	" Symbol tree
 	" Airline has some issue with lazy loading this plugin
 	call add(l:plugins, ['liuchengxu/vista.vim', {
+				\ 'on_event' : 'InsertEnter',
 				\ 'loadconf' : 1,
-            \ 'nolazy' : 1,
 				\ }])
 
 	return l:plugins
 endfunction
 
 function! darkvim#layers#lsp#config() abort
+	let g:coc_disable_startup_warning = 1
 
 	" Vista
 	let g:vista_sidebar_width = 35

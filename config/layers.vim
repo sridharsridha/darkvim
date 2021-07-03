@@ -14,7 +14,7 @@ call darkvim#layers#load('tags')
 call darkvim#layers#load('shell')
 call darkvim#layers#load('format')
 call darkvim#layers#load('fzf')
-call darkvim#layers#load('checkers')
+" call darkvim#layers#load('checkers')
 call darkvim#layers#load('lsp')
 
 " Lang support

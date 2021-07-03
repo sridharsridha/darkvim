@@ -10,12 +10,6 @@ function! darkvim#layers#tools#plugins() abort
 	"\ 'loadconf' : 1,
 	"\ }])
 
-  " Bookmarks
-  " call add(l:plugins, ['MattesGroeger/vim-bookmarks', {
-  "			\ 'on_cmd' : darkvim#util#prefix('Bookmark',
-  "			\                ['ShowAll', 'Toggle', 'Annotate', 'Next', 'Prev']),
-  "			\ 'loadconf' : 1,
-  "			\ }])
 
   " Profile startuptime
   call add(l:plugins, ['tweekmonster/startuptime.vim', {
@@ -49,17 +43,17 @@ function! darkvim#layers#tools#plugins() abort
 	\ }])
 
  "  " Shell tools
- "  call add(l:plugins, ['tpope/vim-eunuch', {
-	" \ 'on_cmd' : ['Delete', 'Unlink', 'Move', 'Rename', 'Chmod', 'Mkdir',
-	" \             'Cfind', 'Clocate', 'Lfind', 'Llocate', 'Wall',
-	" \             'SudoWrite', 'SudoEdit'],
-	" \ }])
+  call add(l:plugins, ['tpope/vim-eunuch', {
+	\ 'on_cmd' : ['Delete', 'Unlink', 'Move', 'Rename', 'Chmod', 'Mkdir',
+	\             'Cfind', 'Clocate', 'Lfind', 'Llocate', 'Wall',
+	\             'SudoWrite', 'SudoEdit'],
+	\ }])
 
   " Quickrun
- "  call add(l:plugins, ['thinca/vim-quickrun', {
-	"\ 'on_cmd': ['QuickRun'],
-	"\ 'loadconf_before': 1,
-	"\ }])
+  call add(l:plugins, ['thinca/vim-quickrun', {
+	\ 'on_cmd': ['QuickRun'],
+	\ 'loadconf_before': 1,
+	\ }])
 
   return l:plugins
 endfunction
